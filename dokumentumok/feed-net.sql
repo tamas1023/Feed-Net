@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Jan 23. 13:47
--- Kiszolgáló verziója: 10.4.17-MariaDB
--- PHP verzió: 8.0.1
+-- Létrehozás ideje: 2022. Jan 24. 13:48
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -101,7 +101,8 @@ CREATE TABLE `éttermek` (
   `Gluténmentes` tinyint(1) NOT NULL,
   `Terasz` tinyint(1) NOT NULL,
   `Bérelhető` tinyint(1) NOT NULL,
-  `Cím` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
+  `Cím` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `db` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
