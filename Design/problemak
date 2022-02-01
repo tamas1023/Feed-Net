@@ -1,0 +1,12 @@
+ha a hamburger menü megvan akkor ha lenyitjuk, akkor a sidebar bezavar,
+
+összeakad a felső navbar és a main sidebar, azt megoldani
+ha kinyitjuk mind a 2 navbart akkor ne akadjon össze
+
+kell 100% sidebar nál egy Szűrés, és egy mégse gomb
+
+esetleg újra átgondolni, vagy újracsinálni a sidebart, lehet hogy fixed lessz, és majd ha összenyomjuk
+akkor lehet majd ki be nyitogatni
+
+
+kiszervezni a szineket egy :root var ba hogy egyszerűbb legyen használni
