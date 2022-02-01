@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Jan 24. 13:48
+-- Létrehozás ideje: 2022. Feb 01. 08:57
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -35,6 +35,32 @@ CREATE TABLE `felhasználók` (
   `Belépés` date NOT NULL,
   `Státusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `helyfoglalás`
+--
+
+CREATE TABLE `helyfoglalás` (
+  `felhasználó_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `étterem_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `kezdés` datetime NOT NULL,
+  `vége` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `hibajelentés`
+--
+
+CREATE TABLE `hibajelentés` (
+  `felhasználó_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `étterem_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
+  `leírás` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -102,7 +128,9 @@ CREATE TABLE `éttermek` (
   `Terasz` tinyint(1) NOT NULL,
   `Bérelhető` tinyint(1) NOT NULL,
   `Cím` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `db` int(11) NOT NULL
+  `db` int(11) NOT NULL,
+  `házhozszállítás` tinyint(1) NOT NULL,
+  `leírás` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -114,6 +142,20 @@ CREATE TABLE `éttermek` (
 --
 ALTER TABLE `felhasználók`
   ADD PRIMARY KEY (`Email`);
+
+--
+-- A tábla indexei `helyfoglalás`
+--
+ALTER TABLE `helyfoglalás`
+  ADD UNIQUE KEY `felhasználó_email` (`felhasználó_email`,`étterem_email`),
+  ADD KEY `étterem_email` (`étterem_email`);
+
+--
+-- A tábla indexei `hibajelentés`
+--
+ALTER TABLE `hibajelentés`
+  ADD UNIQUE KEY `felhasználó_email` (`felhasználó_email`,`étterem_email`),
+  ADD KEY `étterem_email` (`étterem_email`);
 
 --
 -- A tábla indexei `kedvenc`
@@ -150,6 +192,20 @@ ALTER TABLE `éttermek`
 --
 -- Megkötések a kiírt táblákhoz
 --
+
+--
+-- Megkötések a táblához `helyfoglalás`
+--
+ALTER TABLE `helyfoglalás`
+  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`felhasználó_email`) REFERENCES `felhasználók` (`Email`),
+  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`étterem_email`) REFERENCES `éttermek` (`Email`);
+
+--
+-- Megkötések a táblához `hibajelentés`
+--
+ALTER TABLE `hibajelentés`
+  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`felhasználó_email`) REFERENCES `felhasználók` (`Email`),
+  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`étterem_email`) REFERENCES `éttermek` (`Email`);
 
 --
 -- Megkötések a táblához `kedvenc`
