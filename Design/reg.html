@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regisztráció</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">  
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="loginheader">
+            <h3 class="animate__animated animate__backInUp">Regisztráció</h3>
+        </header>
+        <main class="loginmain">
+            <div class="login-form container">
+                <h3>Regisztráció</h3>
+            
+                <form action="/reg" class="loginform" method="POST">
+                    <div class="form-group sorkoz">
+                        <input type="text" name="username" placeholder="Név" class="form-control animate__animated animate__backInLeft" required>
+                    </div>
+                    <div class="form-group sorkoz">
+                        <input type="text" name="username" placeholder="E-mail" class="form-control animate__animated animate__backInLeft" required>
+                    </div>
+                    <div class="form-group sorkoz">
+                        <input type="password" name="passwd1" placeholder="Jelszó" class="form-control animate__animated animate__backInRight">
+                    </div>
+                    <div class="form-group sorkoz">
+                        <input type="password" name="passwd2" placeholder="Jelszó újra " class="form-control animate__animated animate__backInUp">
+                    </div>
+                    <div class="form-group sorkoz">
+                        <input type="submit" value="Registration"  class="btn btn-secondary">
+                    </div>
+                    
+                </form>
+                <a href="login.html">Vissza a bejelentkezéshez</a>
+            </div>
+        </main>
+        <footer  class="loginfooter">
+            
+        </footer>
+        </div>
+        
+        <script src="js/bootstrap.js"></script>
+        
+    </body>
+</html>
