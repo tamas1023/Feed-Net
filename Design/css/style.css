@@ -31,7 +31,7 @@ body {
 #main {
     position: fixed;
     top: 56px;
-    transition: .5s;
+    transition: .1s;
     padding: 15px;
     background-color: red;
     width: 80px;
