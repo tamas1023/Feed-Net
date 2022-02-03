@@ -1,8 +1,10 @@
 let egesz=document.getElementById("egesz");
 let menu=document.getElementById("menu");
+
 var positionInfo = menu.getBoundingClientRect();
 var menuheight = positionInfo.height;
 var menuwidth = positionInfo.width;
+
 var opened=false;
 let width = innerWidth;
 let height = innerHeight;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 03. 13:24
+-- Létrehozás ideje: 2022. Feb 01. 08:57
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -45,8 +45,8 @@ CREATE TABLE `felhasználók` (
 --
 
 CREATE TABLE `helyfoglalás` (
-  `felhasználó_ID` int(11) NOT NULL,
-  `étterem_ID` int(11) NOT NULL,
+  `felhasználó_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `étterem_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `kezdés` datetime NOT NULL,
   `vége` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -58,8 +58,8 @@ CREATE TABLE `helyfoglalás` (
 --
 
 CREATE TABLE `hibajelentés` (
-  `felhasználó_ID` int(11) NOT NULL,
-  `étterem_ID` int(11) NOT NULL,
+  `felhasználó_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `étterem_email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
   `leírás` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -160,6 +160,20 @@ ALTER TABLE `hibajelentés`
   ADD KEY `étterem_ID` (`étterem_ID`);
 
 --
+-- A tábla indexei `helyfoglalás`
+--
+ALTER TABLE `helyfoglalás`
+  ADD UNIQUE KEY `felhasználó_email` (`felhasználó_email`,`étterem_email`),
+  ADD KEY `étterem_email` (`étterem_email`);
+
+--
+-- A tábla indexei `hibajelentés`
+--
+ALTER TABLE `hibajelentés`
+  ADD UNIQUE KEY `felhasználó_email` (`felhasználó_email`,`étterem_email`),
+  ADD KEY `étterem_email` (`étterem_email`);
+
+--
 -- A tábla indexei `kedvenc`
 --
 ALTER TABLE `kedvenc`
@@ -215,15 +229,15 @@ ALTER TABLE `éttermek`
 -- Megkötések a táblához `helyfoglalás`
 --
 ALTER TABLE `helyfoglalás`
-  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`);
+  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`felhasználó_email`) REFERENCES `felhasználók` (`Email`),
+  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`étterem_email`) REFERENCES `éttermek` (`Email`);
 
 --
 -- Megkötések a táblához `hibajelentés`
 --
 ALTER TABLE `hibajelentés`
-  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`);
+  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`felhasználó_email`) REFERENCES `felhasználók` (`Email`),
+  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`étterem_email`) REFERENCES `éttermek` (`Email`);
 
 --
 -- Megkötések a táblához `kedvenc`
