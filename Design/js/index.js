@@ -1,35 +1,38 @@
 let egesz=document.getElementById("egesz");
 let menu=document.getElementById("menu");
-var positionInfo = egesz.getBoundingClientRect();
-var egeszheight = positionInfo.height;
-var egeszwidth = positionInfo.width;
+var positionInfo = menu.getBoundingClientRect();
+var menuheight = positionInfo.height;
+var menuwidth = positionInfo.width;
 var opened=false;
 let width = innerWidth;
 let height = innerHeight;
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 let topnavopened=false;
 window.addEventListener('resize',()=>{
-    egesz=document.getElementById("egesz");
-    positionInfo = egesz.getBoundingClientRect();
+    menu=document.getElementById("menu");
+    positionInfo = menu.getBoundingClientRect();
     //inner width a képernyő szélessége
     width=innerWidth;
-    egeszheight = positionInfo.height;
-    egeszwidth = positionInfo.width;
+    menuheight = positionInfo.height;
+    menuwidth = positionInfo.width;
     if (width<=640) {
       document.getElementById("mySidebar").style.width = "100%";
     }
     else{
       document.getElementById("mySidebar").style.width = "250px";
     }
+    /*
     if (width>=767) {
-      document.getElementById("main").style.top = "56px";
+      document.getElementById("main").style.top =Math.round(menuheight)+"px";
     }
     if (width<767 && topnavopened==true) {
-      document.getElementById("main").style.top = "216px";
-    }
+      document.getElementById("main").style.top =Math.round(menuheight)+"px";
+    }*/
     
     //console.log(width);
-    //console.log("Egesz width: "+egeszwidth);
+    console.log("Menu height: "+menuheight);
     //ha eltűnik a menü kinyitás rész
 /*
     if (width>=768) {
@@ -44,9 +47,15 @@ window.addEventListener('resize',()=>{
       
     }
 */
+if (width>=767) {
+  document.getElementById("main").style.top =Math.round(menuheight)+"px";
+}
+if (width<767 && topnavopened==true) {
+  document.getElementById("main").style.top =Math.round(menuheight)+"px";
+}
     if (opened) {
       document.getElementById("egesz").style.width =width-250+"px";
-      document.getElementById("footer").style.width =width -250+"px";
+      document.getElementById("footer").style.width =width-250+"px";
     }
     else{
       document.getElementById("egesz").style.width ="100%";
@@ -72,24 +81,44 @@ function openNav() {
     let pos=document.getElementById("main");
     let posInfo = pos.getBoundingClientRect();
     console.log(posInfo.top);
-    if(posInfo.top==56)
+    console.log("Menu height: "+menuheight);
+    resizing();
+    if(posInfo.top<=56)
         {
           topnavopened=true;
-          document.getElementById("main").style.top = "216px";
+          document.getElementById("main").style.top =Math.floor(menuheight)+"px";
      
         }
       else
         {
-         if(posInfo.top==216)
+         if(posInfo.top>=271)
           {
             topnavopened=false;
-            document.getElementById("main").style.top = "56px";
+            document.getElementById("main").style.top =Math.floor(menuheight)+"px";
       
           }
         }
     //document.getElementById("main").style.top = "215px";
   }
-  
+  const resizing= async ()=> {
+    await delay(339);
+    //console.log('1.s várakozás');
+    menu=document.getElementById("menu");
+    positionInfo = menu.getBoundingClientRect();
+    menuheight = positionInfo.height;
+    menuwidth = positionInfo.width;
+    
+    if (width>=767) {
+      document.getElementById("main").style.top =Math.floor(menuheight)+"px";
+    }
+    if (width<767 && topnavopened==true) {
+      document.getElementById("main").style.top =Math.floor(menuheight)+"px";
+    }
+    else{
+      document.getElementById("main").style.top =Math.floor(menuheight)+"px";
+    }
+    
+  }
   function closeNav() {
     opened=false;
     let width = innerWidth;
