@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin felület</title>
+
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -35,44 +36,31 @@
       </div>
   <div id="egesz">
     <div class="jobboldal">
-       <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
+      <div>
+        <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
+      </div>
+       
       <div id="kereses">
-        <h2>Keresés a felhasználók között</h2>
+        <h2>Keresés az éttermek között</h2>
       </div>
       <div id="kep" class="col-12 ">
-        <h2>Ha kiválasztottuk a felhasználót akkor az adatok ide fognak megjelenni, és itt lehet szerkeszteni őket</h2>
+        <h2>Ha kiválasztottuk az éttermet akkor az adatok ide fognak megjelenni, és itt lehet szerkeszteni őket</h2>
       </div>
+     
+      <div id="ettermek" class="row m-0 p-0">
+        <div id="etterem" class="col-12 ">
+          <h2>Étterem/Kép</h2>
+        </div>
+        <div id="etterem" class="col-12 ">
+          <h2>Étterem/Kép</h2>
+        </div>
+        <div id="etterem" class="col-12">
+          <h2>Étterem/Kép</h2>
+        </div>
+      </div>
+
       
-      <div id="ettermek" class="row m-0 p-0">
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Felhasználó neve</h2>
-        </div>
-        
-        <div id="ertekeles" class="col-12 col-md-6">
-          <h2>E-mail cím</h2>
-        </div>
-      </div>
 
-      <div id="ettermek" class="row m-0 p-0">
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Felhasználó neve</h2>
-        </div>
-        
-        <div id="ertekeles" class="col-12 col-md-6">
-          <h2>E-mail cím</h2>
-        </div>
-      </div>
-
-
-      <div id="ettermek" class="row m-0 p-0">
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Felhasználó neve</h2>
-        </div>
-        
-        <div id="ertekeles" class="col-12 col-md-6">
-          <h2>E-mail cím</h2>
-        </div>
-      </div>
 
       
 
@@ -83,7 +71,7 @@
   </div>
   
 
-      <script src="js/angular.min.js"></script>
+
       <script src="js/bootstrap.js"></script>
       <script src="js/index.js"></script>
 </body>

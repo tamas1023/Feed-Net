@@ -145,6 +145,22 @@ CREATE TABLE `éttermek` (
 ALTER TABLE `felhasználók`
   ADD PRIMARY KEY (`ID`);
 
+
+--
+-- A tábla indexei `helyfoglalás`
+--
+ALTER TABLE `helyfoglalás`
+  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
+  ADD KEY `étterem_ID` (`étterem_ID`);
+
+--
+-- A tábla indexei `hibajelentés`
+--
+ALTER TABLE `hibajelentés`
+  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
+  ADD KEY `étterem_ID` (`étterem_ID`);
+
+
 --
 -- A tábla indexei `helyfoglalás`
 --
