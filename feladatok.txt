@@ -1,7 +1,5 @@
 dokumentánció átgondolása
 pontosítani a terven
-kitörölni az összes étekritikuskhoz tartozó dolgokat
 adatokkal feltölteni
-layout tervek módosítása
 ratingek
 angularral adatok betöltése
