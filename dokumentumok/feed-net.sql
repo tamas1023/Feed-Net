@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 03. 13:24
+-- Létrehozás ideje: 2022. Feb 07. 13:10
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -110,7 +110,8 @@ CREATE TABLE `értékelés` (
 CREATE TABLE `étlap` (
   `Étterem_ID` int(11) NOT NULL,
   `Név` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `Ár` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
+  `Ár` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `leírás` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -144,22 +145,6 @@ CREATE TABLE `éttermek` (
 --
 ALTER TABLE `felhasználók`
   ADD PRIMARY KEY (`ID`);
-
-
---
--- A tábla indexei `helyfoglalás`
---
-ALTER TABLE `helyfoglalás`
-  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
-  ADD KEY `étterem_ID` (`étterem_ID`);
-
---
--- A tábla indexei `hibajelentés`
---
-ALTER TABLE `hibajelentés`
-  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
-  ADD KEY `étterem_ID` (`étterem_ID`);
-
 
 --
 -- A tábla indexei `helyfoglalás`

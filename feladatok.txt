@@ -3,3 +3,10 @@ pontosítani a terven
 adatokkal feltölteni
 ratingek
 angularral adatok betöltése
+
+
+
+GYIK
+Bejelentkezés/ regisztráció
+kedvencek gomb, hibajelentés, és rendelés rész beletevése a kiválasztott html beletevése
+rákapcsolt html átnevezése  kiválasztott html re
