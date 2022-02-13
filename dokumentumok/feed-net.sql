@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 12. 20:40
+-- Létrehozás ideje: 2022. Feb 13. 14:10
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -32,8 +32,8 @@ CREATE TABLE `felhasználók` (
   `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Név` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Jelszó` text COLLATE utf8_hungarian_ci NOT NULL,
-  `Regisztráció` date NOT NULL,
-  `Belépés` date NOT NULL,
+  `Regisztráció` datetime NOT NULL,
+  `Belépés` datetime NOT NULL,
   `Státusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -48,7 +48,8 @@ CREATE TABLE `helyfoglalás` (
   `felhasználó_ID` int(11) NOT NULL,
   `étterem_ID` int(11) NOT NULL,
   `kezdés` datetime NOT NULL,
-  `vége` datetime NOT NULL
+  `vége` datetime NOT NULL,
+  `fő` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -109,7 +110,8 @@ CREATE TABLE `értékelés` (
   `Étterem_ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL,
   `Pontszám` int(11) NOT NULL,
-  `Étrékelés` mediumtext COLLATE utf8_hungarian_ci NOT NULL
+  `Étrékelés` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
+  `Dátum` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
