@@ -22,32 +22,36 @@
 
   <!-- Ha mobilos nézeten vagyunk akkor jobb alsó sarokba ugorjon a szűrés gomb
       Koppány szerint jobban néz így ki-->
-  <div id="menu">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navigáció</a>
-        <button class="navbar-toggler " onclick="TopNav()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav me-auto mb-lg-0" id="navitems">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Főoldal</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="kedvencettermek.html">Kedvencek</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Bérlés.html">Helyfoglalás</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link logout"id="logout" href="login.html">Bejelentkezés</a>
-            </li>
-          </ul>
-        </div>
+      <div id="menu">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Feed-Net</a>
+            <button class="navbar-toggler " onclick="TopNav()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav me-auto mb-lg-0" id="navitems">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="index.html">Főoldal</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="kedvencettermek.html">Kedvencek</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gyik.html">GYIK</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link login" href="login.html">Bejelentkezés</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link reg" href="reg.html">Regisztráció</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
       </div>
-    </nav>
-  </div>
   <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <h3>Kategória</h3>
