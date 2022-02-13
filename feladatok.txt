@@ -10,3 +10,9 @@ GYIK
 Bejelentkezés/ regisztráció
 kedvencek gomb, hibajelentés, és rendelés rész beletevése a kiválasztott html beletevése
 rákapcsolt html átnevezése  kiválasztott html re
+
+login, reg színek megváltoztatása?
+
+login új képek
+
+kedvencek keresésnél egy gomb amivel ki lehet venni a kedvencek közül, layoutba nem kell
