@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 07. 13:10
--- Kiszolgáló verziója: 10.4.6-MariaDB
--- PHP verzió: 7.3.8
+-- Létrehozás ideje: 2022. Feb 13. 14:10
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,8 +32,8 @@ CREATE TABLE `felhasználók` (
   `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Név` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Jelszó` text COLLATE utf8_hungarian_ci NOT NULL,
-  `Regisztráció` date NOT NULL,
-  `Belépés` date NOT NULL,
+  `Regisztráció` datetime NOT NULL,
+  `Belépés` datetime NOT NULL,
   `Státusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -48,7 +48,8 @@ CREATE TABLE `helyfoglalás` (
   `felhasználó_ID` int(11) NOT NULL,
   `étterem_ID` int(11) NOT NULL,
   `kezdés` datetime NOT NULL,
-  `vége` datetime NOT NULL
+  `vége` datetime NOT NULL,
+  `fő` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -78,6 +79,17 @@ CREATE TABLE `kedvenc` (
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `képek`
+--
+
+CREATE TABLE `képek` (
+  `Étterem_ID` int(11) NOT NULL,
+  `Képek` bit(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `nyitvatartás`
 --
 
@@ -98,7 +110,8 @@ CREATE TABLE `értékelés` (
   `Étterem_ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL,
   `Pontszám` int(11) NOT NULL,
-  `Étrékelés` mediumtext COLLATE utf8_hungarian_ci NOT NULL
+  `Étrékelés` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
+  `Dátum` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -131,7 +144,7 @@ CREATE TABLE `éttermek` (
   `Terasz` tinyint(1) NOT NULL,
   `Bérelhető` tinyint(1) NOT NULL,
   `Cím` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `db` int(11) NOT NULL,
+  `férőhely` int(11) NOT NULL,
   `házhozszállítás` tinyint(1) NOT NULL,
   `leírás` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -166,6 +179,12 @@ ALTER TABLE `hibajelentés`
 ALTER TABLE `kedvenc`
   ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`,`Felhasználó_ID`),
   ADD KEY `Felhasználó_ID` (`Felhasználó_ID`);
+
+--
+-- A tábla indexei `képek`
+--
+ALTER TABLE `képek`
+  ADD PRIMARY KEY (`Étterem_ID`);
 
 --
 -- A tábla indexei `nyitvatartás`
@@ -203,6 +222,12 @@ ALTER TABLE `felhasználók`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT a táblához `képek`
+--
+ALTER TABLE `képek`
+  MODIFY `Étterem_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT a táblához `éttermek`
 --
 ALTER TABLE `éttermek`
@@ -232,6 +257,12 @@ ALTER TABLE `hibajelentés`
 ALTER TABLE `kedvenc`
   ADD CONSTRAINT `kedvenc_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
   ADD CONSTRAINT `kedvenc_ibfk_2` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`);
+
+--
+-- Megkötések a táblához `képek`
+--
+ALTER TABLE `képek`
+  ADD CONSTRAINT `képek_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`);
 
 --
 -- Megkötések a táblához `nyitvatartás`
