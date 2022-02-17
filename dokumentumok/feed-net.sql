@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 15. 17:14
--- Kiszolgáló verziója: 10.4.17-MariaDB
--- PHP verzió: 8.0.1
+-- Létrehozás ideje: 2022. Feb 17. 14:07
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,6 +46,7 @@ CREATE TABLE `felhasználók` (
 --
 
 CREATE TABLE `helyfoglalás` (
+  `ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Kezdés` datetime NOT NULL,
@@ -60,6 +61,7 @@ CREATE TABLE `helyfoglalás` (
 --
 
 CREATE TABLE `hibajelentés` (
+  `ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
@@ -73,6 +75,7 @@ CREATE TABLE `hibajelentés` (
 --
 
 CREATE TABLE `kedvenc` (
+  `ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -84,6 +87,7 @@ CREATE TABLE `kedvenc` (
 --
 
 CREATE TABLE `képek` (
+  `ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Képek` bit(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -95,6 +99,7 @@ CREATE TABLE `képek` (
 --
 
 CREATE TABLE `nyitvatartás` (
+  `ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Nap` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
   `Nyitás` time NOT NULL,
@@ -108,6 +113,7 @@ CREATE TABLE `nyitvatartás` (
 --
 
 CREATE TABLE `értékelés` (
+  `ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Felhasználó_ID` int(11) NOT NULL,
   `Pontszám` int(11) NOT NULL,
@@ -122,6 +128,7 @@ CREATE TABLE `értékelés` (
 --
 
 CREATE TABLE `étlap` (
+  `ID` int(11) NOT NULL,
   `Étterem_ID` int(11) NOT NULL,
   `Név` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `Ár` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
@@ -165,6 +172,7 @@ ALTER TABLE `felhasználók`
 -- A tábla indexei `helyfoglalás`
 --
 ALTER TABLE `helyfoglalás`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `felhasználó_ID` (`Felhasználó_ID`,`Étterem_ID`),
   ADD KEY `étterem_ID` (`Étterem_ID`);
 
@@ -172,6 +180,7 @@ ALTER TABLE `helyfoglalás`
 -- A tábla indexei `hibajelentés`
 --
 ALTER TABLE `hibajelentés`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `felhasználó_ID` (`Felhasználó_ID`,`Étterem_ID`),
   ADD KEY `étterem_ID` (`Étterem_ID`);
 
@@ -179,6 +188,7 @@ ALTER TABLE `hibajelentés`
 -- A tábla indexei `kedvenc`
 --
 ALTER TABLE `kedvenc`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`,`Felhasználó_ID`),
   ADD KEY `Felhasználó_ID` (`Felhasználó_ID`);
 
@@ -186,18 +196,21 @@ ALTER TABLE `kedvenc`
 -- A tábla indexei `képek`
 --
 ALTER TABLE `képek`
-  ADD PRIMARY KEY (`Étterem_ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`);
 
 --
 -- A tábla indexei `nyitvatartás`
 --
 ALTER TABLE `nyitvatartás`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`);
 
 --
 -- A tábla indexei `értékelés`
 --
 ALTER TABLE `értékelés`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`,`Felhasználó_ID`),
   ADD KEY `Felhasználó_ID` (`Felhasználó_ID`);
 
@@ -205,6 +218,7 @@ ALTER TABLE `értékelés`
 -- A tábla indexei `étlap`
 --
 ALTER TABLE `étlap`
+  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`);
 
 --
@@ -224,10 +238,46 @@ ALTER TABLE `felhasználók`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT a táblához `helyfoglalás`
+--
+ALTER TABLE `helyfoglalás`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `hibajelentés`
+--
+ALTER TABLE `hibajelentés`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `kedvenc`
+--
+ALTER TABLE `kedvenc`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT a táblához `képek`
 --
 ALTER TABLE `képek`
-  MODIFY `Étterem_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `nyitvatartás`
+--
+ALTER TABLE `nyitvatartás`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `értékelés`
+--
+ALTER TABLE `értékelés`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `étlap`
+--
+ALTER TABLE `étlap`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `éttermek`
@@ -243,8 +293,8 @@ ALTER TABLE `éttermek`
 -- Megkötések a táblához `helyfoglalás`
 --
 ALTER TABLE `helyfoglalás`
-  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`),
+  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
+  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
   ADD CONSTRAINT `helyfoglalás_ibfk_3` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
   ADD CONSTRAINT `helyfoglalás_ibfk_4` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`);
 
@@ -252,8 +302,8 @@ ALTER TABLE `helyfoglalás`
 -- Megkötések a táblához `hibajelentés`
 --
 ALTER TABLE `hibajelentés`
-  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`),
+  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
+  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
   ADD CONSTRAINT `hibajelentés_ibfk_3` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
   ADD CONSTRAINT `hibajelentés_ibfk_4` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`);
 
