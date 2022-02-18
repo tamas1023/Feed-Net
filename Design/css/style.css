@@ -159,6 +159,33 @@ body {
     padding: 0;
     float: left;
 }
+.reg
+{
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+.login{
+    position: absolute;
+    cursor: pointer;
+    right: 100px;
+}
+#gyik{
+    display: flex;
+    align-items: center;
+    height: 150px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+@media (min-width: 992px) {
+    .reg
+{
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+
+}
 @media screen and (max-height: 450px) {
     #mySidebar {padding-top: 15px;}
     #mySidebar a {font-size: 18px;}
@@ -198,6 +225,18 @@ padding: 2px;
     position: relative;
     cursor: pointer;
 }
+.reg 
+{
+    position: relative;
+    cursor: pointer;
+}
+.login 
+{
+    position: relative;
+    cursor: pointer;
+    right: 0;
+}
+
 
 }
 #h2{
