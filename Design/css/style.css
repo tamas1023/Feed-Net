@@ -3,6 +3,7 @@
     --background:white;
     --highlight:#6f2232;
     --lesshighlight:#950740;
+    --hoverszin:lightgray;
 }
 
 body {
@@ -235,4 +236,9 @@ letter-spacing: 3px;
 .loginform
 {
     border: 0;
+}
+.table tbody tr:hover
+{
+    background-color: var(--hoverszin);
+    cursor: pointer;
 }
