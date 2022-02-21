@@ -17,36 +17,15 @@ window.addEventListener('resize',()=>{
     width=innerWidth;
     menuheight = positionInfo.height;
     menuwidth = positionInfo.width;
-    if (width<=640) {
+    if (width<=650) {
       document.getElementById("mySidebar").style.width = "100%";
     }
     else{
       document.getElementById("mySidebar").style.width = "250px";
     }
-    /*
-    if (width>=767) {
-      document.getElementById("main").style.top =Math.round(menuheight)+"px";
-    }
-    if (width<767 && topnavopened==true) {
-      document.getElementById("main").style.top =Math.round(menuheight)+"px";
-    }*/
-    
-    //console.log(width);
+
     console.log("Menu height: "+menuheight);
-    //ha eltűnik a menü kinyitás rész
-/*
-    if (width>=768) {
-      let pos=document.getElementById("main");
-      let  posInfo = pos.getBoundingClientRect();
-      if(posInfo.top==55)
-        {
-          document.getElementById("main").style.top = "215px";
-     
-        }
-      TopNav();
-      
-    }
-*/
+
 if (width>=767) {
   document.getElementById("main").style.top =Math.round(menuheight)+"px";
 }
@@ -69,8 +48,17 @@ function openNav() {
     opened=true;
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("main").style.display = "none";
-    document.getElementById("egesz").style.marginLeft = "250px";
-    document.getElementById("footer").style.marginLeft = "250px";
+    //ha kis képernyőn nézzük akkor a sidebar kihúzódik sokat és az úgy nem szép
+    //ezt megoldjuk ezzel
+    if (width>=450) {
+      document.getElementById("egesz").style.marginLeft = "250px";
+      document.getElementById("footer").style.marginLeft = "250px";
+    }
+    else{
+      document.getElementById("egesz").style.marginLeft = "0px";
+      document.getElementById("footer").style.marginLeft = "0px";
+    }
+    
     //console.log(width);
     document.getElementById("egesz").style.width =width -250+"px";
     document.getElementById("footer").style.width =width -250+"px";

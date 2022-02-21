@@ -60,15 +60,13 @@ img{
     margin-top: 5px;
     margin-bottom: 5px;
     width: 850px;
-    background-color: white;
-    
-    border: 1px solid black;
+    text-align: center;
 }
 #kereses input{
-    width: 73%;
+    width: 50%;
 }
 #kereses button{
-    width: 20%;
+    
     background-color: var(--lesshighlight);
 }
 #kereses button:hover{
