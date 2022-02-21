@@ -87,6 +87,9 @@ img{
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
+#etterem h2{
+    margin-left: 10px;
+}
 
 #mySidebar {
     height: 100%;
