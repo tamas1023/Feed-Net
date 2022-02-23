@@ -7,11 +7,17 @@
     --footer:#BAB2B5;
     --other:#123C69;
 }
-
 body {
     font-family: "Lato", sans-serif;
     background-color: var(--highlight);
     
+}
+.accordion-button {
+    background-color: slategray;
+}
+.accordion-button:not(.collapsed){
+    color: black;
+    background-color: slategray;
 }
 img{
     width: 100%;
@@ -21,6 +27,7 @@ img{
  position: fixed;
  width: 100%;
  background-color: var(--other);
+ z-index: 100;
 }
 #egesz{
     background-color: var(--highlight);
