@@ -39,4 +39,7 @@ app.controller('htmlCtrl',function($scope,$rootScope){
         $rootScope.felvesz=1;
         console.log($rootScope.felvesz);
     }
+    $scope.ettermek=function($id){
+        //lekérés azt az étlapot ahol az id = étterem id dispalay none al legyen a váltás ha rákapcsol (másik tábla lesz de ugyan azon a helyen e miatt)
+    }
 });

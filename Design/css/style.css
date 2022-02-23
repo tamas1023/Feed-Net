@@ -242,3 +242,10 @@ letter-spacing: 3px;
     background-color: var(--hoverszin);
     cursor: pointer;
 }
+@media (max-width: 576px) {
+
+  #egesz{
+      padding-left: 2px;
+      padding-right:2px ;
+  }
+}
