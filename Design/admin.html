@@ -44,15 +44,16 @@
       </div>
        
       <div id="kereses">
-        <div class="container-fluid" style="margin-top: 5px;">
-        <input class="" style="width: 50%;" type="search" placeholder="Keresés" ng-model="search" >
-      <button class="btn btn-outline-success" style="margin-bottom: 5px;">Keresés</button>
+        <div class="container-fluid" style="margin-top: 5px;margin-bottom: 20px;">
+        <input class="" style="display: block;margin: auto; width: 70%; height: 40px;" type="search" placeholder="Keresés" ng-model="search" >
+     
     </div>
+
     <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
+      <div class="accordion-item" ng-show="etteremad==1">
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Új adat felvétele
+          Új Étterem felvétele vagy meglévő szerkesztése
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -68,7 +69,7 @@
               <label for="leiras">Leírás:</label>
               <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="ujleiras"></textarea>
               <label for="parkolo">Parkoló:</label>
-              <input type="checkbox" class="form-check-input" name="parkolo"ng-model="ujparkolo" ><br>
+              <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="parkolo==1" ><br>
               <label for="bankkartya">Bankkártya:</label>
               <input type="checkbox" class="form-check-input" name="bankkartya"ng-model="ujbankkartya" ><br>
               <label for="glutenmentes">Gluténmentes:</label>
@@ -86,7 +87,31 @@
           </div>
         </div>
       </div>
+      
+      <div class="accordion-item" ng-show="etteremad==0">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Új étel felvétele vagy szerkesztése
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+              <label for="nev">Név:</label>
+              <input type="text" name="nev" placeholder="Az étel neve" class="form-control" ng-model="ujnevetel">
+              <label for="email">Ár:</label>
+              <input type="email" name="ar" placeholder="Az étel ára" class="form-control" ng-model="ujar">
+              <label for="leiras">Leírás:</label>
+              <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Az étel leírása" ng-model="ujleirasetel"></textarea>
+
+              <button class="btn btn-warning" ng-if="felvesz==1" ng-click="felveszEtlap()">Felvesz</button>
+              <button class="btn btn-warning"ng-if="felvesz==0" ng-click="updateEtlap()">Módosít</button>
+              <button class="btn btn-warning"ng-if="felvesz==0" ng-click="unselectRowEtlap()">Vissza</button>
+              <button class=" btn btn-danger" ng-click="deleteRecord()" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
+          </div>
+        </div>
       </div>
+      </div>
+      <a href="" ng-show="etteremad==0" style="text-decoration: none; " ng-click="visszavaltasetterem()"><p style="margin-top: 10px;margin-bottom: 10px;">Vissza az éttermekre</p></a>
     <!-- 
       </div>
       <div style="background-color: white;" class="col-12 ">
@@ -138,7 +163,7 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>-->
-      <table class="table table-striped table-sm">
+      <table class="table table-striped table-sm" ng-show="etteremad==1">
         <thead>
           <tr>
             <th>Név</th>
@@ -160,6 +185,29 @@
         <tfoot>
           <tr>
             <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <table class="table table-striped table-sm" ng-show="etteremad==0">
+        <thead>
+          <tr>
+            <th>Név</th>
+            <th>Ár</th>
+            <th>Leírás</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="animate" ng-repeat="adat in etlap | filter:{nev:search}" ng-click="selectRowEtlap(adat.id)">
+            <td>{{adat.nev}}</td>
+            <td>{{adat.ar}} Ft</td>
+            <td>{{adat.leiras}}</td>
+            
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" class="text-center">Összesen: {{etlap.length}} rekord</td>
           </tr>
         </tfoot>
       </table>
