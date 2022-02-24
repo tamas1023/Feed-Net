@@ -180,10 +180,14 @@ padding: 2px;
 }
 @media (max-width: 767px) {
     .logout
-{
-    position: relative;
-    cursor: pointer;
-}
+    {
+        position: relative;
+        cursor: pointer;
+    }
+    #kereso
+    {
+        width: 40%;
+    }
 
 }
 #h2{
@@ -248,4 +252,15 @@ letter-spacing: 3px;
       padding-left: 2px;
       padding-right:2px ;
   }
+}
+#kereso
+{
+    display: block;
+    right: 0;
+    width: 148px; 
+    height: 40px;
+}
+ div>.container-fluid
+{
+    margin-top: 5px;margin-bottom: 20px;
 }

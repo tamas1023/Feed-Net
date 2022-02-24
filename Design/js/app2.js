@@ -6,7 +6,7 @@ app.run(function($rootScope){
     $rootScope.felvesz2=1;
   
 });
-app.controller('htmlCtrl',function($scope,$rootScope){
+app.controller('etteremCtrl',function($scope,$rootScope){
     /* a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
     az adatokat nagy betűsökre (itt is meg a html ben is)
     */ 
@@ -93,3 +93,6 @@ app.controller('htmlCtrl',function($scope,$rootScope){
         $scope.etteremad=1;
     }
 });
+app.controller('felhasznalokCtrl',function($scope,$rootScope){
+    
+})
