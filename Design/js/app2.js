@@ -3,6 +3,7 @@ var app= new angular.module('Feed-Net',['ngAnimate']);
 app.run(function($rootScope){
     $rootScope.title="Étterem";
     $rootScope.felvesz=1;
+    $rootScope.felvesz2=1;
   
 });
 app.controller('htmlCtrl',function($scope,$rootScope){
@@ -52,14 +53,16 @@ app.controller('htmlCtrl',function($scope,$rootScope){
     }
     $scope.etterem=function($id){
         // adatok lekérdezése
+        $rootScope.felvesz2=1;
         $scope.etteremad=0;
+        $scope.ujnevetel=null;
+        $scope.ujar=null;
+        $scope.ujleirasetel=null;
         $scope.etlap=[{id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:2,nev:"Harcsa leves",ar:950,leiras:"Harkcsa hús leves zöldségekkel"},
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"}];
-        $scope.ujnev=null;
-        $scope.ujar=null;
-        $scope.ujleiras=null;
-        $rootScope.felvesz=1;
+       
+        
     }
     $scope.selectRowEtlap=function($id)
     {
@@ -67,10 +70,10 @@ app.controller('htmlCtrl',function($scope,$rootScope){
         $scope.ujnevetel=$scope.etlap[$id-1].nev;
         $scope.ujar=$scope.etlap[$id-1].ar;
         $scope.ujleirasetel=$scope.etlap[$id-1].leiras;
-        $rootScope.felvesz=0;
+        $rootScope.felvesz2=0;
     }
     $scope.unselectRowEtlap=function(){
-        $rootScope.felvesz=1;
+        $rootScope.felvesz2=1;
         $scope.ujnevetel=null;
         $scope.ujar=null;
         $scope.ujleirasetel=null;
@@ -78,6 +81,14 @@ app.controller('htmlCtrl',function($scope,$rootScope){
     }
     $scope.visszavaltasetterem=function()
     {
+        $scope.ujID=null;
+        $scope.ujnev=null;
+        $scope.ujemail=null;
+        $scope.ujtelefon=null;
+        $scope.ujcim=null;
+        $scope.ujleiras=null;
+        $scope.parkolo=null;
+        $rootScope.felvesz2=1;
         $rootScope.felvesz=1;
         $scope.etteremad=1;
     }
