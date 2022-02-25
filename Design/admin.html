@@ -14,7 +14,7 @@
     <script src="js/app2.js"></script>
 </head>
 <body ng-controller="etteremCtrl">
-    <div id="menu">
+    <div id="menu" style="z-index: 100;">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
           <div class="container-fluid">
             <a class="navbar-brand" href="#">Feed-Net</a>
@@ -57,14 +57,22 @@
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-              <label for="nev">Név:</label>
-              <input type="text" name="nev" placeholder="Név" class="form-control" ng-model="ujnev">
-              <label for="email">Email:</label>
-              <input type="email" name="email" placeholder="Email Cím" class="form-control" ng-model="ujemail">
-              <label for="telefon">Telefon:</label>
-              <input type="text" name="telefon" placeholder="Telefon" class="form-control" ng-model="ujtelefon">
-              <label for="cim">Cím:</label>
-              <input type="text" name="cim" placeholder="Cím" class="form-control" ng-model="ujcim">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" ng-model="ujnev" placeholder="Jakab Jozsef">
+                <label for="floatingInput">Név</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput"ng-model="ujemail" placeholder="tesz1@gmail.com">
+                <label for="floatingInput">Email Cím</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput"ng-model="ujtelefon" placeholder="+">
+                <label for="floatingInput">Telefon</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput"ng-model="ujcim" placeholder="+">
+                <label for="floatingInput">Cím</label>
+              </div>
               <label for="leiras">Leírás:</label>
               <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="ujleiras"></textarea>
               <label for="parkolo">Parkoló:</label>
@@ -95,10 +103,14 @@
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-              <label for="nev">Név:</label>
-              <input type="text" name="nev" placeholder="Az étel neve" class="form-control" ng-model="ujnevetel">
-              <label for="email">Ár:</label>
-              <input type="email" name="ar" placeholder="Az étel ára" class="form-control" ng-model="ujar">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujnevetel" placeholder="+">
+              <label for="floatingInput">Név</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujar" placeholder="+">
+              <label for="floatingInput">Ár</label>
+            </div>
               <label for="leiras">Leírás:</label>
               <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Az étel leírása" ng-model="ujleirasetel"></textarea>
 
