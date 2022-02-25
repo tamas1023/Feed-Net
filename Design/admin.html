@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin felület</title>
+    <title>Étterem kezelés</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/bootstrap.js"></script>
-        <script src="js/angular.min.js"></script>
+    <script src="js/angular.min.js"></script>
     <script src="js/angular-animate.min.js"></script>
     <script src="js/app2.js"></script>
 </head>
@@ -134,7 +134,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="animate" ng-repeat="adat in ettermek | filter:{nev:search}" ng-click="selectRow(adat.id)">
+          <tr class="animate" ng-repeat="adat in ettermek | filter:{nev:search}" ng-click="selectRow($index)">
             <td>{{adat.nev}}</td>
             <td>{{adat.telefon}}</td>
             <td>{{adat.cim}}</td>
@@ -158,7 +158,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="animate" ng-repeat="adat in etlap | filter:{nev:search}" ng-click="selectRowEtlap(adat.id)">
+          <tr class="animate" ng-repeat="adat in etlap | filter:{nev:search}" ng-click="selectRowEtlap($index)">
             <td>{{adat.nev}}</td>
             <td>{{adat.ar}} Ft</td>
             <td>{{adat.leiras}}</td>
