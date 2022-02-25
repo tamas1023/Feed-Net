@@ -1,17 +1,20 @@
 :root{
-    --szin:green;
-    --background:white;
-    --highlight:#EDC7B7;
-    --lesshighlight:#AC3B61;
-    --btnhover:#cc1e58;
-    --footer:#BAB2B5;
-    --other:#123C69;
+    --szin:rgb(209, 200, 200);
+    --ellenkezoszin:black;
+    --feher: white;
+
+    --highlight:#3f3e3e;
+    --lesshighlight:#6b6864; /*Szűrés*/
+    --footer:#b46306;
+    --menu:#b46306;
+
 }
 body {
     font-family: "Lato", sans-serif;
     background-color: var(--highlight);
     
 }
+
 .accordion-button {
     background-color: slategray;
 }
@@ -26,7 +29,7 @@ img{
 #menu{
  position: fixed;
  width: 100%;
- background-color: var(--other);
+ background-color: var(--menu);
  z-index: 100;
 }
 #egesz{
@@ -58,6 +61,7 @@ img{
     width: 100%;
     height: 100%;
     background-color: var(--highlight);
+    color: var(--szin);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -108,24 +112,32 @@ img{
     z-index: 1;
     top: 55px;
     left: 0;
-    background-color: #111;
+    background-color:var(--lesshighlight);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
 .szurok{
-    color: white;
+    color: var(--szin);
 }
 .szurokwrap{
     padding-bottom: 10px;
     padding-left: 60px;
 }
+#megse{
+    background-color: var(--highlight);
+}
+#megse:hover{
+    background-color: var(--ellenkezoszin);
+}
+
   
 #mySidebar a,#mySidebar h3 {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color:  var(--feher);
+    background-color: var(--highlight) transparent;
     display: block;
     transition: 0.3s;
 }
@@ -160,6 +172,7 @@ img{
     height: 100px;
     padding: 0;
     background-color: var(--footer);
+    color: white;
     text-align: center;
     margin:0 auto;
     display: flex;
