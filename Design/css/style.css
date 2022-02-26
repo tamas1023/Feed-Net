@@ -139,11 +139,13 @@ body {
     transition: 0.5s;
 }
 #etelkritikus{
+    
     width: 150px;
     height: 40px;
     margin: 10px;
+    margin-left: 13px;
     padding: 0;
-    float: left;
+    float:left;
 }
 @media screen and (max-height: 450px) {
     #mySidebar {padding-top: 15px;}
@@ -253,12 +255,32 @@ letter-spacing: 3px;
       padding-right:2px ;
   }
 }
+@media (max-width: 1000px) {
+
+    input#kereso
+    {
+        width: 55%;
+    }
+  }
+  @media (max-width: 420px) {
+
+    input#kereso
+    {
+        width: 85%;
+    }
+   .admin{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+  }
 #kereso
 {
     display: block;
     right: 0;
-    width: 148px; 
+    width: 70%;
     height: 40px;
+    margin:auto;
 }
  div>.container-fluid
 {

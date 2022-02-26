@@ -39,10 +39,11 @@
         </nav>
       </div>
   <div id="egesz">
-    <div>
-       <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
-      </div>
-      <div id="kereses">
+    
+      <div id="kereses" class="admin">
+        <div>
+          <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
+         </div>
         <div class="container-fluid" >
           <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
       </div>
@@ -99,7 +100,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="6" class="text-center">Összesen: {{felhasznalok.length}} rekord</td>
+              <td colspan="4" class="text-center">Összesen: {{felhasznalok.length}} rekord</td>
             </tr>
           </tfoot>
         </table>
