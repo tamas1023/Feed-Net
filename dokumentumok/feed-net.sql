@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 13. 14:10
--- Kiszolgáló verziója: 10.4.17-MariaDB
--- PHP verzió: 8.0.1
+-- Létrehozás ideje: 2022. Feb 22. 09:04
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,45 +24,100 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `felhasználók`
+-- Tábla szerkezet ehhez a táblához `ertekeles`
 --
 
-CREATE TABLE `felhasználók` (
+CREATE TABLE `ertekeles` (
+  `ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Felhasznalo_ID` int(11) NOT NULL,
+  `Pontszam` int(11) NOT NULL,
+  `Ertekeles` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
+  `Datum` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `etlap`
+--
+
+CREATE TABLE `etlap` (
+  `ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Nev` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `Ar` int(11) NOT NULL,
+  `Leiras` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `ettermek`
+--
+
+CREATE TABLE `ettermek` (
   `ID` int(11) NOT NULL,
   `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Név` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Jelszó` text COLLATE utf8_hungarian_ci NOT NULL,
-  `Regisztráció` datetime NOT NULL,
-  `Belépés` datetime NOT NULL,
-  `Státusz` tinyint(1) NOT NULL,
+  `Nev` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Telefon` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Parkolo` tinyint(1) NOT NULL,
+  `Bankkartya` tinyint(1) NOT NULL,
+  `Glutenmentes` tinyint(1) NOT NULL,
+  `Terasz` tinyint(1) NOT NULL,
+  `Berelheto` tinyint(1) NOT NULL,
+  `Cim` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Ferohely` int(11) NOT NULL,
+  `Hazhozszallitas` tinyint(1) NOT NULL,
+  `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Statusz` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `felhasznalok`
+--
+
+CREATE TABLE `felhasznalok` (
+  `ID` int(11) NOT NULL,
+  `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Nev` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Jelszo` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
+  `Telefon` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
+  `Regisztracio` datetime NOT NULL,
+  `Belepes` datetime NOT NULL,
+  `Statusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `helyfoglalás`
+-- Tábla szerkezet ehhez a táblához `helyfoglalas`
 --
 
-CREATE TABLE `helyfoglalás` (
-  `felhasználó_ID` int(11) NOT NULL,
-  `étterem_ID` int(11) NOT NULL,
-  `kezdés` datetime NOT NULL,
-  `vége` datetime NOT NULL,
-  `fő` int(11) NOT NULL
+CREATE TABLE `helyfoglalas` (
+  `ID` int(11) NOT NULL,
+  `Felhasznalo_ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Kezdes` datetime NOT NULL,
+  `Vege` datetime NOT NULL,
+  `Fo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `hibajelentés`
+-- Tábla szerkezet ehhez a táblához `hibajelentes`
 --
 
-CREATE TABLE `hibajelentés` (
-  `felhasználó_ID` int(11) NOT NULL,
-  `étterem_ID` int(11) NOT NULL,
-  `tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
-  `leírás` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
+CREATE TABLE `hibajelentes` (
+  `ID` int(11) NOT NULL,
+  `Felhasznalo_ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
+  `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -72,81 +127,35 @@ CREATE TABLE `hibajelentés` (
 --
 
 CREATE TABLE `kedvenc` (
-  `Étterem_ID` int(11) NOT NULL,
-  `Felhasználó_ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `képek`
---
-
-CREATE TABLE `képek` (
-  `Étterem_ID` int(11) NOT NULL,
-  `Képek` bit(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `nyitvatartás`
---
-
-CREATE TABLE `nyitvatartás` (
-  `Étterem_ID` int(11) NOT NULL,
-  `Nap` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
-  `Nyitás` time NOT NULL,
-  `Zárás` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `értékelés`
---
-
-CREATE TABLE `értékelés` (
-  `Étterem_ID` int(11) NOT NULL,
-  `Felhasználó_ID` int(11) NOT NULL,
-  `Pontszám` int(11) NOT NULL,
-  `Étrékelés` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
-  `Dátum` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `étlap`
---
-
-CREATE TABLE `étlap` (
-  `Étterem_ID` int(11) NOT NULL,
-  `Név` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `Ár` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `leírás` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `éttermek`
---
-
-CREATE TABLE `éttermek` (
   `ID` int(11) NOT NULL,
-  `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Név` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Telefon` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Parkoló` tinyint(1) NOT NULL,
-  `Bankkártya` tinyint(1) NOT NULL,
-  `Gluténmentes` tinyint(1) NOT NULL,
-  `Terasz` tinyint(1) NOT NULL,
-  `Bérelhető` tinyint(1) NOT NULL,
-  `Cím` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `férőhely` int(11) NOT NULL,
-  `házhozszállítás` tinyint(1) NOT NULL,
-  `leírás` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
+  `Etterem_ID` int(11) NOT NULL,
+  `Felhasznalo_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `kepek`
+--
+
+CREATE TABLE `kepek` (
+  `ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Kepek` bit(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `nyitvatartas`
+--
+
+CREATE TABLE `nyitvatartas` (
+  `ID` int(11) NOT NULL,
+  `Etterem_ID` int(11) NOT NULL,
+  `Nap` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
+  `Nyitas` time NOT NULL,
+  `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -154,83 +163,126 @@ CREATE TABLE `éttermek` (
 --
 
 --
--- A tábla indexei `felhasználók`
+-- A tábla indexei `ertekeles`
 --
-ALTER TABLE `felhasználók`
+ALTER TABLE `ertekeles`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
+
+--
+-- A tábla indexei `etlap`
+--
+ALTER TABLE `etlap`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+
+--
+-- A tábla indexei `ettermek`
+--
+ALTER TABLE `ettermek`
   ADD PRIMARY KEY (`ID`);
 
 --
--- A tábla indexei `helyfoglalás`
+-- A tábla indexei `felhasznalok`
 --
-ALTER TABLE `helyfoglalás`
-  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
-  ADD KEY `étterem_ID` (`étterem_ID`);
+ALTER TABLE `felhasznalok`
+  ADD PRIMARY KEY (`ID`);
 
 --
--- A tábla indexei `hibajelentés`
+-- A tábla indexei `helyfoglalas`
 --
-ALTER TABLE `hibajelentés`
-  ADD UNIQUE KEY `felhasználó_ID` (`felhasználó_ID`,`étterem_ID`),
-  ADD KEY `étterem_ID` (`étterem_ID`);
+ALTER TABLE `helyfoglalas`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
+  ADD KEY `etterem_ID` (`Etterem_ID`);
+
+--
+-- A tábla indexei `hibajelentes`
+--
+ALTER TABLE `hibajelentes`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
+  ADD KEY `etterem_ID` (`Etterem_ID`);
 
 --
 -- A tábla indexei `kedvenc`
 --
 ALTER TABLE `kedvenc`
-  ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`,`Felhasználó_ID`),
-  ADD KEY `Felhasználó_ID` (`Felhasználó_ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
 
 --
--- A tábla indexei `képek`
+-- A tábla indexei `kepek`
 --
-ALTER TABLE `képek`
-  ADD PRIMARY KEY (`Étterem_ID`);
+ALTER TABLE `kepek`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
 
 --
--- A tábla indexei `nyitvatartás`
+-- A tábla indexei `nyitvatartas`
 --
-ALTER TABLE `nyitvatartás`
-  ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`);
-
---
--- A tábla indexei `értékelés`
---
-ALTER TABLE `értékelés`
-  ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`,`Felhasználó_ID`),
-  ADD KEY `Felhasználó_ID` (`Felhasználó_ID`);
-
---
--- A tábla indexei `étlap`
---
-ALTER TABLE `étlap`
-  ADD UNIQUE KEY `Étterem_ID` (`Étterem_ID`);
-
---
--- A tábla indexei `éttermek`
---
-ALTER TABLE `éttermek`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `nyitvatartas`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
 
 --
--- AUTO_INCREMENT a táblához `felhasználók`
+-- AUTO_INCREMENT a táblához `ertekeles`
 --
-ALTER TABLE `felhasználók`
+ALTER TABLE `ertekeles`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `képek`
+-- AUTO_INCREMENT a táblához `etlap`
 --
-ALTER TABLE `képek`
-  MODIFY `Étterem_ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `etlap`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `éttermek`
+-- AUTO_INCREMENT a táblához `ettermek`
 --
-ALTER TABLE `éttermek`
+ALTER TABLE `ettermek`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `felhasznalok`
+--
+ALTER TABLE `felhasznalok`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `helyfoglalas`
+--
+ALTER TABLE `helyfoglalas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `hibajelentes`
+--
+ALTER TABLE `hibajelentes`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `kedvenc`
+--
+ALTER TABLE `kedvenc`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `kepek`
+--
+ALTER TABLE `kepek`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `nyitvatartas`
+--
+ALTER TABLE `nyitvatartas`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -238,50 +290,54 @@ ALTER TABLE `éttermek`
 --
 
 --
--- Megkötések a táblához `helyfoglalás`
+-- Megkötések a táblához `ertekeles`
 --
-ALTER TABLE `helyfoglalás`
-  ADD CONSTRAINT `helyfoglalás_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `helyfoglalás_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`);
+ALTER TABLE `ertekeles`
+  ADD CONSTRAINT `ertekeles_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`),
+  ADD CONSTRAINT `ertekeles_ibfk_2` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`);
 
 --
--- Megkötések a táblához `hibajelentés`
+-- Megkötések a táblához `etlap`
 --
-ALTER TABLE `hibajelentés`
-  ADD CONSTRAINT `hibajelentés_ibfk_1` FOREIGN KEY (`felhasználó_ID`) REFERENCES `felhasználók` (`ID`),
-  ADD CONSTRAINT `hibajelentés_ibfk_2` FOREIGN KEY (`étterem_ID`) REFERENCES `éttermek` (`ID`);
+ALTER TABLE `etlap`
+  ADD CONSTRAINT `etlap_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`);
+
+--
+-- Megkötések a táblához `helyfoglalas`
+--
+ALTER TABLE `helyfoglalas`
+  ADD CONSTRAINT `helyfoglalas_ibfk_1` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`),
+  ADD CONSTRAINT `helyfoglalas_ibfk_2` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`),
+  ADD CONSTRAINT `helyfoglalas_ibfk_3` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`),
+  ADD CONSTRAINT `helyfoglalas_ibfk_4` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`);
+
+--
+-- Megkötések a táblához `hibajelentes`
+--
+ALTER TABLE `hibajelentes`
+  ADD CONSTRAINT `hibajelentes_ibfk_1` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`),
+  ADD CONSTRAINT `hibajelentes_ibfk_2` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`),
+  ADD CONSTRAINT `hibajelentes_ibfk_3` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`),
+  ADD CONSTRAINT `hibajelentes_ibfk_4` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`);
 
 --
 -- Megkötések a táblához `kedvenc`
 --
 ALTER TABLE `kedvenc`
-  ADD CONSTRAINT `kedvenc_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
-  ADD CONSTRAINT `kedvenc_ibfk_2` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`);
+  ADD CONSTRAINT `kedvenc_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`),
+  ADD CONSTRAINT `kedvenc_ibfk_2` FOREIGN KEY (`Felhasznalo_ID`) REFERENCES `felhasznalok` (`ID`);
 
 --
--- Megkötések a táblához `képek`
+-- Megkötések a táblához `kepek`
 --
-ALTER TABLE `képek`
-  ADD CONSTRAINT `képek_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`);
+ALTER TABLE `kepek`
+  ADD CONSTRAINT `kepek_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`);
 
 --
--- Megkötések a táblához `nyitvatartás`
+-- Megkötések a táblához `nyitvatartas`
 --
-ALTER TABLE `nyitvatartás`
-  ADD CONSTRAINT `nyitvatartás_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`);
-
---
--- Megkötések a táblához `értékelés`
---
-ALTER TABLE `értékelés`
-  ADD CONSTRAINT `értékelés_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`),
-  ADD CONSTRAINT `értékelés_ibfk_2` FOREIGN KEY (`Felhasználó_ID`) REFERENCES `felhasználók` (`ID`);
-
---
--- Megkötések a táblához `étlap`
---
-ALTER TABLE `étlap`
-  ADD CONSTRAINT `étlap_ibfk_1` FOREIGN KEY (`Étterem_ID`) REFERENCES `éttermek` (`ID`);
+ALTER TABLE `nyitvatartas`
+  ADD CONSTRAINT `nyitvatartas_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
