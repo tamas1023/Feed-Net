@@ -60,11 +60,18 @@ body {
     width: 99%;
     border: 1px solid black;
 }
-#kereses input{
-    width: 73%;
+#adminkereses{
+    margin:0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    width: 99%;
+    border: 1px solid black;
+}
+#kereses input#radio{
+    width:0%;
 }
 #kereses button{
-    width: 20%;
     background-color: var(--lesshighlight);
 }
 #kereses button:hover{
