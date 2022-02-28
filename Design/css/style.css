@@ -182,17 +182,25 @@ img{
 }
 #kivalasztottegesz{
     display: flex;
-    width: 100%;
-    
+    width: 100%;  
 }
 #kepek img{
-    height: 450px;
+    
 }
+/* ideiglenes de a vásznas megodáshoz ez nem kell
+#kepek .carousel-item img{
+    object-fit: cover;
+    object-position: center;
+    height: 40vh;
+}*/
 #kivalasztott{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
 }
 #infok{
     display: flex;
