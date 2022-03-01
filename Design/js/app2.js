@@ -25,6 +25,10 @@ app.config(function($routeProvider){
         templateUrl:'hibajelentesek.html',
         controller:'hibajelentesekCtrl'
     })
+    .when('/etteremfoglalas',{
+        templateUrl:'etteremfoglalas.html',
+        controller:'etteremfoglalasCtrl'
+    })
 })
 
 
