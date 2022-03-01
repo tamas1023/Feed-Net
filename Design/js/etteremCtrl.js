@@ -1,4 +1,4 @@
-app.controller('etteremCtrl',function($scope,$rootScope){
+app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     /* a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
     az adatokat nagy betűsökre (itt is meg a html ben is)
     */ 
@@ -56,7 +56,7 @@ app.controller('etteremCtrl',function($scope,$rootScope){
        
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
 
-        //location.href('/admin/etlap'+$id)
+       $location.url('/admin/etlap/'+$id)
     }
     $scope.selectRowEtlap=function($id)
     {
