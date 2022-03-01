@@ -51,11 +51,12 @@ app.controller('etteremCtrl',function($scope,$rootScope){
         $scope.ujnevetel=null;
         $scope.ujar=null;
         $scope.ujleirasetel=null;
+        $rootScope.selectedetteremID=$id;
         $scope.etlap=[{id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
        
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
-       
-        
+
+        //location.href('/admin/etlap'+$id)
     }
     $scope.selectRowEtlap=function($id)
     {
