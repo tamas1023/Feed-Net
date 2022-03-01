@@ -100,6 +100,10 @@ img{
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
+#ertekeles textarea{
+    width: 100%;
+    height: 100px;
+}
 #etterem h2{
     margin-left: 10px;
 }
@@ -181,9 +185,16 @@ img{
     transition: 0.5s;
 }
 #kivalasztottegesz{
-    display: flex;
-    width: 100%;  
+    width: 100%;
+    padding: 10px;
+    padding-top: 55px;
+
 }
+.gombok,#kivalasztottegesz h1{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #kepek img{
     
 }
@@ -203,31 +214,19 @@ img{
     align-content: flex-start;
 }
 #infok{
-    display: flex;
+    /*display: flex;
     justify-content: center;
     align-items: flex-start;
     height: 150px;
-    border: 1px solid black;
+    border: 1px solid black;*/
     margin-bottom: 10px;
 }
+/*
 #informaciok{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100%;
     width: 100%;
-}
-#kivelrendezes{
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    height: 10px;
-    width: 100%;
-}
-#kivelrendezes button{
-    margin-left: 5px;
-    margin-top: 3px;
-}
+}*/
+
 
 #etelkritikus{
     width: 150px;
