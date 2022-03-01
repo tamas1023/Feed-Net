@@ -17,13 +17,14 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope){
          $scope.ujjog=$scope.felhasznalok[id].jog;
          $scope.ujstatusz=$scope.felhasznalok[id].statusz;
          $scope.statusz=$scope.felhasznalok[id].statusz;
-         if($scope.ujjog="admin")
+         if($scope.felhasznalok[id].jog=="admin")
          {
-            console.log($scope.ujjog,"+ id: "+id);
+            console.log($scope.felhasznalok[id].jog,"+ id: "+id);
             $scope.admin=true;
          }
          else
          {
+            console.log($scope.felhasznalok[id].jog,"+ id: "+id);
             $scope.admin=false;
          }
          $rootScope.felvesz=0;
