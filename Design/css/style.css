@@ -36,10 +36,17 @@ img{
 }
 #egesz{
     background-color: var(--highlight);
-    /* 
-    width: 100vw;  % of viewport width
-    height: 100vh; % of viewport height
-    */
+    width: 100%;
+    height: 100%;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 55px;
+    transition: margin-left .5s;
+    padding-bottom: 0;
+   
+}
+#adminegesz{
+    background-color: var(--highlight);
     width: 100%;
     height: 100%;
     padding-left: 80px;
@@ -389,10 +396,10 @@ letter-spacing: 3px;
 }
 @media (max-width: 576px) {
 
-  #egesz{
-      padding-left: 2px;
-      padding-right:2px ;
-  }
+  #adminegesz{
+    padding-left: 2px;
+    padding-right:2px ;
+}
 }
 @media (max-width: 1000px) {
 
