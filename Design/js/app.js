@@ -1,4 +1,4 @@
-var app= new angular.module('elsoApp',['ngAnimate']);
+var app= new angular.module('Feed-Net-App',['ngRoute','ngAnimate']);
 
 app.run(function($rootScope){
     $rootScope.title="Étterem";
