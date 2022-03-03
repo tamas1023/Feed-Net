@@ -272,11 +272,13 @@ img{
     cursor: pointer;
     right: 0;
 }
-.login{
+.login
+{
     position: absolute;
     cursor: pointer;
     right: 100px;
 }
+
 #gyik{
     display: flex;
     align-items: center;
@@ -327,7 +329,13 @@ padding: 2px;
 
 }
 @media (max-width: 767px) {
-    .logout
+    .login
+    {
+        position: relative;
+        cursor: pointer;
+        right: 0;
+    }
+    .reg
     {
         position: relative;
         cursor: pointer;
