@@ -13,16 +13,18 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-animate.min.js"></script>
     <script src="js/angular-route.min.js"></script>
+    <script src="js/sha1.js"></script>
     <script src="js/app2.js"></script>
+    <script src="modules/dbfactory.js"></script>
+
     <script src="controllers/etteremCtrl.js"></script>
     <script src="controllers/felhasznalokCtrl.js"></script>
     <script src="controllers/hibajelentesekCtrl.js"></script>
     <script src="controllers/etteremetlapCtrl.js"></script>
     <script src="controllers/etteremfoglalasCtrl.js"></script>
-    <!--<script src="modules/dbfactory.js"></script>-->
 </head>
 <body>
-    <div id="menu" style="z-index: 100;">
+    <div id="menu" style="z-index: 100;" ng-if="loggedIn">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
           <div class="container-fluid">
             <a class="navbar-brand" href="#">Feed-Net</a>
@@ -44,7 +46,7 @@
                   <a class="nav-link" ng-if="logJog=='etterem'" href="#!/etteremfoglalas">Étteremfoglalás</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link reg" href="login.html">Kijelentkezés</a>
+                  <a class="nav-link reg" href="login.html" href="#!/logout" >Kijelentkezés</a>
                 </li>
               </ul>
             </div>
