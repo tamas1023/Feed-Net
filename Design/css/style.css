@@ -83,6 +83,16 @@ img{
 #kereses button:hover{
     background-color: var(--btnhover);
 }
+#kereses input{
+    width: 73%;
+}
+#kereses button{
+    width: 20%;
+    background-color: var(--lesshighlight);
+}
+#kereses button:hover{
+    background-color: var(--btnhover);
+}
 #ettermek{
     background-color: var(--highlight);
     width: 100%;
