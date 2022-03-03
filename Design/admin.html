@@ -1,80 +1,86 @@
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin felület</title>
+<div id="adminkereses" class="admin">
+    <div>
+      <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
+    </div>
+    <div class="container-fluid" >
+    <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
+</div>
 
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div id="menu">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Feed-Net</a>
-            <button class="navbar-toggler " onclick="TopNav()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav me-auto mb-lg-0" id="navitems">
-                <li class="nav-item">
-                  <a class="nav-link" href="admin.html">Éttermek kezelés</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="felhasznaloszerkesztes.html">Felhasználókezelés</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="hibajelentesek.html">Hibajelentések</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link reg" href="login.html">Kijelentkezés</a>
-                </li>
-              </ul>
-            </div>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item" >
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      Új Étterem felvétele vagy meglévő szerkesztése
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" ng-model="ujnev" placeholder="Jakab Jozsef">
+            <label for="floatingInput">Név</label>
           </div>
-        </nav>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput"ng-model="ujemail" placeholder="tesz1@gmail.com">
+            <label for="floatingInput">Email Cím</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput"ng-model="ujtelefon" placeholder="+">
+            <label for="floatingInput">Telefon</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput"ng-model="ujcim" placeholder="+">
+            <label for="floatingInput">Cím</label>
+          </div>
+          <label for="leiras">Leírás:</label>
+          <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="ujleiras"></textarea>
+          <label for="parkolo">Parkoló:</label>
+          <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="parkolo==1" ><br>
+          <label for="bankkartya">Bankkártya:</label>
+          <input type="checkbox" class="form-check-input" name="bankkartya"ng-model="ujbankkartya" ><br>
+          <label for="glutenmentes">Gluténmentes:</label>
+          <input type="checkbox" class="form-check-input" name="glutenmentes" ng-model="ujglutenmentes" ><br>
+          <label for="terasz">Terasz:</label>
+          <input type="checkbox" class="form-check-input" name="terasz" ng-model="ujterasz" ><br>
+          <label for="berelheto">Bérelhető:</label>
+          <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ><br>
+          <label for="hazhozszallitas">Házhozszállítás:</label>
+          <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas"><br>
+          <button class="btn btn-warning" ng-if="felvesz==1" ng-click="felvesz()">Felvesz</button>
+          <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
+          <button class="btn btn-warning"ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
+          <button class=" btn btn-danger" ng-click="deleteRecord()" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
       </div>
-  <div id="egesz">
-    <div class="jobboldal">
-      <div>
-        <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
-      </div>
-       
-      <div id="kereses">
-        <h2>Keresés az éttermek között</h2>
-      </div>
-      <div id="kep" class="col-12 ">
-        <h2>Ha kiválasztottuk az éttermet akkor az adatok ide fognak megjelenni, és itt lehet szerkeszteni őket</h2>
-      </div>
-     
-      <div id="ettermek" class="row m-0 p-0">
-        <div id="etterem" class="col-12 ">
-          <h2>Étterem/Kép</h2>
-        </div>
-        <div id="etterem" class="col-12 ">
-          <h2>Étterem/Kép</h2>
-        </div>
-        <div id="etterem" class="col-12">
-          <h2>Étterem/Kép</h2>
-        </div>
-      </div>
-
-      
-
-
-      
-
     </div>
   </div>
-  <div id="footer">
-    <h1>Footer</h1>
-  </div>
   
+ 
+  </div>
+  <br>
+  <table class="table table-striped table-sm" >
+    <thead>
+      <tr>
+        <th>Név</th>
+        <th>Telefon</th>
+        <th>Cím</th>
+        <th>Leírás</th>
+        <th>Étlap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="animate" ng-repeat="adat in ettermek | filter:{nev:search}" ng-click="selectRow($index)">
+        <td>{{adat.nev}}</td>
+        <td>{{adat.telefon}}</td>
+        <td>{{adat.cim}}</td>
+        <td>{{adat.leiras}}</td>
+        <td><a href=""> <button class=" btn btn-info" ng-click="etterem(adat.id)" ><i class="bi bi-list"></i></td></button></a>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
+      </tr>
+    </tfoot>
+  </table>
 
-
-      <script src="js/bootstrap.js"></script>
-      <script src="js/index.js"></script>
-</body>
-</html>
+  
+</div>

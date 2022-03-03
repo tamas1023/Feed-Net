@@ -1,4 +1,5 @@
 :root{
+
     --szin:rgb(209, 200, 200);
     --ellenkezoszin:black;
     --feher: white;
@@ -7,6 +8,7 @@
     --lesshighlight:#6b6864; /*Szűrés*/
     --footer:#b46306;
     --menu:#b46306;
+
 
 }
 body {
@@ -70,6 +72,7 @@ img{
     margin:0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
+
     width: 850px;
     text-align: center;
 }
@@ -82,12 +85,21 @@ img{
 }
 #kereses button:hover{
     background-color: var(--btnhover);
+
 }
-#kereses input{
-    width: 73%;
+#adminkereses{
+    margin:0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    width: 99%;
+    border: 1px solid black;
+
+}
+#kereses input#radio{
+    width:0%;
 }
 #kereses button{
-    width: 20%;
     background-color: var(--lesshighlight);
 }
 #kereses button:hover{
@@ -239,11 +251,13 @@ img{
 
 
 #etelkritikus{
+    
     width: 150px;
     height: 40px;
     margin: 10px;
+    margin-left: 13px;
     padding: 0;
-    float: left;
+    float:left;
 }
 .reg
 {
@@ -307,22 +321,14 @@ padding: 2px;
 }
 @media (max-width: 767px) {
     .logout
-{
-    position: relative;
-    cursor: pointer;
-}
-.reg 
-{
-    position: relative;
-    cursor: pointer;
-}
-.login 
-{
-    position: relative;
-    cursor: pointer;
-    right: 0;
-}
-
+    {
+        position: relative;
+        cursor: pointer;
+    }
+    #kereso
+    {
+        width: 40%;
+    }
 
 }
 #h2{
@@ -375,4 +381,47 @@ letter-spacing: 3px;
 .loginform
 {
     border: 0;
+}
+.table tbody tr:hover
+{
+    background-color: var(--hoverszin);
+    cursor: pointer;
+}
+@media (max-width: 576px) {
+
+  #egesz{
+      padding-left: 2px;
+      padding-right:2px ;
+  }
+}
+@media (max-width: 1000px) {
+
+    input#kereso
+    {
+        width: 55%;
+    }
+  }
+  @media (max-width: 420px) {
+
+    input#kereso
+    {
+        width: 85%;
+    }
+   .admin{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+  }
+#kereso
+{
+    display: block;
+    right: 0;
+    width: 70%;
+    height: 40px;
+    margin:auto;
+}
+ div>.container-fluid
+{
+    margin-top: 5px;margin-bottom: 20px;
 }
