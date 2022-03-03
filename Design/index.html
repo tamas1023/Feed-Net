@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/bootstrap.css">
+    
+    <!--<link rel="stylesheet" href="css/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
 
     <script src="js/angular.min.js"></script>
@@ -42,8 +46,9 @@
             </li>
             
             <li class="nav-item">
-              <a class="nav-link login" href="login.html">Bejelentkezés</a>
+              <a class="nav-link login" href="login.html"><i class="bx bx-log-in"> </i> Bejelentkezés</a>
             </li>
+            
             <li class="nav-item">
               <a class="nav-link reg" href="reg.html">Regisztráció</a>
             </li>
@@ -91,12 +96,12 @@
       <input type="checkbox" >
       <label for="" class="szurok">Szűrőelemek</label>
     </div>
-    <button class="btn btn-primary m-2">Szűrés</button>
-    <button class="btn btn-secondary m-2">Mégse</button>
+    <button class="btn btn-success m-2" id="szures">Szűrés</button>
+    <button class="btn btn-secondary m-2" id="megse">Mégse</button>
   </div>
   <div id="main" class="item">
     <h5>Szűrés</h5>
-    <button class="opensidebarbtn" onclick="openNav()">☰ </button>  
+    <button class="opensidebarbtn"  onclick="openNav()">☰ </button>  
    
   </div>
 
@@ -109,53 +114,25 @@
            
       </div>
       
-      <div id="ettermek" class="row m-0 p-0">
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-          <img src="" alt="">
+      <div id="ettermek" ng-controller="ettermekCtrl"  class="row m-0 p-0">
+        <div id="etterem" ng-repeat="etterem in ettermek" class="col-12 col-md-6 col-s-12">
+          <img src="{{etterem.kep}}" alt="">
+          <br><br>
+          <h2>{{etterem.nev}}</h2>
+          
+          <h2 >{{etterem.ertekeles}} <i class="bi bi-star-fill"></i></h2>
+          
         </div>
-        <div id="etterem" class="col-12 col-md-6">
+        <!--<div id="etterem" class="col-12 col-md-6">
           <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
-        <div id="etterem" class="col-12 col-md-6">
-          <h2>Étterem/Kép/Értékelés</h2>
-        </div>
+        </div>-->
+        
+      </div>      
       </div>
-
-      
-      </div>
-
-
-
-
     </div>
-    <!--
-    
-    <div   class="item">
-      <p>1Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis neque hic natus ipsa reiciendis! Deleniti reiciendis deserunt, sint repellendus quos, totam asperiores nobis ab quae expedita quo. Laudantium, fugit non!</p>
-      <p>2Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis neque hic natus ipsa reiciendis! Deleniti reiciendis deserunt, sint repellendus quos, totam asperiores nobis ab quae expedita quo. Laudantium, fugit non!</p>
-      <p>3Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis neque hic natus ipsa reiciendis! Deleniti reiciendis deserunt, sint repellendus quos, totam asperiores nobis ab quae expedita quo. Laudantium, fugit non!</p>
-      <p>4Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis neque hic natus ipsa reiciendis! Deleniti reiciendis deserunt, sint repellendus quos, totam asperiores nobis ab quae expedita quo. Laudantium, fugit non!</p>
-      <p>5Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis neque hic natus ipsa reiciendis! Deleniti reiciendis deserunt, sint repellendus quos, totam asperiores nobis ab quae expedita quo. Laudantium, fugit non!</p>
-    </div>
-    
-    -->
+
   </div>
+  
   <div id="footer">
     <h1>Footer</h1>
   </div>
