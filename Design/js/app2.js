@@ -5,11 +5,14 @@ app.run(function($rootScope){
     $rootScope.felvesz=1;
     $rootScope.felvesz2=1;
     $rootScope.selectedetteremID=0;
+    $rootScope.loggedIn=false;
+    $rootScope.logJog="admin";
   
 });
 app.config(function($routeProvider){
     $routeProvider
     .when('/admin',{
+       
         templateUrl:'admin.html',
         controller:'etteremCtrl'
     })
@@ -26,6 +29,15 @@ app.config(function($routeProvider){
         controller:'hibajelentesekCtrl'
     })
     .when('/etteremfoglalas',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/admin');
+                }
+            }
+        },
         templateUrl:'etteremfoglalas.html',
         controller:'etteremfoglalasCtrl'
     })
