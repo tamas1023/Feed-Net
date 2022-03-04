@@ -1,30 +1,52 @@
 :root{
-    --szin:green;
-    --background:white;
 
-    --highlight:#EDC7B7;
-    --lesshighlight:#AC3B61;
-    --btnhover:#cc1e58;
-    --footer:#BAB2B5;
-    --other:#123C69;
+    --szin:rgb(209, 200, 200);
+    --ellenkezoszin:black;
+    --feher: white;
+
+    --highlight:#3f3e3e;
+    --lesshighlight:#6b6864; /*Szűrés*/
+    --footer:#b46306;
+    --menu:#b46306;
+
+
 }
-
 body {
     font-family: "Lato", sans-serif;
     background-color: var(--highlight);
     
 }
+
+.accordion-button {
+    background-color: slategray;
+}
+.accordion-button:not(.collapsed){
+    color: black;
+    background-color: slategray;
+}
+img{
+    width: 100%;
+    /*height: 100%;*/
+}
 #menu{
  position: fixed;
  width: 100%;
- background-color: var(--other);
+ background-color: var(--menu);
+ z-index: 100;
 }
 #egesz{
     background-color: var(--highlight);
-    /* 
-    width: 100vw;  % of viewport width
-    height: 100vh; % of viewport height
-    */
+    width: 100%;
+    height: 100%;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 55px;
+    transition: margin-left .5s;
+    padding-bottom: 0;
+   
+}
+#adminegesz{
+    background-color: var(--highlight);
     width: 100%;
     height: 100%;
     padding-left: 80px;
@@ -48,6 +70,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--highlight);
+    color: var(--szin);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -56,9 +79,20 @@ body {
     margin:0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    background-color: white;
-    width: 99%;
-    border: 1px solid black;
+
+    width: 850px;
+    text-align: center;
+}
+#kereses input{
+    width: 50%;
+}
+#kereses button{
+    
+    background-color: var(--lesshighlight);
+}
+#kereses button:hover{
+    background-color: var(--btnhover);
+
 }
 #adminkereses{
     margin:0 auto;
@@ -67,6 +101,7 @@ body {
     background-color: white;
     width: 99%;
     border: 1px solid black;
+
 }
 #kereses input#radio{
     width:0%;
@@ -86,10 +121,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
-    /*background-color: white;*/
-    border: 1px solid black;
-    margin-bottom: 10px;
+    /*height: 150px;
+    background-color: white;
+    border: 1px solid black;*/
+    border-top: 1px solid black;
+    padding: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+#ertekeles textarea{
+    width: 100%;
+    height: 100px;
+}
+#etterem h2{
+    margin-left: 10px;
 }
 
 #mySidebar {
@@ -100,24 +145,32 @@ body {
     z-index: 1;
     top: 55px;
     left: 0;
-    background-color: #111;
+    background-color:var(--lesshighlight);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
 .szurok{
-    color: white;
+    color: var(--szin);
 }
 .szurokwrap{
     padding-bottom: 10px;
     padding-left: 60px;
 }
+#megse{
+    background-color: var(--highlight);
+}
+#megse:hover{
+    background-color: var(--ellenkezoszin);
+}
+
   
 #mySidebar a,#mySidebar h3 {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color:  var(--feher);
+    background-color: var(--highlight) transparent;
     display: block;
     transition: 0.3s;
 }
@@ -152,6 +205,7 @@ body {
     height: 100px;
     padding: 0;
     background-color: var(--footer);
+    color: white;
     text-align: center;
     margin:0 auto;
     display: flex;
@@ -159,6 +213,50 @@ body {
     align-items: center;
     transition: 0.5s;
 }
+#kivalasztottegesz{
+    width: 100%;
+    padding: 10px;
+    padding-top: 55px;
+
+}
+.gombok,#kivalasztottegesz h1{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#kepek img{
+    
+}
+/* ideiglenes de a vásznas megodáshoz ez nem kell
+#kepek .carousel-item img{
+    object-fit: cover;
+    object-position: center;
+    height: 40vh;
+}*/
+#kivalasztott{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+}
+#infok{
+    /*display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 150px;
+    border: 1px solid black;*/
+    margin-bottom: 10px;
+}
+/*
+#informaciok{
+    height: 100%;
+    width: 100%;
+}*/
+
+
 #etelkritikus{
     
     width: 150px;
@@ -174,11 +272,13 @@ body {
     cursor: pointer;
     right: 0;
 }
-.login{
+.login
+{
     position: absolute;
     cursor: pointer;
     right: 100px;
 }
+
 #gyik{
     display: flex;
     align-items: center;
@@ -229,7 +329,13 @@ padding: 2px;
 
 }
 @media (max-width: 767px) {
-    .logout
+    .login
+    {
+        position: relative;
+        cursor: pointer;
+        right: 0;
+    }
+    .reg
     {
         position: relative;
         cursor: pointer;
@@ -298,10 +404,10 @@ letter-spacing: 3px;
 }
 @media (max-width: 576px) {
 
-  #egesz{
-      padding-left: 2px;
-      padding-right:2px ;
-  }
+  #adminegesz{
+    padding-left: 2px;
+    padding-right:2px ;
+}
 }
 @media (max-width: 1000px) {
 

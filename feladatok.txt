@@ -5,14 +5,6 @@ ratingek
 angularral adatok betöltése
 
 
-
-GYIK
-Bejelentkezés/ regisztráció
-kedvencek gomb, hibajelentés, és rendelés rész beletevése a kiválasztott html beletevése
-rákapcsolt html átnevezése  kiválasztott html re
-
-login, reg színek megváltoztatása?
-
-login új képek
-
-kedvencek keresésnél egy gomb amivel ki lehet venni a kedvencek közül, layoutba nem kell
+Csinálni egy vászont, ami x és y hosszú és széles, és azt használjuk az összes képhez, 
+ha nagyobb ha kisebb jól fog úgy működni
+és úgy ez a megoldás jó lesz
