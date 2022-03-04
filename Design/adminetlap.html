@@ -1,7 +1,4 @@
 <div id="adminkereses" class="admin">
-    <div>
-      <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
-    </div>
     <div class="container-fluid" >
     <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
 </div>
@@ -33,7 +30,7 @@
     </div>
   </div>
 </div>
-<a href="#!/admin"  style="text-decoration: none; " ><p style="margin-top: 10px;margin-bottom: 10px;">Vissza az éttermekre</p></a>
+<a ng-click="visszavaltas()" href="#!/admin" style="text-decoration: none; " ><p style="margin-top: 10px;margin-bottom: 10px;">Vissza az éttermekre</p></a>
 <br>
 <table class="table table-striped table-sm" >
     <thead>

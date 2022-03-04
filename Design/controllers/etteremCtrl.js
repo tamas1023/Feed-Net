@@ -7,7 +7,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location){
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";
-
+    $rootScope.sidebar=false;
     $scope.etteremad=1;
     $scope.ettermek=[
         {id:1,nev:"Bajai Tomato",email:"bajatomato@gmail.com",telefon:"06 70 3799462",parkolo:1,bankkartlya:0,glutenmentes:0,terasz:0,berelheto:1,cim:"6500 Baja Jónai utca 12",leiras:"Egy kicsi de konfortos pizzéria hosszabb leírás hogy nézzük mit csinál ha sokkal több a szöveg ebben a box ban"},
@@ -59,7 +59,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location){
        
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
 
-       $location.url('/admin/etlap/'+$id)
+       $location.url('/admin/etlap/'+$id);
     }
     $scope.selectRowEtlap=function($id)
     {
