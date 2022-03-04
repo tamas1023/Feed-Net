@@ -1,7 +1,5 @@
-<div id="adminkereses" class="admin">
-    <div>
-      <a href="index.html"> <button class="btn btn-primary" id="etelkritikus" >Vissza a főoldalra</button></a>
-    </div>
+<div id="adminegesz">
+<div id="adminkereses">
     <div class="container-fluid" >
     <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
 </div>
@@ -72,7 +70,7 @@
         <td>{{adat.telefon}}</td>
         <td>{{adat.cim}}</td>
         <td>{{adat.leiras}}</td>
-        <td><a href=""> <button class=" btn btn-info" ng-click="etterem(adat.id)" ><i class="bi bi-list"></i></td></button></a>
+        <td><a href="#!/admin/etlap/{{adat.id}}" ng-click="etterem(adat.id)"> <button class=" btn btn-info" ><i class="bi bi-list"></i></td></button></a>
       </tr>
     </tbody>
     <tfoot>
@@ -83,4 +81,5 @@
   </table>
 
   
+</div>
 </div>
