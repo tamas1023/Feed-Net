@@ -6,34 +6,25 @@ app.run(function($rootScope){
     $rootScope.felvesz=1;
     $rootScope.felvesz2=1;
     $rootScope.selectedetteremID=0;
+    $rootScope.logivagyreg=false;
     //be van e jelentezve és a jogosultsága admin/user/etterem
     $rootScope.loggedIn=true;
-    $rootScope.logJog="admin";
+    $rootScope.logJog="etterem";
   
 });
-app.controller('loginCtrl',function($scope,$rootScope,$location){
-    $scope.login=function(){
-       //alert("belepett");
-        if ($scope.email == null || $scope.jelszo == null) {
-            alert('Nem adtál meg minden belépési adatot!');
-        } else {
-            dbfactory.logincheck($scope.email, CryptoJS.SHA1($scope.jelszo).toString()).then(function(res) {
-                if (res.data.length > 0) {
-                    //bejeletkezett a felhasználó
-                    $rootScope.loggedIn = true;
-                    $rootScope.logJog=res.Jog;
-                    //$rootScope.loggedUser = $scope.username;
-                    //sessionStorage.setItem('pizzaUser', angular.toJson($scope.username));
-                } else {
-                    alert('Hibás belépési adatok!');
-                }
-            });
-        }
-    }
-})
 app.config(function($routeProvider){
     $routeProvider
     
+    .when('/reg',{
+       
+        templateUrl:'reg.html',
+        controller:'regCtrl'
+    })
+    .when('/login',{
+       
+        templateUrl:'login.html',
+        controller:'loginCtrl'
+    })
     .when('/',{
        
         templateUrl:'ettermek.html',

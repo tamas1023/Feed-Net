@@ -1,5 +1,6 @@
 app.controller('ettermekCtrl',function($rootScope,$scope){
     $rootScope.sidebar=true;
+    $rootScope.logivagyreg=false;
     $scope.ettermek=[
         {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 "},
         
