@@ -25,6 +25,16 @@ app.get('/',(req,res)=>{
     res.send(results);
   })
 })
+app.post('/login', (req, res) => {
+  let data = {
+      email: req.body.Email,
+      pass: req.body.passwd,
+  }
+  pool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}' AND jelszo='${data.pass}'`, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
