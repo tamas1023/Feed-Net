@@ -17,6 +17,22 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //email check
+        emailcheck: function(email) {
+            let deferred = $q.defer();
+            let data = {
+                Email: email,
+            }
+            $http.get(url + '/emailcheck', data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();
@@ -105,5 +121,17 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         }
+       /* logged:function(){
+        let deferred=q.defer();
+        $http.get(url+"/logged").then(
+            function(res) {
+                deferred.resolve(res.data);
+            },
+            function(err) {
+                deferred.reject(err);
+            }
+        );
+        return deferred.promise;
+        }*/
     }
 });

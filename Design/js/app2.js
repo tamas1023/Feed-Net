@@ -10,6 +10,13 @@ app.run(function($rootScope){
     //be van e jelentezve és a jogosultsága admin/user/etterem
     $rootScope.loggedIn=true;
     $rootScope.logJog="etterem";
+    if (sessionStorage.getItem('User')) {
+        $rootScope.loggedIn = true;
+        $rootScope.logJog = angular.fromJson(sessionStorage.getItem('User'));
+    } else {
+        $rootScope.loggedIn = false;
+        $rootScope.logJog = "";
+    }
   
 });
 app.config(function($routeProvider){
