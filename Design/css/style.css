@@ -91,10 +91,10 @@ img{
 }
 #kereses button{
     
-    background-color: var(--lesshighlight);
+    /*background-color: var(--lesshighlight);*/
 }
 #kereses button:hover{
-    background-color: var(--btnhover);
+    /*background-color: var(--btnhover);*/
 
 }
 #adminkereses{
@@ -109,12 +109,7 @@ img{
 #kereses input#radio{
     width:0%;
 }
-#kereses button{
-    background-color: var(--lesshighlight);
-}
-#kereses button:hover{
-    background-color: var(--btnhover);
-}
+
 #ettermek{
     background-color: var(--highlight);
     width: 100%;
@@ -227,9 +222,6 @@ img{
     padding-bottom: 10px;
 }
 
-#kepek img{
-    
-}
 /* ideiglenes de a vásznas megodáshoz ez nem kell
 #kepek .carousel-item img{
     object-fit: cover;
