@@ -9,7 +9,7 @@ app.run(function($rootScope){
     $rootScope.logivagyreg=false;
     //be van e jelentezve és a jogosultsága admin/user/etterem
     $rootScope.loggedIn=true;
-    $rootScope.logJog="etterem";
+    $rootScope.logJog="user";
   
 });
 app.config(function($routeProvider){

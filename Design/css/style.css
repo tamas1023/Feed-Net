@@ -200,16 +200,23 @@ img{
   
 #footer{
     width: 100%;
-    height: 100px;
     padding: 0;
     background-color: var(--footer);
     color: white;
-    text-align: center;
     margin:0 auto;
+    /* a szöveg középre helyezése
     display: flex;
+    text-align: center;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
     transition: 0.5s;
+}
+a{
+    text-decoration: none;
+    color: var(--feher);
+}
+a:hover{
+    color: var(--feher);
 }
 #kivalasztottegesz{
     width: 100%;
