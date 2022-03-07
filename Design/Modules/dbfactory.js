@@ -17,6 +17,20 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //kilépés
+        logout:function(){
+            let deferred = $q.defer();
+            $http.get(url+"/logout").then(
+                function(res)
+                {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         //email check
         emailcheck: function(email) {
             let deferred = $q.defer();

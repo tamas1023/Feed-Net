@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router=require('./Routes/router.js');
 const dbPool=require('./dbModel/DatabaseModel');
 const session = require('express-session');
 const cors=require("cors");
@@ -14,6 +15,7 @@ app.use(session({
   }))
 app.use(cors());
 app.use(express.json());
+//app.use('/',router);
 
 dbPool.getConnection((err,connection)=>{
     if(err)throw err;
@@ -21,7 +23,7 @@ dbPool.getConnection((err,connection)=>{
 
 })
 app.get('/',(req,res)=>{
-  if(jog=="admin")
+  if(session.Rights="admin")
   {
     dbPool.query('SELECT * FROM felhasznalok',(err,results)=>{
       if (err)throw err;
@@ -29,6 +31,11 @@ app.get('/',(req,res)=>{
      // console.log(jog);
     });
   }
+});
+app.get('/logout',(req,res)=>{
+    session.Rights="user";
+    session.LoggedIn=false;
+    console.log(session.Rights);
 })
 app.post('/login', (req, res) => {
   let data = {
@@ -41,11 +48,16 @@ app.post('/login', (req, res) => {
       //console.log(results[0].Jog);
       if(results.length>0)
       {
+        session.Rights=results[0].Jog;
+        session.LoggedIn=true;
         jog=results[0].Jog;
       }
+      console.log(session.Rights);
   });
 });
+
 // check if email already exists
+
 app.get('/emailcheck',(req,res)=>{
   let data = {
     email: req.body.Email,
@@ -59,6 +71,9 @@ app.get('/emailcheck',(req,res)=>{
     res.json(results);
 });
 })
+
+//registration
+
 app.post('/reg', (req, res) => {
   let data = {
       email: req.body.Email,
