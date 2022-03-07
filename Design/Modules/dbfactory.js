@@ -17,6 +17,55 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //kilépés
+        logout:function(){
+            let deferred = $q.defer();
+            $http.get(url+"/logout").then(
+                function(res)
+                {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //registration
+        reg:function(email,name, pass){
+            let deferred = $q.defer();
+            let data = {
+                Email: email,
+                Name:name,
+                passwd: pass
+            }
+            $http.post(url+"/reg",data).then(
+                function(res)
+                {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //email check
+        emailcheck: function(email) {
+            let deferred = $q.defer();
+            let data = {
+                Email: email,
+            }
+            $http.post(url + '/emailcheck', data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();
@@ -105,5 +154,17 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         }
+       /* logged:function(){
+        let deferred=q.defer();
+        $http.get(url+"/logged").then(
+            function(res) {
+                deferred.resolve(res.data);
+            },
+            function(err) {
+                deferred.reject(err);
+            }
+        );
+        return deferred.promise;
+        }*/
     }
 });
