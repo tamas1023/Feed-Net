@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const router=require('./Routes/router.js');
 const dbPool=require('./dbModel/DatabaseModel');
 const session = require('express-session');
 const cors=require("cors");
@@ -15,7 +14,6 @@ app.use(session({
   }))
 app.use(cors());
 app.use(express.json());
-//app.use('/',router);
 
 dbPool.getConnection((err,connection)=>{
     if(err)throw err;
@@ -23,7 +21,7 @@ dbPool.getConnection((err,connection)=>{
 
 })
 app.get('/',(req,res)=>{
-  if(session.Rights="admin")
+  if(session.Rights=="admin")
   {
     dbPool.query('SELECT * FROM felhasznalok',(err,results)=>{
       if (err)throw err;
@@ -35,7 +33,7 @@ app.get('/',(req,res)=>{
 app.get('/logout',(req,res)=>{
     session.Rights="user";
     session.LoggedIn=false;
-    console.log(session.Rights);
+    //console.log(session.LoggedIn);
 })
 app.post('/login', (req, res) => {
   let data = {
@@ -52,13 +50,25 @@ app.post('/login', (req, res) => {
         session.LoggedIn=true;
         jog=results[0].Jog;
       }
-      console.log(session.Rights);
+      console.log(session.LoggedIn);
   });
 });
+app.post("/reg",(req,res)=>{
+  let data = {
+    email: req.body.Email,
+    name:req.body.Name,
+    pass: req.body.passwd,
+}
+dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', '${data.pass}', NULL, CURRENT_TIME, NULL, '1', 'user');`,(err,results)=>{
+  if(err)throw err;
+ // console.log('sikeres insert');
+  res.json({message:"ok"});
+})
+})
 
 // check if email already exists
 
-app.get('/emailcheck',(req,res)=>{
+app.post('/emailcheck',(req,res)=>{
   let data = {
     email: req.body.Email,
   }

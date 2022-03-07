@@ -31,13 +31,32 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //registration
+        reg:function(email,name, pass){
+            let deferred = $q.defer();
+            let data = {
+                Email: email,
+                Name:name,
+                passwd: pass
+            }
+            $http.post(url+"/reg",data).then(
+                function(res)
+                {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         //email check
         emailcheck: function(email) {
             let deferred = $q.defer();
             let data = {
                 Email: email,
             }
-            $http.get(url + '/emailcheck', data).then(
+            $http.post(url + '/emailcheck', data).then(
                 function(res) {
                     deferred.resolve(res);
                 },

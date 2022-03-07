@@ -15,12 +15,19 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
             }
             else
             {
-              // alert($scope.ujemail);
+              //alert($scope.ujemail);
                     
                 dbfactory.emailcheck($scope.ujemail).then(function(res){
                     if(res.data.length>0)
                     {
                         alert('Ez az email cím már foglalat');
+                    }
+                    else
+                    {
+                        dbfactory.reg($scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujjelszo).toString()).then(function(res){
+                            $location.path("#!/login");
+                        });
+
                     }
                 })
             }
