@@ -1,13 +1,13 @@
 <div class="jobboldal">
     <div id="kereses">
       
-      <input type="search" class="m-2" placeholder="Keresés">
-      <button type="submit" class="m-2 btn btn-success">Keresés</button>
+      <input type="search" class="m-2" ng-model="keres" placeholder="Keresés">
+      <!--<button type="submit" class="m-2 btn btn-success" >Keresés</button>-->
          
     </div>
     
     <div id="ettermek"  class="row m-0 p-0">
-      <div id="etterem" ng-repeat="ett in ettermek" class="col-12 col-md-6 col-s-12">
+      <div id="etterem" ng-repeat="ett in ettermek | filter:{nev:keres}" class="col-12 col-md-6 col-s-12">
         <img src="{{ett.kep}}" alt="">
         <br><br>
         <h2>{{ett.nev}}</h2>
