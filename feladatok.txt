@@ -8,3 +8,7 @@ angularral adatok betöltése
 Csinálni egy vászont, ami x és y hosszú és széles, és azt használjuk az összes képhez, 
 ha nagyobb ha kisebb jól fog úgy működni
 és úgy ez a megoldás jó lesz
+
+
+Szűrés: Gomb kattintásra megnézi hogy mi van kipipálva, és backendnek küld egy kérést, és új tölti be az adatokat,
+Esetleg ugyan így a sima kertesésnél

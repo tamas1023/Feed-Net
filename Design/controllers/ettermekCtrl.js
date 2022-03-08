@@ -1,10 +1,11 @@
 app.controller('ettermekCtrl',function($rootScope,$scope){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
+    
     $scope.ettermek=[
-        {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 "},
+        {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 ",kartya:1},
         
-        {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 "},
+        {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 ",kartya:0},
         {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 "},
         {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 "},
         
@@ -33,3 +34,4 @@ app.controller('ettermekCtrl',function($rootScope,$scope){
     ]
 
 });
+

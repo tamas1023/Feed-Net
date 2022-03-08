@@ -86,39 +86,39 @@
       </div>
     </nav>
   </div>
-  <div ng-show="sidebar==true">
+  <div ng-show="sidebar==true" ng-controller="ettermekCtrl">
   <div id="mySidebar" class="sidebar"  >
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <h3>Csillagos értékelés</h3>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox" ng-model="kartyaszures" ng-checked="kartyaszures" >
       <label for="" class="szurok">Kártyaelfogadó hely</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox"  ng-model="parkolo" ng-checked="parkolo==1">
       <label for="" class="szurok">Parlokó</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Gluténmentes étel</label>
+      <input type="checkbox" ng-model="gluten" ng-checked="gluten==1">
+      <label for="" class="szurok">Gluténmentes étel </label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
       <label for="" class="szurok">Nyitva van-e?</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox" ng-model="szallitas" ng-checked="szallitas==1">
       <label for="" class="szurok">Házhozszállítás</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox" ng-model="terasz" ng-checked="terasz==1">
       <label for="" class="szurok">Terasz</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
+      <input type="checkbox" ng-model="wifi" ng-checked="wifi==1">
       <label for="" class="szurok">Wifi</label>
     </div>
-    <button class="btn btn-success m-2" id="szures">Szűrés</button>
+    <button class="btn btn-success m-2" id="szures" ng-click="Szures()">Szűrés</button>
     <button class="btn btn-secondary m-2" id="megse" class="closebtn" onclick="closeNav()">Mégse</button>
   </div>
   <div id="main" class="item">

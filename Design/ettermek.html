@@ -7,7 +7,7 @@
     </div>
     
     <div id="ettermek"  class="row m-0 p-0">
-      <div id="etterem" ng-repeat="ett in ettermek | filter:{nev:keres}" class="col-12 col-md-6 col-s-12">
+      <div id="etterem" ng-repeat="ett in ettermek | filter:{nev:keres} | filter:{kartya:kartyaszures}" class="col-12 col-md-6 col-s-12">
         <img src="{{ett.kep}}" alt="">
         <br><br>
         <h2>{{ett.nev}}</h2>
