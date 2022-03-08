@@ -20,6 +20,12 @@ dbPool.getConnection((err,connection)=>{
     console.log("Connected to database Connid:"+connection.threadId);
 
 })
+app.post('/session',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
+  {
+    res.send(session.Rights);
+  }
+})
 app.get('/',(req,res)=>{
   if(session.Rights=="admin")
   {
@@ -101,10 +107,17 @@ app.post('/emailcheck',(req,res)=>{
 
   //admin étlap select
   app.get('/admindiningselect',(req,res)=>{
-    dbPool.query('SELECT * FROM ettermek',(err,results)=>{
-      if(err)throw err;
-      res.json(results);
-    })
+    if(session.Rights=="admin")
+    {
+      dbPool.query('SELECT * FROM ettermek',(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      });
+    }
+    else
+    {
+      res.json({message:"Nem kérheted ezeket le"});
+    }
   })
 
 

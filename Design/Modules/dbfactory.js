@@ -1,6 +1,20 @@
 app.factory('dbfactory', function($http, $q) {
     let url = 'http://localhost:8080';
     return {
+        //session lekérés
+        session:function() {
+            let deferred = $q.defer();
+            $http.post(url + '/session').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         logincheck: function( email, pass) {
             let deferred = $q.defer();
             let data = {
