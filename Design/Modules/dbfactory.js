@@ -66,6 +66,23 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+        //admin Selects
+        
+        admindingingselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/admindiningselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

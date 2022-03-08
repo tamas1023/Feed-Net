@@ -3,6 +3,8 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
     $rootScope.sidebar=false;
+    sessionStorage.removeItem('User');
+    dbfactory.logout().then(function(res){alert('Kilépve')});
     $scope.reg=function(){
         if ($scope.ujemail == null || $scope.ujjelszo == null||$scope.ujnev==null||$scope.ujjelszo2==null) {
             alert('Nem adtál meg minden regisztráláshoz adatot!');
@@ -23,11 +25,18 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
                         alert('Ez az email cím már foglalat');
                     }
                     else
-                    {
-                        dbfactory.reg($scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujjelszo).toString()).then(function(res){
-                            $location.path("#!/login");
-                        });
-
+                    { 
+                        let pattern =  /^[a-zA-Z0-9]{8,}$/;
+                        if(!$scope.ujjelszo.match(pattern))
+                        {
+                            alert('A jelszó nep felel meg a minimális követelményeknek');
+                        }
+                        else
+                        {
+                            dbfactory.reg($scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujjelszo).toString()).then(function(res){
+                                $location.path("#!/login");
+                            });
+                        }      
                     }
                 })
             }

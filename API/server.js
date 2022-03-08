@@ -30,11 +30,17 @@ app.get('/',(req,res)=>{
     });
   }
 });
+
+    //Log out
+
 app.get('/logout',(req,res)=>{
     session.Rights="user";
     session.LoggedIn=false;
     //console.log(session.LoggedIn);
 })
+
+    //login
+
 app.post('/login', (req, res) => {
   let data = {
       email: req.body.Email,
@@ -50,9 +56,18 @@ app.post('/login', (req, res) => {
         session.LoggedIn=true;
         jog=results[0].Jog;
       }
-      console.log(session.LoggedIn);
+      //console.log(session.LoggedIn);
   });
+
+    //belépési dátum
+  dbPool.query(`UPDATE felhasznalok SET Belepes=CURRENT_TIME WHERE Email='${data.email}'`,(err,resluts)=>{
+    if(err)throw err;
+    //console.log('sikeres dátum frissítés');
+  })
 });
+
+  //registration
+
 app.post("/reg",(req,res)=>{
   let data = {
     email: req.body.Email,
@@ -69,34 +84,28 @@ dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.na
 // check if email already exists
 
 app.post('/emailcheck',(req,res)=>{
-  let data = {
-    email: req.body.Email,
-  }
-  let Email=req.body.Email;
-  console.log(Email);
-  //let email=req.body.Email;
-  //console.log(email);
-  dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-});
-})
-
-//registration
-
-app.post('/reg', (req, res) => {
-  let data = {
+    let data = {
       email: req.body.Email,
-      pass: req.body.passwd,
-  }
-  dbPool.query(`INSERT INTO felhasznalok VALUES(null,)`, (err, results) => {
+    }
+    let Email=req.body.Email;
+    console.log(Email);
+    //let email=req.body.Email;
+    //console.log(email);
+    dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
       if (err) throw err;
       res.json(results);
-      //console.log(results[0].Jog);
-
   });
 });
 
+  //admin Selects
+
+  //admin étlap select
+  app.get('/admindiningselect',(req,res)=>{
+    dbPool.query('SELECT * FROM ettermek',(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  })
 
 
 app.listen(port, ()=>{
