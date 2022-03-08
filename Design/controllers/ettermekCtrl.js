@@ -1,6 +1,8 @@
-app.controller('ettermekCtrl',function($rootScope,$scope){
+app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
+    $scope.feltétel=1;
+
     
     $scope.ettermek=[
         {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 ",kartya:1},
@@ -32,6 +34,19 @@ app.controller('ettermekCtrl',function($rootScope,$scope){
         {id:1,nev:"Kedvenc Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"5 "},
         {id:1,nev:"Kedvenc Étterem ",kep:"img/kedvencetterem.jpg",ertekeles:"5 "},
     ]
+    $scope.Szures=function () {
+        alert("Katt");
+        dbfactory.selectCustom("ettermek",$scope.feltétel).then(function(res) {
+            if (res.length > 0) {
+                alert("Jött adat");
+                console.log(res);
+            } else {
+                alert("Nem jött adat");
+                console.log(res);
+            }
+        });
+    }
+    
 
 });
 

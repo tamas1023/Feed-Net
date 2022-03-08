@@ -30,8 +30,22 @@ app.post('/login', (req, res) => {
       email: req.body.Email,
       pass: req.body.passwd,
   }
-  pool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}' AND jelszo='${data.pass}'`, (err, results) => {
+  dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}' AND jelszo='${data.pass}'`, (err, results) => {
       if (err) throw err;
+      res.json(results);
+  });
+});
+
+app.post('/selectCustom', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    select:req.body.Select
+  }
+  console.log(data.tablename);
+  console.log(data.select);
+  dbPool.query(`SELECT * FROM ${data.tablename} WHERE  ${data.select}`, (err, results) => {
+      if (err) throw err;
+      console.log(results);
       res.json(results);
   });
 });

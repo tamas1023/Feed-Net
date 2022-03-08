@@ -64,9 +64,11 @@ img{
     top: 56px;
     transition: .1s;
     padding: 15px;
-    background-color: var(--lesshighlight);
+    /*
+    background-color: var(--lesshighlight);*/
     width: 80px;
-    height: 120px;
+    margin-bottom: 80px;
+    z-index: 0;
 }
 .jobboldal{
     margin: 0 auto;
@@ -141,7 +143,8 @@ img{
     display: none;
     position: fixed;
     z-index: 1;
-    top: 55px;
+    /*
+    top: 35px;*/
     left: 0;
     background-color:var(--lesshighlight);
     overflow-x: hidden;
@@ -163,8 +166,18 @@ img{
 }
 
   
-#mySidebar a,#mySidebar h3 {
+#mySidebar a{
     padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color:  var(--feher);
+    background-color: var(--highlight) transparent;
+    display: block;
+    transition: 0.3s;
+}
+#mySidebar h3 {
+    padding: 8px 8px 8px 32px;
+    padding-top: 30px;
     text-decoration: none;
     font-size: 25px;
     color:  var(--feher);
@@ -210,6 +223,7 @@ img{
     justify-content: center;
     align-items: center;*/
     transition: 0.5s;
+    
 }
 a{
     text-decoration: none;

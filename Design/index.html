@@ -28,11 +28,11 @@
     <script src="controllers/hibajelentesekCtrl.js"></script>
     <script src="controllers/etteremetlapCtrl.js"></script>
     <script src="controllers/etteremfoglalasCtrl.js"></script>
-  <script src="controllers/ettermekCtrl.js"></script>
-  <script src="controllers/gyikCtrl.js"></script>
-  <script src="controllers/kedvencekCtrl.js"></script>
-  <script src="controllers/regCtrl.js"></script>
-  <script src="controllers/loginCtrl.js"></script>
+    <script src="controllers/ettermekCtrl.js"></script>
+    <script src="controllers/gyikCtrl.js"></script>
+    <script src="controllers/kedvencekCtrl.js"></script>
+    <script src="controllers/regCtrl.js"></script>
+    <script src="controllers/loginCtrl.js"></script>
     <title class="ng-binding">{{title}}</title>
 
 </head>
@@ -87,8 +87,8 @@
     </nav>
   </div>
   <div ng-show="sidebar==true" ng-controller="ettermekCtrl">
-  <div id="mySidebar" class="sidebar"  >
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <div id="mySidebar" class="sidebar">
+    <p href="javascript:void(0)" class="closebtn" onclick="">×</p>
     <h3>Csillagos értékelés</h3>
     <div class="szurokwrap">
       <input type="checkbox" ng-model="kartyaszures" ng-checked="kartyaszures" >
@@ -118,11 +118,14 @@
       <input type="checkbox" ng-model="wifi" ng-checked="wifi==1">
       <label for="" class="szurok">Wifi</label>
     </div>
-    <button class="btn btn-success m-2" id="szures" ng-click="Szures()">Szűrés</button>
-    <button class="btn btn-secondary m-2" id="megse" class="closebtn" onclick="closeNav()">Mégse</button>
+    
+      <button class="btn btn-success m-2" id="szures" ng-click="Szures()">Szűrés</button>
+      <button class="btn btn-secondary m-2" id="megse" class="closebtn" onclick="closeNav()">Mégse</button>
+    
+    
   </div>
   <div id="main" class="item">
-    <h5>Szűrés</h5>
+    <h5></h5>
     <button class="opensidebarbtn"  onclick="openNav()">☰ </button>  
    
   </div>
