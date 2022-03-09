@@ -104,9 +104,9 @@ app.post('/emailcheck',(req,res)=>{
   });
 });
 
-  //admin Étlap
+  //admin Étterem
 
-  //admin étlap select
+  //admin select
   app.get('/admindiningselect',(req,res)=>{
     if(session.Rights=="admin")
     {
@@ -121,6 +121,8 @@ app.post('/emailcheck',(req,res)=>{
     }
   });
   
+  //admin étterem update
+
 app.post('/admindiningupdate',(req,res)=>{
   let data = {
     id:req.body.ID,
@@ -143,7 +145,85 @@ app.post('/admindiningupdate',(req,res)=>{
     res.json(results);
     console.log('sikeres módosítás');
   });
+})
 
+  //admin étterem felvétel
+
+app.post('/admindininginsert',(req,res)=>{
+    let data = {
+      id:req.body.ID,
+      nev:req.body.Nev,
+      email: req.body.Email,
+      telefon:req.body.Telefon,
+      cim:req.body.Cim,
+      ferohely:req.body.Ferohely,
+      leiras:req.body.Leiras,
+      parkolo:req.body.Parkolo,
+      bankkartya:req.body.Bankkartya,
+      glutenmentes:req.body.Glutenmentes,
+      terasz:req.body.Terasz,
+      berelheto:req.body.Berelheto,
+      hazhozszallitas:req.body.Hazhozszallitas,
+      statusz:req.body.Statusz
+    }
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz})`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+      console.log('sikeres felvétel');
+    });
+})
+
+  //admin étlap select
+
+app.post('/adminfoodselect',(req,res)=>{
+  /*let data = {
+    id:req.body.ID
+  }*/
+  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
+})
+
+  //admin étlap delete
+
+app.post('/adminfooddelete',(req,res)=>{
+  dbPool.query(`DELETE FROM etlap WHERE ID=${req.body.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"törlve lett"});
+  })
+})
+
+  //admin étlap felvétel
+
+app.post('/adminfoodinsert',(req,res)=>{
+  let data={
+    etteremid:req.body.EtteremID,
+    nev:req.body.Nev,
+    ar:req.body.Ar,
+    leiras:req.body.Leiras
+  }
+  dbPool.query(`INSTER INTO etlap WHERE VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"felvéve lett étel"});
+  })
+})
+
+
+  //admin étlap módosítás
+
+app.post('/adminfoodupdate',(req,res)=>{
+  let data={
+    id:req.body.ID,
+    etteremid:req.body.EtteremID,
+    nev:req.body.Nev,
+    ar:req.body.Ar,
+    leiras:req.body.Leiras
+  }
+  dbPool.query(`UPDATE etlap SET ID=${data.id}, Etterem_ID=${data.etteremid},Nev='${data.nev}',Ar=${data.ar},Leiras='${data.leiras}' WHERE ID=${data.id} AND Etterem_ID=${data.etteremid} `,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"felvéve lett étel"});
+  })
 })
 
 app.listen(port, ()=>{
