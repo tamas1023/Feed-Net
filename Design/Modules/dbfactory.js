@@ -40,7 +40,7 @@ app.factory('dbfactory', function($http, $q) {
             }
             $http.post(url + '/selectCustom',data).then(
                 function(res) {
-                    deferred.resolve(res.data);
+                    deferred.resolve(res);
                 },
                 function(err) {
                     deferred.reject(err);
