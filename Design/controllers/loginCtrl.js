@@ -4,7 +4,7 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.logivagyreg=true;
     $rootScope.sidebar=false;
     sessionStorage.removeItem('User');
-    dbfactory.logout().then(function(res){alert('Kilépve')});
+    dbfactory.logout().then(function(res){});
     $scope.login=function(){
         //alert("belepett");
          if ($scope.email == null || $scope.jelszo == null) {

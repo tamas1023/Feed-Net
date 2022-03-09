@@ -42,6 +42,7 @@ app.get('/',(req,res)=>{
 app.get('/logout',(req,res)=>{
     session.Rights="user";
     session.LoggedIn=false;
+    res.json({message:"ok"});
     //console.log(session.LoggedIn);
 })
 
@@ -103,7 +104,7 @@ app.post('/emailcheck',(req,res)=>{
   });
 });
 
-  //admin Selects
+  //admin Étlap
 
   //admin étlap select
   app.get('/admindiningselect',(req,res)=>{
@@ -118,8 +119,32 @@ app.post('/emailcheck',(req,res)=>{
     {
       res.json({message:"Nem kérheted ezeket le"});
     }
-  })
+  });
+  
+app.post('/admindiningupdate',(req,res)=>{
+  let data = {
+    id:req.body.ID,
+    nev:req.body.Nev,
+    email: req.body.Email,
+    telefon:req.body.Telefon,
+    cim:req.body.Cim,
+    ferohely:req.body.Ferohely,
+    leiras:req.body.Leiras,
+    parkolo:req.body.Parkolo,
+    bankkartya:req.body.Bankkartya,
+    glutenmentes:req.body.Glutenmentes,
+    terasz:req.body.Terasz,
+    berelheto:req.body.Berelheto,
+    hazhozszallitas:req.body.Hazhozszallitas,
+    statusz:req.body.Statusz
+  }
+  dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+    console.log('sikeres módosítás');
+  });
 
+})
 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);

@@ -4,41 +4,50 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
     az adatokat nagy betűsökre (itt is meg a html ben is)
     */ 
-   
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";
     $rootScope.sidebar=false;
     $scope.etteremad=1;
+    $scope.ModID=0;
     dbfactory.admindingingselect().then(function(res){
         if(res.data.length>0)
         {
             $scope.ettermek=res.data;
         }
+       //console.log(res.data.length);
     });
-    $scope.etlap=[
+   /* $scope.etlap=[
         {id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:2,nev:"Harcsa leves",ar:950,leiras:"Harkcsa hús leves zöldségekkel"},
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:4,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:5,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"}
-    ];
+    ];*/
     $scope.selectRow=function($id){
-       $scope.ujID=$scope.ettermek[$id].ID;
+       $scope.ModID=$scope.ettermek[$id].ID;
         $scope.ujnev=$scope.ettermek[$id].Nev;
         $scope.ujemail=$scope.ettermek[$id].Email;
         $scope.ujtelefon=$scope.ettermek[$id].Telefon;
         $scope.ujcim=$scope.ettermek[$id].Cim;
         $scope.ujleiras=$scope.ettermek[$id].Leiras;
        // $scope.parkolo=$scope.ettermek[$id].Parkolo;
-        $scope.ujparkolo=$scope.ettermek[$id].Parkolo;
-        $scope.ujbankkartya=$scope.ettermek[$id].Bankkartya;
-        $scope.ujglutenmentes=$scope.ettermek[$id].Glutenmentes;
-        $scope.ujterasz=$scope.ettermek[$id].Terasz;
-        $scope.ujberelheto=$scope.ettermek[$id].Berelheto;
-        $scope.ujhazhozszallitas=$scope.ettermek[$id].Hazhozszallitas;
+        $scope.ujparkolo=($scope.ettermek[$id].Parkolo)? true : false;
+        $scope.ujbankkartya=($scope.ettermek[$id].Bankkartya)? true : false;
+        $scope.ujglutenmentes=($scope.ettermek[$id].Glutenmentes)? true : false;
+        $scope.ujterasz=($scope.ettermek[$id].Terasz)? true : false;
+        $scope.ujberelheto=($scope.ettermek[$id].Berelheto)? true : false;
+        $scope.ujhazhozszallitas=($scope.ettermek[$id].Hazhozszallitas)? true : false;
         $scope.ujferohely=$scope.ettermek[$id].Ferohely;
+        $scope.ujstatusz=($scope.ettermek[$id].Statusz)? true : false;
         $rootScope.felvesz=0;
+    }
+    $scope.update=function()
+    {
+        //alert($scope.ujparkolo);
+        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+
+        })
     }
     $scope.unselectRow=function()
     {

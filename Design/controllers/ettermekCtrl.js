@@ -12,6 +12,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$location){
         //console.log(res.data);
         sessionStorage.setItem('User', angular.toJson(res.data));
         $rootScope.logJog=res.data;
+        //console.log(res.data);
         //$location.path("#!/");
     })
     $scope.ettermek=[
