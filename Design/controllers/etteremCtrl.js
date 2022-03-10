@@ -1,40 +1,53 @@
-app.controller('etteremCtrl',function($scope,$rootScope,$location){
+app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
 
     /* db factory ha lesz akkor itt fellül kell mit a location 
     a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
     az adatokat nagy betűsökre (itt is meg a html ben is)
     */ 
-   
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";
     $rootScope.sidebar=false;
     $scope.etteremad=1;
-    $scope.ettermek=[
-        {id:1,nev:"Bajai Tomato",email:"bajatomato@gmail.com",telefon:"06 70 3799462",parkolo:1,bankkartlya:0,glutenmentes:0,terasz:0,berelheto:1,cim:"6500 Baja Jónai utca 12",leiras:"Egy kicsi de konfortos pizzéria hosszabb leírás hogy nézzük mit csinál ha sokkal több a szöveg ebben a box ban"},
-        
-        {id:3,nev:"Bajai Tomato",email:"bajatomato@gmail.com",telefon:"06 70 3799464",parkolo:1,bankkartlya:0,glutenmentes:0,terasz:0,berelheto:0,cim:"6500 Baja Jónai utca 12",leiras:"Egy kicsi de konfortos pizzéria"},
-        {id:4,nev:"Bajai Tomato",email:"bajatomato@gmail.com",telefon:"06 70 3799465",parkolo:0,bankkartlya:0,glutenmentes:0,terasz:0,berelheto:1,cim:"6500 Baja Jónai utca 12",leiras:"Egy kicsi de konfortos pizzéria"},
-    
-        {id:6,nev:"Bajai Tomato",email:"bajatomato@gmail.com",telefon:"06 70 3799467",parkolo:0,bankkartlya:0,glutenmentes:0,terasz:1,berelheto:0,cim:"6500 Baja Jónai utca 12",leiras:"Egy kicsi de konfortos pizzéria"}
-    ];
-    $scope.etlap=[
+    $scope.ModID=0;
+    dbfactory.admindingingselect().then(function(res){
+        if(res.data.length>0)
+        {
+            $scope.ettermek=res.data;
+        }
+       //console.log(res.data.length);
+    });
+   /* $scope.etlap=[
         {id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:2,nev:"Harcsa leves",ar:950,leiras:"Harkcsa hús leves zöldségekkel"},
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:4,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
         {id:5,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"}
-    ];
+    ];*/
     $scope.selectRow=function($id){
-       $scope.ujID=$scope.ettermek[$id].id;
-        $scope.ujnev=$scope.ettermek[$id].nev;
-        $scope.ujemail=$scope.ettermek[$id].email;
-        $scope.ujtelefon=$scope.ettermek[$id].telefon;
-        $scope.ujcim=$scope.ettermek[$id].cim;
-        $scope.ujleiras=$scope.ettermek[$id].leiras;
-        $scope.parkolo=$scope.ettermek[$id].parkolo;
-        $scope.ujparkolo=$scope.ettermek[$id].parkolo;
+       $scope.ModID=$scope.ettermek[$id].ID;
+        $scope.ujnev=$scope.ettermek[$id].Nev;
+        $scope.ujemail=$scope.ettermek[$id].Email;
+        $scope.ujtelefon=$scope.ettermek[$id].Telefon;
+        $scope.ujcim=$scope.ettermek[$id].Cim;
+        $scope.ujleiras=$scope.ettermek[$id].Leiras;
+       // $scope.parkolo=$scope.ettermek[$id].Parkolo;
+        $scope.ujparkolo=($scope.ettermek[$id].Parkolo)? true : false;
+        $scope.ujbankkartya=($scope.ettermek[$id].Bankkartya)? true : false;
+        $scope.ujglutenmentes=($scope.ettermek[$id].Glutenmentes)? true : false;
+        $scope.ujterasz=($scope.ettermek[$id].Terasz)? true : false;
+        $scope.ujberelheto=($scope.ettermek[$id].Berelheto)? true : false;
+        $scope.ujhazhozszallitas=($scope.ettermek[$id].Hazhozszallitas)? true : false;
+        $scope.ujferohely=$scope.ettermek[$id].Ferohely;
+        $scope.ujstatusz=($scope.ettermek[$id].Statusz)? true : false;
         $rootScope.felvesz=0;
+    }
+    $scope.update=function()
+    {
+        //alert($scope.ujparkolo);
+        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+
+        })
     }
     $scope.unselectRow=function()
     {
@@ -44,7 +57,13 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location){
         $scope.ujtelefon=null;
         $scope.ujcim=null;
         $scope.ujleiras=null;
-        $scope.parkolo=null;
+        $scope.ujparkolo=null;
+        $scope.ujbankkartya=null;
+        $scope.ujglutenmentes=null;
+        $scope.ujterasz=null;
+        $scope.ujberelheto=null;
+        $scope.ujhazhozszallitas=null
+        $scope.ujferohely=null;
         $rootScope.felvesz=1;
         
     }

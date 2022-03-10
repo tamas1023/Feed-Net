@@ -1,6 +1,20 @@
 app.factory('dbfactory', function($http, $q) {
     let url = 'http://localhost:8080';
     return {
+        //session lekérés
+        session:function() {
+            let deferred = $q.defer();
+            $http.post(url + '/session').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         logincheck: function( email, pass) {
             let deferred = $q.defer();
             let data = {
@@ -66,6 +80,55 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+        //admin Étlap
+        
+        //admin étlap select
+
+        admindingingselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/admindiningselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //admin étlap update
+
+        admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id,
+                Nev:nev,
+                Email: email,
+                Telefon:telefon,
+                Cim:cim,
+                Ferohely:ferohely,
+                Leiras:leiras,
+                Parkolo:parkolo,
+                Bankkartya:bankkartya,
+                Glutenmentes:glutenmentes,
+                Terasz:terasz,
+                Berelheto:berelheto,
+                Hazhozszallitas:hazhozszallitas,
+                Statusz:statusz
+            }
+            $http.post(url + '/admindiningupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

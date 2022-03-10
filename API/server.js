@@ -20,6 +20,12 @@ dbPool.getConnection((err,connection)=>{
     console.log("Connected to database Connid:"+connection.threadId);
 
 })
+app.post('/session',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
+  {
+    res.send(session.Rights);
+  }
+})
 app.get('/',(req,res)=>{
   if(session.Rights=="admin")
   {
@@ -30,11 +36,18 @@ app.get('/',(req,res)=>{
     });
   }
 });
+
+    //Log out
+
 app.get('/logout',(req,res)=>{
     session.Rights="user";
     session.LoggedIn=false;
+    res.json({message:"ok"});
     //console.log(session.LoggedIn);
 })
+
+    //login
+
 app.post('/login', (req, res) => {
   let data = {
       email: req.body.Email,
@@ -50,9 +63,18 @@ app.post('/login', (req, res) => {
         session.LoggedIn=true;
         jog=results[0].Jog;
       }
-      console.log(session.LoggedIn);
+      //console.log(session.LoggedIn);
   });
+
+    //belépési dátum
+  dbPool.query(`UPDATE felhasznalok SET Belepes=CURRENT_TIME WHERE Email='${data.email}'`,(err,resluts)=>{
+    if(err)throw err;
+    //console.log('sikeres dátum frissítés');
+  })
 });
+
+  //registration
+
 app.post("/reg",(req,res)=>{
   let data = {
     email: req.body.Email,
@@ -69,35 +91,140 @@ dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.na
 // check if email already exists
 
 app.post('/emailcheck',(req,res)=>{
-  let data = {
-    email: req.body.Email,
-  }
-  let Email=req.body.Email;
-  console.log(Email);
-  //let email=req.body.Email;
-  //console.log(email);
-  dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-});
-})
-
-//registration
-
-app.post('/reg', (req, res) => {
-  let data = {
+    let data = {
       email: req.body.Email,
-      pass: req.body.passwd,
-  }
-  dbPool.query(`INSERT INTO felhasznalok VALUES(null,)`, (err, results) => {
+    }
+    let Email=req.body.Email;
+    console.log(Email);
+    //let email=req.body.Email;
+    //console.log(email);
+    dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
       if (err) throw err;
       res.json(results);
-      //console.log(results[0].Jog);
-
   });
 });
 
+  //admin Étterem
 
+  //admin select
+  app.get('/admindiningselect',(req,res)=>{
+    if(session.Rights=="admin")
+    {
+      dbPool.query('SELECT * FROM ettermek',(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      });
+    }
+    else
+    {
+      res.json({message:"Nem kérheted ezeket le"});
+    }
+  });
+  
+  //admin étterem update
+
+app.post('/admindiningupdate',(req,res)=>{
+  let data = {
+    id:req.body.ID,
+    nev:req.body.Nev,
+    email: req.body.Email,
+    telefon:req.body.Telefon,
+    cim:req.body.Cim,
+    ferohely:req.body.Ferohely,
+    leiras:req.body.Leiras,
+    parkolo:req.body.Parkolo,
+    bankkartya:req.body.Bankkartya,
+    glutenmentes:req.body.Glutenmentes,
+    terasz:req.body.Terasz,
+    berelheto:req.body.Berelheto,
+    hazhozszallitas:req.body.Hazhozszallitas,
+    statusz:req.body.Statusz
+  }
+  dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+    console.log('sikeres módosítás');
+  });
+})
+
+  //admin étterem felvétel
+
+app.post('/admindininginsert',(req,res)=>{
+    let data = {
+      id:req.body.ID,
+      nev:req.body.Nev,
+      email: req.body.Email,
+      telefon:req.body.Telefon,
+      cim:req.body.Cim,
+      ferohely:req.body.Ferohely,
+      leiras:req.body.Leiras,
+      parkolo:req.body.Parkolo,
+      bankkartya:req.body.Bankkartya,
+      glutenmentes:req.body.Glutenmentes,
+      terasz:req.body.Terasz,
+      berelheto:req.body.Berelheto,
+      hazhozszallitas:req.body.Hazhozszallitas,
+      statusz:req.body.Statusz
+    }
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz})`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+      console.log('sikeres felvétel');
+    });
+})
+
+  //admin étlap select
+
+app.post('/adminfoodselect',(req,res)=>{
+  /*let data = {
+    id:req.body.ID
+  }*/
+  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
+})
+
+  //admin étlap delete
+
+app.post('/adminfooddelete',(req,res)=>{
+  dbPool.query(`DELETE FROM etlap WHERE ID=${req.body.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"törlve lett"});
+  })
+})
+
+  //admin étlap felvétel
+
+app.post('/adminfoodinsert',(req,res)=>{
+  let data={
+    etteremid:req.body.EtteremID,
+    nev:req.body.Nev,
+    ar:req.body.Ar,
+    leiras:req.body.Leiras
+  }
+  dbPool.query(`INSTER INTO etlap WHERE VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"felvéve lett étel"});
+  })
+})
+
+
+  //admin étlap módosítás
+
+app.post('/adminfoodupdate',(req,res)=>{
+  let data={
+    id:req.body.ID,
+    etteremid:req.body.EtteremID,
+    nev:req.body.Nev,
+    ar:req.body.Ar,
+    leiras:req.body.Leiras
+  }
+  dbPool.query(`UPDATE etlap SET ID=${data.id}, Etterem_ID=${data.etteremid},Nev='${data.nev}',Ar=${data.ar},Leiras='${data.leiras}' WHERE ID=${data.id} AND Etterem_ID=${data.etteremid} `,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"felvéve lett étel"});
+  })
+})
 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
