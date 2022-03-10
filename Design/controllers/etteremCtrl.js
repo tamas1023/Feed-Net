@@ -1,4 +1,17 @@
 app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
+    if (sessionStorage.getItem('User')) {
+        $rootScope.loggedIn = true;
+        $rootScope.logJog = angular.fromJson(sessionStorage.getItem('User'));
+    } else {
+        $rootScope.loggedIn = false;
+        $rootScope.logJog = "";
+    }
+    dbfactory.session().then(function(res){
+        //console.log(res.data);
+        sessionStorage.setItem('User', angular.toJson(res.data));
+        $rootScope.logJog=res.data;
+        //$location.path("#!/");
+    })
 
     /* db factory ha lesz akkor itt fellül kell mit a location 
     a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
@@ -46,7 +59,14 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     {
         //alert($scope.ujparkolo);
         dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-
+            
+            dbfactory.admindingingselect().then(function(res){
+                if(res.data.length>0)
+                {
+                    $scope.ettermek=res.data;
+                }
+               //console.log(res.data.length);
+            });
         })
     }
     $scope.unselectRow=function()
@@ -127,8 +147,15 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                 $scope.ujhazhozszallitas=( $scope.ujhazhozszallitas)? true : false;
                 $scope.ujstatusz=( $scope.ujstatusz)? true : false;
                 dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-                    
+                    dbfactory.admindingingselect().then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.ettermek=res.data;
+                        }
+                       //console.log(res.data.length);
+                    });
                 })
+                
             }
         })
        

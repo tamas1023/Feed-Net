@@ -82,9 +82,9 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
-        //admin Étlap
+        //admin Étterem
         
-        //admin étlap select
+        //admin Étterem select
 
         admindingingselect:function() {
             let deferred = $q.defer();
@@ -99,7 +99,7 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
-        //admin étlap update
+        //admin Étterem update
 
         admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
             let deferred = $q.defer();
@@ -130,7 +130,7 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
-         //admin étlap insert
+         //admin Étterem insert
          admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
             let deferred = $q.defer();
             let data = {
@@ -167,6 +167,26 @@ app.factory('dbfactory', function($http, $q) {
                 id:ID
             }
             $http.post(url + '/adminfoodselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+         //admin étlap insert
+        
+         adminfoodinsert:function(etteremID,nev,ar,leiras) {
+            let deferred = $q.defer();
+            let data = {
+                EtteremID:etteremID,
+                Nev:nev,
+                Ar:ar,
+                Leiras:leiras
+            }
+            $http.post(url + '/adminfoodinsert',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },

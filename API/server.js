@@ -210,7 +210,6 @@ app.post('/adminfoodinsert',(req,res)=>{
   })
 })
 
-
   //admin étlap módosítás
 
 app.post('/adminfoodupdate',(req,res)=>{
