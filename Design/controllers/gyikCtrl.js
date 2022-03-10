@@ -1,4 +1,4 @@
-app.controller('gyikCtrl',function($rootScope,$scope){
+app.controller('gyikCtrl',function($rootScope,$scope,dbfactory){
     $rootScope.sidebar=false;
     if (sessionStorage.getItem('User')) {
         $rootScope.loggedIn = true;

@@ -1,14 +1,35 @@
-app.controller('etteremetlapCtrl',function($scope,$rootScope,$location){
+app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory){
 
     $rootScope.felvesz2=1;
         $scope.etteremad=0;
         $scope.ujnevetel=null;
         $scope.ujar=null;
         $scope.ujleirasetel=null;
-        $scope.etlap=[{id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-       
-        {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
+        $scope.etlap=[];
+        //alert($rootScope.selectedetteremID);
+        dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+            if(res.data.length>0)
+            {
+                $scope.etlap=res.data;
+            }
+           //console.log(res.data.length);
+        });
         $scope.visszavaltas=function(){
             $location.path('#!/admin');
+        }
+        $scope.selectRowEtlap=function($id)
+        {
+            $scope.ujID=$scope.etlap[$id].Id;
+            $scope.ujnevetel=$scope.etlap[$id].Nev;
+            $scope.ujar=$scope.etlap[$id].Ar;
+            $scope.ujleirasetel=$scope.etlap[$id].Leiras;
+            $rootScope.felvesz2=0;
+        }
+        $scope.unselectRowEtlap=function(){
+            $rootScope.felvesz2=1;
+            $scope.ujnevetel=null;
+            $scope.ujar=null;
+            $scope.ujleirasetel=null;
+            
         }
 })

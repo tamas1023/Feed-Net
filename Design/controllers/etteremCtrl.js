@@ -64,6 +64,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujberelheto=null;
         $scope.ujhazhozszallitas=null
         $scope.ujferohely=null;
+        $scope.ujstatusz=null;
         $rootScope.felvesz=1;
         
     }
@@ -79,7 +80,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
        
         {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
 
-       $location.url('/admin/etlap/'+$id);
+       $location.url('/admin/etlap/'+$rootScope.selectedetteremID);
     }
     $scope.selectRowEtlap=function($id)
     {
@@ -108,5 +109,28 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $rootScope.felvesz2=1;
         $rootScope.felvesz=1;
         $scope.etteremad=1;
+    }
+    $scope.insert=function()
+    {
+        dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+            if(res.data.length>0)
+            {
+                alert('Ez az email cím már foglalat');
+            }
+            else
+            {
+                $scope.ujparkolo=($scope.ujparkolo)? true : false;
+                $scope.ujbankkartya=($scope.ujbankkartya)? true : false;
+                $scope.ujglutenmentes=($scope.ujglutenmentes)? true : false;
+                $scope.ujterasz=($scope.ujterasz)? true : false;
+                $scope.ujberelheto=( $scope.ujberelheto)? true : false;
+                $scope.ujhazhozszallitas=( $scope.ujhazhozszallitas)? true : false;
+                $scope.ujstatusz=( $scope.ujstatusz)? true : false;
+                dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                    
+                })
+            }
+        })
+       
     }
 });

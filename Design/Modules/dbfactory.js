@@ -65,9 +65,10 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
         //email check
-        emailcheck: function(email) {
+        emailcheck: function(table,email) {
             let deferred = $q.defer();
             let data = {
+                Table:table,
                 Email: email,
             }
             $http.post(url + '/emailcheck', data).then(
@@ -128,6 +129,54 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+         //admin étlap insert
+         admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id,
+                Nev:nev,
+                Email: email,
+                Telefon:telefon,
+                Cim:cim,
+                Ferohely:ferohely,
+                Leiras:leiras,
+                Parkolo:parkolo,
+                Bankkartya:bankkartya,
+                Glutenmentes:glutenmentes,
+                Terasz:terasz,
+                Berelheto:berelheto,
+                Hazhozszallitas:hazhozszallitas,
+                Statusz:statusz
+            }
+            $http.post(url + '/admindininginsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //admin étlap select
+        
+        adminfoodselect:function(ID) {
+            let deferred = $q.defer();
+            let data = {
+                id:ID
+            }
+            $http.post(url + '/adminfoodselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
 
         // SELECT ALL
         selectAll: function(tablename) {

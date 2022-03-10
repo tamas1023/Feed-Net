@@ -92,13 +92,14 @@ dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.na
 
 app.post('/emailcheck',(req,res)=>{
     let data = {
+      table: req.body.Table,
       email: req.body.Email,
     }
-    let Email=req.body.Email;
-    console.log(Email);
+
+    //console.log(Email);
     //let email=req.body.Email;
     //console.log(email);
-    dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
+    dbPool.query(`SELECT * FROM ${data.table} WHERE Email='${data.email}'`, (err, results) => {
       if (err) throw err;
       res.json(results);
   });
@@ -143,7 +144,7 @@ app.post('/admindiningupdate',(req,res)=>{
   dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
     if(err)throw err;
     res.json(results);
-    console.log('sikeres módosítás');
+    //console.log('sikeres módosítás');
   });
 })
 
@@ -176,10 +177,10 @@ app.post('/admindininginsert',(req,res)=>{
   //admin étlap select
 
 app.post('/adminfoodselect',(req,res)=>{
-  /*let data = {
-    id:req.body.ID
-  }*/
-  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+  let data = {
+    ID:req.body.id
+  }
+  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${data.ID}`,(err,results)=>{
     if(err)throw err;
     res.json(results);
   })
