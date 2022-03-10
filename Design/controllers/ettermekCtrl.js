@@ -4,18 +4,11 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
     $scope.feltétel=1;
     $scope.ettermek=[];
     dbfactory.selectCustom("ettermek",$scope.feltétel).then(function(res) {
-        if (res.data.length > 0) {
-            
-            console.log(res.data);
+        if (res.data.length > 0) { 
             $scope.ettermek=res.data;
-        } else {
-            
-            
-        }
-        
+        } 
     });
-    console.log("Étterem");
-    console.log($scope.ettermek);
+    
     /*
     $scope.ettermek=[
         {id:1,nev:"Bajai Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"3 ",kartya:1},

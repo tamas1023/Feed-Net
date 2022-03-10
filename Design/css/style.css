@@ -58,6 +58,14 @@ img{
 {
     padding-left: 80px;
     padding-right: 80px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background-color: var(--highlight);
+    color: var(--szin);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 #main {
     position: fixed;
@@ -70,16 +78,6 @@ img{
     margin-bottom: 80px;
     z-index: 0;
 }
-.jobboldal{
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    background-color: var(--highlight);
-    color: var(--szin);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
 #kereses{
     margin:0 auto;
     margin-top: 5px;
@@ -90,14 +88,6 @@ img{
 }
 #kereses input{
     width: 50%;
-}
-#kereses button{
-    
-    /*background-color: var(--lesshighlight);*/
-}
-#kereses button:hover{
-    /*background-color: var(--btnhover);*/
-
 }
 #adminkereses{
     margin:0 auto;
@@ -242,13 +232,10 @@ a:hover{
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
-/* ideiglenes de a vásznas megodáshoz ez nem kell
-#kepek .carousel-item img{
-    object-fit: cover;
-    object-position: center;
-    height: 40vh;
-}*/
+#cimresz{
+    width: 100%;
+    z-index: 100;
+}
 #kivalasztott{
     display: flex;
     justify-content: center;
