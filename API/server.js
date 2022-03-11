@@ -43,7 +43,6 @@ app.post('/selectCustom', (req, res) => {
   }
   dbPool.query(`SELECT * FROM ${data.tablename} WHERE  ${data.select}`, (err, results) => {
       if (err) throw err;
-      
       res.json(results);
   });
 });

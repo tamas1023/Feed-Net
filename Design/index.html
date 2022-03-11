@@ -91,6 +91,10 @@
     <p href="javascript:void(0)" class="closebtn" onclick="">×</p>
     <h3>Csillagos értékelés</h3>
     <div class="szurokwrap">
+      <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
+      <label for="" class="szurok">Nyitva van-e?</label>
+    </div>
+    <div class="szurokwrap">
       <input type="checkbox" ng-model="kartyaszures" ng-checked="kartyaszures" >
       <label for="" class="szurok">Kártyaelfogadó hely</label>
     </div>
@@ -102,10 +106,7 @@
       <input type="checkbox" ng-model="gluten" ng-checked="gluten==1">
       <label for="" class="szurok">Gluténmentes étel </label>
     </div>
-    <div class="szurokwrap">
-      <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
-      <label for="" class="szurok">Nyitva van-e?</label>
-    </div>
+    
     <div class="szurokwrap">
       <input type="checkbox" ng-model="szallitas" ng-checked="szallitas==1">
       <label for="" class="szurok">Házhozszállítás</label>
