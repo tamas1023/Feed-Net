@@ -197,6 +197,45 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //admin étlap delete
+
+        adminfooddelete:function(ID) {
+            let deferred = $q.defer();
+            let data = {
+                id:ID
+            }
+            $http.post(url + '/adminfooddelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //admin étlap update
+
+        adminfoodupdate:function(id,etteremid,nev,ar,leiras) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id,
+                EtteremID:etteremid,
+                Nev:nev,
+                Ar:ar,
+                Leiras:leiras
+            }
+            $http.post(url + '/adminfoodupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
 
         // SELECT ALL
         selectAll: function(tablename) {

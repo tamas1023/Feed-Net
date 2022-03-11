@@ -1,17 +1,5 @@
 app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
-    if (sessionStorage.getItem('User')) {
-        $rootScope.loggedIn = true;
-        $rootScope.logJog = angular.fromJson(sessionStorage.getItem('User'));
-    } else {
-        $rootScope.loggedIn = false;
-        $rootScope.logJog = "";
-    }
-    dbfactory.session().then(function(res){
-        //console.log(res.data);
-        sessionStorage.setItem('User', angular.toJson(res.data));
-        $rootScope.logJog=res.data;
-        //$location.path("#!/");
-    })
+
 
     /* db factory ha lesz akkor itt fellül kell mit a location 
     a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja

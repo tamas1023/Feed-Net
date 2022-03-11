@@ -19,11 +19,12 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         }
         $scope.selectRowEtlap=function($id)
         {
-            $scope.ujID=$scope.etlap[$id].Id;
+            $scope.ujID=$scope.etlap[$id].ID;
             $scope.ujnevetel=$scope.etlap[$id].Nev;
             $scope.ujar=$scope.etlap[$id].Ar;
             $scope.ujleirasetel=$scope.etlap[$id].Leiras;
             $rootScope.felvesz2=0;
+            //alert($scope.ujID);
         }
         $scope.unselectRowEtlap=function(){
             $rootScope.felvesz2=1;
@@ -40,6 +41,32 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                     {
                         $scope.etlap=res.data;
                     }
+                   //console.log(res.data.length);
+                });
+            })
+        }
+        $scope.deleteRecord=function()
+        {
+            dbfactory.adminfooddelete($scope.ujID).then(function(res){
+                dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                    if(res.data.length>0)
+                    {
+                        $scope.etlap=res.data;
+                    }
+                    $scope.unselectRowEtlap();
+                   //console.log(res.data.length);
+                });
+            })
+        }
+        $scope.updateEtlap=function()
+        {
+            dbfactory.adminfoodupdate($scope.ujID,$rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar,$scope.ujleirasetel).then(function(res){
+                dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                    if(res.data.length>0)
+                    {
+                        $scope.etlap=res.data;
+                    }
+                    $scope.unselectRowEtlap();
                    //console.log(res.data.length);
                 });
             })

@@ -3,8 +3,11 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
     $rootScope.sidebar=false;
-    sessionStorage.removeItem('User');
-    dbfactory.logout().then(function(res){});
+    //sessionStorage.removeItem('User');
+    dbfactory.logout().then(function(res){
+        $rootScope.loggedIn=false;
+        $rootScope.logJog="";
+    });
     $scope.login=function(){
         //alert("belepett");
          if ($scope.email == null || $scope.jelszo == null) {
@@ -20,7 +23,7 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
                      $location.path("#!/");
                      //alert(res.data[0].Jog);
                      //$rootScope.loggedUser = $scope.username;
-                     sessionStorage.setItem('User', angular.toJson($rootScope.logJog));
+                     //sessionStorage.setItem('User', angular.toJson($rootScope.logJog));
                  } else {
                      alert('Hibás belépési adatok!');
                  }

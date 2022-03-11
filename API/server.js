@@ -4,6 +4,7 @@ const dbPool=require('./dbModel/DatabaseModel');
 const session = require('express-session');
 const cors=require("cors");
 const { json } = require('express');
+const { Session } = require('express-session');
 require('dotenv').config();
 var jog="";
 const port = process.env.PORT || 3000;
@@ -40,10 +41,12 @@ app.get('/',(req,res)=>{
     //Log out
 
 app.get('/logout',(req,res)=>{
-    session.Rights="user";
+    session.Rights="";
     session.LoggedIn=false;
+    req.session.destroy();
+
     res.json({message:"ok"});
-    //console.log(session.LoggedIn);
+    console.log(session.LoggedIn);
 })
 
     //login
@@ -59,6 +62,7 @@ app.post('/login', (req, res) => {
       //console.log(results[0].Jog);
       if(results.length>0)
       {
+        sesssion=req.session
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
         jog=results[0].Jog;
@@ -204,7 +208,7 @@ app.post('/adminfoodinsert',(req,res)=>{
     ar:req.body.Ar,
     leiras:req.body.Leiras
   }
-  dbPool.query(`INSTER INTO etlap WHERE VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
+  dbPool.query(`INSERT INTO etlap VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
     if(err)throw err;
     res.json({message:"felvéve lett étel"});
   })
