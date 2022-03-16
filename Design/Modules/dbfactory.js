@@ -239,10 +239,78 @@ app.factory('dbfactory', function($http, $q) {
 
 
         //felhasználók
+
         //felhasználók kilistázása
+
         userselect:function() {
             let deferred = $q.defer();
             $http.get(url + '/userselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //felhasználók insert
+
+        userinsert:function(id,email,nev,telefon,pass,jog,statusz) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id,
+                Email:email,
+                Name:nev,
+                Telefon:telefon,
+                passwd:pass,
+                Jog:jog,
+                Statusz:statusz
+            }
+            $http.post(url + '/userinsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //felhasználó update
+
+        userupdate:function(id,email,nev,telefon,pass,jog,statusz) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id,
+                Email:email,
+                Name:nev,
+                Telefon:telefon,
+                passwd:pass,
+                Jog:jog,
+                Statusz:statusz
+            }
+            $http.post(url + '/userupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //felhasználók delete
+
+        userdelete:function(id) {
+            let deferred = $q.defer();
+            let data = {
+                ID:id
+            }
+            $http.post(url + '/userdelete',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },

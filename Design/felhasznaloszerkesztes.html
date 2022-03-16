@@ -23,7 +23,12 @@
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="floatingInput"  ng-model="ujtelefon" placeholder="teszt@email.com">
                   <label for="floatingInput">Telefon</label>
-                </div>                
+                </div> 
+                 
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput"  ng-model="ujpass" placeholder="t">
+                  <label for="floatingInput">Jelszó</label>
+                </div>               
                 <label for="jog">Jog:</label>
                 <select name="nem" id=""ng-model="ujjog" class="form-control" ng-disabled="admin">
                   <option value="user">felhasználó</option>
@@ -31,11 +36,11 @@
                   <option value="etterem">Étterem</option>
                 </select>
                <label for="Statusz">Státusz:</label>
-                <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="statusz==1" ng-disabled="admin" ><br>
-                <button class="btn btn-warning" ng-if="felvesz==1" ng-click="felvesz()">Felvesz</button>
+                <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="ujstatusz==1" ng-disabled="admin" ><br>
+               <button class="btn btn-warning" ng-if="felvesz==1" ng-click="insert()">Felvesz</button>
                 <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
                 <button class="btn btn-warning"ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
-                <button class=" btn btn-danger" ng-click="deleteRecord()" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
+                <button class=" btn btn-danger" ng-click="deleteRecord()" ng-disabled="admin" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
             </div>
           </div>
         </div>
@@ -46,14 +51,14 @@
             <tr>
               <th>Név</th>
               <th>Email</th>
-              <th>Telefon</th>
+              <th>Státusz</th>
             </tr>
           </thead>
           <tbody>
             <tr class="animate" ng-repeat="adat in felhasznalok | filter:{nev:search}" ng-click="selectRow($index)">
-              <td>{{adat.nev}}</td>
-              <td>{{adat.email}}</td>
-              <td>{{adat.telefon}}</td>
+              <td>{{adat.Nev}}</td>
+              <td>{{adat.Email}}</td>
+              <td>{{adat.Statusz}}</td>
             </tr>
           </tbody>
           <tfoot>

@@ -290,6 +290,30 @@ app.get("/userselect",(req,res)=>{
   }
 })
 
+  //admin felhasználó insert
+
+  app.post('/userinsert',(req,res)=>{
+    if(session.Rights=="admin")
+    {
+      let data = {
+        id:req.body.ID,
+        email: req.body.Email,
+        name:req.body.Name,
+        telefon:req.body.Telefon,
+        pass: req.body.passwd,
+        jog:req.body.Jog,
+        statusz:req.body.Statusz
+    }
+      dbPool.query(`INSERT INTO felhasznalok VALUES(NULL,'${data.email}','${data.name}','${data.pass}','${data.telefon}',CURRENT_TIME,NULL,${data.statusz},'${data.jog}');`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nem kérheted ezeket le"});
+    }
+  })
 
   //admin felhasználók update
 
@@ -305,7 +329,7 @@ app.post('/userupdate',(req,res)=>{
       jog:req.body.Jog,
       statusz:req.body.Statusz
   }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id});`,(err,results)=>{
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id};`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
