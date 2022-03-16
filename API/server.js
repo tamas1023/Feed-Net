@@ -46,7 +46,7 @@ app.get('/logout',(req,res)=>{
     req.session.destroy();
 
     res.json({message:"ok"});
-    console.log(session.LoggedIn);
+   // console.log(session.LoggedIn);
 })
 
     //login

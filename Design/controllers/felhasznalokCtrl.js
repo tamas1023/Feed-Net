@@ -9,6 +9,12 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope){
         {id:5,nev:"Jakab józsef4",email:"admin@gmail.com",telefon:"06 70 3799466",jog:"admin",statusz:1},
         {id:6,nev:"Jakab józsef5",email:"bajatomato@gmail.com",telefon:"06 70 3799467",jog:"user",statusz:0}
     ];
+    dbfactory.userselect().then(function(res){
+      if(res.data.length>0)
+      {
+          $scope.felhasznalok=res.data;
+      }
+  });
     $scope.selectRow=function(id){
          $scope.ujID=$scope.felhasznalok[id].id;
          $scope.ujnev=$scope.felhasznalok[id].nev;
