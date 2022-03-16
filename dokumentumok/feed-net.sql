@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 16. 12:26
--- Kiszolgáló verziója: 10.4.6-MariaDB
--- PHP verzió: 7.3.8
+-- Létrehozás ideje: 2022. Már 16. 21:14
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,6 +35,18 @@ CREATE TABLE `ertekeles` (
   `Ertekeles` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
   `Datum` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `ertekeles`
+--
+
+INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Ertekeles`, `Datum`) VALUES
+(1, 1, 2, 5, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(2, 2, 2, 4, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(3, 3, 2, 3, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
+(5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
+(6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41');
 
 -- --------------------------------------------------------
 
@@ -96,6 +108,18 @@ INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`
 -- --------------------------------------------------------
 
 --
+-- A nézet helyettes szerkezete `ettermek_ertekelesek`
+-- (Lásd alább az aktuális nézetet)
+--
+CREATE TABLE `ettermek_ertekelesek` (
+`Nev` varchar(1000)
+,`Kep` varchar(100)
+,`Ertekeles` decimal(12,1)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `felhasznalok`
 --
 
@@ -104,9 +128,9 @@ CREATE TABLE `felhasznalok` (
   `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Nev` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Jelszo` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `Telefon` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
+  `Telefon` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Regisztracio` datetime NOT NULL,
-  `Belepes` datetime NOT NULL,
+  `Belepes` datetime DEFAULT NULL,
   `Statusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
@@ -187,6 +211,15 @@ CREATE TABLE `nyitvatartas` (
   `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Nézet szerkezete `ettermek_ertekelesek`
+--
+DROP TABLE IF EXISTS `ettermek_ertekelesek`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS SELECT `ettermek`.`Nev` AS `Nev`, `ettermek`.`Kep` AS `Kep`, round(avg(`ertekeles`.`Pontszam`),1) AS `Ertekeles` FROM (`ettermek` join `ertekeles`) WHERE `ettermek`.`ID` = `ertekeles`.`Etterem_ID` GROUP BY `ettermek`.`Nev` ;
+
 --
 -- Indexek a kiírt táblákhoz
 --
@@ -264,7 +297,7 @@ ALTER TABLE `nyitvatartas`
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `etlap`
