@@ -15,15 +15,23 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
          } else {
              dbfactory.logincheck($scope.email, CryptoJS.SHA1($scope.jelszo).toString()).then(function(res) {
                  if (res.data.length > 0) {
-                     //bejeletkezett a felhasználó
-                     $rootScope.loggedIn = true;
-                     $rootScope.logJog=res.data[0].Jog;
-                     $rootScope.logivagyreg=false;
-                     $rootScope.sidebar=true;
-                     $location.path("#!/");
-                     //alert(res.data[0].Jog);
-                     //$rootScope.loggedUser = $scope.username;
-                     //sessionStorage.setItem('User', angular.toJson($rootScope.logJog));
+                     if(res.data[0].Statusz==1)
+                     {
+                        //bejeletkezett a felhasználó
+                        $rootScope.loggedIn = true;
+                        $rootScope.logJog=res.data[0].Jog;
+                        $rootScope.logivagyreg=false;
+                        $rootScope.sidebar=true;
+                        $location.path("#!/");
+                        //alert(res.data[0].Jog);
+                        //$rootScope.loggedUser = $scope.username;
+                        //sessionStorage.setItem('User', angular.toJson($rootScope.logJog));
+                     }
+                     else
+                     {
+                         alert('Tiltott felhasználó');
+                     }
+                    
                  } else {
                      alert('Hibás belépési adatok!');
                  }
