@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 10. 12:28
+-- Létrehozás ideje: 2022. Már 16. 12:26
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -49,6 +49,16 @@ CREATE TABLE `etlap` (
   `Ar` int(11) NOT NULL,
   `Leiras` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `etlap`
+--
+
+INSERT INTO `etlap` (`ID`, `Etterem_ID`, `Nev`, `Ar`, `Leiras`) VALUES
+(1, 1, 'Sült Tarja', 1300, 'Frissen sült Tarja'),
+(2, 1, 'Eper Torta', 2300, 'Eperrel megszort zselatin torta'),
+(3, 2, 'Sör', 450, '3 deciliteres árpa sör'),
+(4, 2, 'félédes bor', 900, 'fél literes félédes bor');
 
 -- --------------------------------------------------------
 
@@ -186,15 +196,15 @@ CREATE TABLE `nyitvatartas` (
 --
 ALTER TABLE `ertekeles`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
-  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`),
+  ADD KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`) USING BTREE;
 
 --
 -- A tábla indexei `etlap`
 --
 ALTER TABLE `etlap`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `ettermek`
@@ -213,38 +223,38 @@ ALTER TABLE `felhasznalok`
 --
 ALTER TABLE `helyfoglalas`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
-  ADD KEY `etterem_ID` (`Etterem_ID`);
+  ADD KEY `etterem_ID` (`Etterem_ID`),
+  ADD KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `hibajelentes`
 --
 ALTER TABLE `hibajelentes`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
-  ADD KEY `etterem_ID` (`Etterem_ID`);
+  ADD KEY `etterem_ID` (`Etterem_ID`),
+  ADD KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `kedvenc`
 --
 ALTER TABLE `kedvenc`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
-  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`),
+  ADD KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`) USING BTREE;
 
 --
 -- A tábla indexei `kepek`
 --
 ALTER TABLE `kepek`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
@@ -260,7 +270,7 @@ ALTER TABLE `ertekeles`
 -- AUTO_INCREMENT a táblához `etlap`
 --
 ALTER TABLE `etlap`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `ettermek`
