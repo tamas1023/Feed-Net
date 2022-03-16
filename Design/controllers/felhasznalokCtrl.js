@@ -1,14 +1,8 @@
 app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
     $scope.admin=false;
-    $scope.statusz=0;
-    $scope.felhasznalok=[
-        {id:1,nev:"Jakab józsef",email:"bajatomato@gmail.com",telefon:"06 70 3799462",jog:"user",statusz:1},
-        {id:2,nev:"Jakab józsef1",email:"bajatomato@gmail.com",telefon:"06 70 3799463",jog:"user",statusz:1},
-        {id:3,nev:"Jakab józsef2",email:"bajatomato@gmail.com",telefon:"06 70 3799464",jog:"user",statusz:1},
-        {id:4,nev:"Jakab józsef3",email:"bajatomato@gmail.com",telefon:"06 70 3799465",jog:"user",statusz:1},
-        {id:5,nev:"Jakab józsef4",email:"admin@gmail.com",telefon:"06 70 3799466",jog:"admin",statusz:1},
-        {id:6,nev:"Jakab józsef5",email:"bajatomato@gmail.com",telefon:"06 70 3799467",jog:"user",statusz:0}
-    ];
+    $scope.jelszo="";
+   // $scope.statusz=0;
+    $scope.felhasznalok=[];
     dbfactory.userselect().then(function(res){
       if(res.data.length>0)
       {
@@ -16,21 +10,22 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
       }
   });
     $scope.selectRow=function(id){
-         $scope.ujID=$scope.felhasznalok[id].id;
-         $scope.ujnev=$scope.felhasznalok[id].nev;
-         $scope.ujemail=$scope.felhasznalok[id].email;
-         $scope.ujtelefon=$scope.felhasznalok[id].telefon;
-         $scope.ujjog=$scope.felhasznalok[id].jog;
-         $scope.ujstatusz=$scope.felhasznalok[id].statusz;
-         $scope.statusz=$scope.felhasznalok[id].statusz;
-         if($scope.felhasznalok[id].jog=="admin")
+         $scope.ujID=$scope.felhasznalok[id].ID;
+         $scope.ujnev=$scope.felhasznalok[id].Nev;
+         $scope.ujemail=$scope.felhasznalok[id].Email;
+         $scope.ujtelefon=$scope.felhasznalok[id].Telefon;
+         $scope.ujpass=$scope.felhasznalok[id].Jelszo;
+         $scope.jelszo=$scope.felhasznalok[id].Jelszo;
+         $scope.ujjog=$scope.felhasznalok[id].Jog;
+         $scope.ujstatusz=$scope.felhasznalok[id].Statusz ? true:false;
+         if($scope.felhasznalok[id].Jog=="admin")
          {
-            console.log($scope.felhasznalok[id].jog,"+ id: "+id);
+            //console.log($scope.felhasznalok[id].Jog,"+ id: "+id);
             $scope.admin=true;
          }
          else
          {
-            console.log($scope.felhasznalok[id].jog,"+ id: "+id);
+            //console.log($scope.felhasznalok[id].Jog,"+ id: "+id);
             $scope.admin=false;
          }
          $rootScope.felvesz=0;
@@ -42,7 +37,73 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
         $scope.ujtelefon=null;
         $scope.ujjog=null;
         $scope.ujstatusz=null;
-        $scope.statusz=0;
+       // $scope.statusz=0;
         $rootScope.felvesz=1;
+        $scope.admin=false;
+        $scope.ujpass=null;
+     }
+     $scope.deleteRecord=function()
+     {
+        dbfactory.userdelete($scope.ujID).then(function(res){
+            dbfactory.userselect().then(function(res){
+                if(res.data.length>0)
+                {
+                    $scope.felhasznalok=res.data;
+                }
+            });
+        })
+        $scope.unselectRow();
+     }
+     $scope.insert=function()
+     { 
+        dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
+            if(res.data.length>0)
+            {
+                alert('Ez az email cím már foglalat');
+            }
+            else
+            {
+                $scope.ujstatusz=($scope.ujstatusz) ? true:false;
+               
+                let pattern =  /^[a-zA-Z0-9]{8,}$/;
+                if(!$scope.ujpass.match(pattern))
+                {
+                    alert('A jelszó nep felel meg a minimális követelményeknek');
+                }
+                else
+                {
+                    if($scope.ujtelefon==null)
+                    {
+                        $scope.ujtelefon="";
+                    }
+                    dbfactory.userinsert($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,CryptoJS.SHA1($scope.ujpass).toString(),$scope.ujjog,$scope.ujstatusz).then(function(res){
+                        dbfactory.userselect().then(function(res){
+                            if(res.data.length>0)
+                            {
+                                $scope.felhasznalok=res.data;
+                            }
+                        });
+                    })
+                }
+            }
+            $scope.unselectRow();
+        })
+     }
+     $scope.update=function()
+     { 
+         //alert($scope.jelszo,+"Új jelszó:"+$scope.ujpass)
+     if($scope.jelszo!=$scope.ujpass)
+     {
+         $scope.ujpass=CryptoJS.SHA1($scope.ujpass).toString();
+     }
+        dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
+            dbfactory.userselect().then(function(res){
+                if(res.data.length>0)
+                {
+                    $scope.felhasznalok=res.data;
+                }
+            });
+            $scope.unselectRow();
+        })
      }
 });
