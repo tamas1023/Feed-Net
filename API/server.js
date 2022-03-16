@@ -4,6 +4,7 @@ const dbPool=require('./dbModel/DatabaseModel');
 const session = require('express-session');
 const cors=require("cors");
 const { json } = require('express');
+const { Session } = require('express-session');
 require('dotenv').config();
 var jog="";
 const port = process.env.PORT || 3000;
@@ -40,10 +41,12 @@ app.get('/',(req,res)=>{
     //Log out
 
 app.get('/logout',(req,res)=>{
-    session.Rights="user";
+    session.Rights="";
     session.LoggedIn=false;
+    req.session.destroy();
+
     res.json({message:"ok"});
-    //console.log(session.LoggedIn);
+   // console.log(session.LoggedIn);
 })
 
     //login
@@ -59,6 +62,7 @@ app.post('/login', (req, res) => {
       //console.log(results[0].Jog);
       if(results.length>0)
       {
+        sesssion=req.session
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
         jog=results[0].Jog;
@@ -92,13 +96,14 @@ dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.na
 
 app.post('/emailcheck',(req,res)=>{
     let data = {
+      table: req.body.Table,
       email: req.body.Email,
     }
-    let Email=req.body.Email;
-    console.log(Email);
+
+    //console.log(Email);
     //let email=req.body.Email;
     //console.log(email);
-    dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`, (err, results) => {
+    dbPool.query(`SELECT * FROM ${data.table} WHERE Email='${data.email}'`, (err, results) => {
       if (err) throw err;
       res.json(results);
   });
@@ -143,7 +148,7 @@ app.post('/admindiningupdate',(req,res)=>{
   dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
     if(err)throw err;
     res.json(results);
-    console.log('sikeres módosítás');
+    //console.log('sikeres módosítás');
   });
 })
 
@@ -176,10 +181,10 @@ app.post('/admindininginsert',(req,res)=>{
   //admin étlap select
 
 app.post('/adminfoodselect',(req,res)=>{
-  /*let data = {
-    id:req.body.ID
-  }*/
-  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+  let data = {
+    ID:req.body.id
+  }
+  dbPool.query(`SELECT * FROM etlap WHERE Etterem_ID=${data.ID}`,(err,results)=>{
     if(err)throw err;
     res.json(results);
   })
@@ -203,12 +208,11 @@ app.post('/adminfoodinsert',(req,res)=>{
     ar:req.body.Ar,
     leiras:req.body.Leiras
   }
-  dbPool.query(`INSTER INTO etlap WHERE VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
+  dbPool.query(`INSERT INTO etlap VALUES(NULL,${data.etteremid},'${data.nev}',${data.ar},'${data.leiras}')`,(err,results)=>{
     if(err)throw err;
     res.json({message:"felvéve lett étel"});
   })
 })
-
 
   //admin étlap módosítás
 
