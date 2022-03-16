@@ -1,4 +1,4 @@
-app.controller('felhasznalokCtrl',function($scope,$rootScope){
+app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
     $scope.admin=false;
     $scope.statusz=0;
     $scope.felhasznalok=[
