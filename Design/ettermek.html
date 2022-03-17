@@ -7,12 +7,12 @@
     </div>
     
     <div id="ettermek"  class="row m-0 p-0">
-      <div id="etterem" ng-repeat="ett in ettermek | filter:{Nev:keres} | filter:{kartya:kartyaszures}" class="col-12 col-md-6 col-s-12">
+      <div id="etterem" ng-repeat="ett in ettermek | filter:{Nev:keres}" class="col-12 col-md-6 col-s-12">
         <img src="{{ett.Kep}}" alt="">
         <br><br>
         <h2>{{ett.Nev}}</h2>
         
-        <h2 >{{ett.ertekeles}} <i class="bi bi-star-fill"></i></h2>
+        <h2 >{{ett.Ertekeles}}<i class="bi bi-star-fill"></i></h2>
         
       </div>
       <!--<div id="etterem" class="col-12 col-md-6">

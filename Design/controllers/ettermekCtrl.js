@@ -1,9 +1,10 @@
-app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
+app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
-    $rootScope.feltetel="1";
+    $rootScope.feltetel="";
+    $rootScope.alapfeltetel="1";
     $scope.ettermek=[];
-    dbfactory.selectCustom("ettermek",$rootScope.feltetel).then(function(res) {
+    dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
         if (res.data.length > 0) { 
             
             $scope.ettermek=res.data;
@@ -23,6 +24,9 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
     ]
 
     $scope.Szures=function () {
+        
+        
+
         
         $rootScope.feltetel="1";
         $scope.feltetelek=[];
@@ -57,11 +61,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
         }
         
         
-        /*
-        alert($scope.feltetelek.length);
-        alert($scope.feltetelek);
-        console.log($scope.feltetelek);
-        */
+
 
         $rootScope.feltetel=" ";
         for (let i = 0; i < $scope.feltetelek.length; i++) {
@@ -83,13 +83,19 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory){
         //is benne van, ha nincs nyitv. akkor csak ami most van az is jó
 
         //valamiért nem frissíti az index.html-t de már a lekérés jó
+        console.log($rootScope.feltetel);
         if ($rootScope.feltetel!=" ") {
             dbfactory.selectCustom("ettermek",$rootScope.feltetel).then(function(res) {
                 if (res.data.length > 0) {
                     
                     $scope.ettermek=res.data;
+                    //az include olt oldal újratöltése
+                    //elvileg ha kitöröljük/frissítjük az éttermeket
+                    //akkor frissül a weboldal is?? csak valamiért nem frissül 
+                    
                     console.log(res.data);
                     console.log($scope.ettermek);
+                    //console.log($scope.ettermek[1].Nev);
                     console.log("Jó");
                 } else {
                     
