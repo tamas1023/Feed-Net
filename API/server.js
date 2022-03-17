@@ -356,6 +356,56 @@ app.post('/userdelete',(req,res)=>{
   }
 })
 
+    //admin hibajelentés delete
+
+app.post('/errordelete',(req,res)=>{
+  if(session.Rights=="admin")
+  {
+    dbPool.query(`DELETE FROM hibajelentes WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+  //etterem rendelések select
+
+
+app.post("/etteremselect",(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    dbPool.query(`SELECT * FROM helyfoglalas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+//etterem rendelések delete
+
+app.post("/etteremdelete",(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+        res.json({message:"ok"});
+      
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
