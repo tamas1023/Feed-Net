@@ -3,12 +3,12 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
     $rootScope.logivagyreg=false;
     $rootScope.feltetel="";
     $rootScope.alapfeltetel="1";
-    $scope.ettermek=[];
+    $rootScope.ettermek=[];
     dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
         if (res.data.length > 0) { 
             
-            $scope.ettermek=res.data;
-            console.log($scope.ettermek);
+            $rootScope.ettermek=res.data;
+            console.log($rootScope.ettermek);
         } 
         
     });
@@ -83,27 +83,33 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
         //is benne van, ha nincs nyitv. akkor csak ami most van az is jó
 
         //valamiért nem frissíti az index.html-t de már a lekérés jó
-        console.log($rootScope.feltetel);
-        if ($rootScope.feltetel!=" ") {
-            dbfactory.selectCustom("ettermek",$rootScope.feltetel).then(function(res) {
-                if (res.data.length > 0) {
-                    
-                    $scope.ettermek=res.data;
-                    //az include olt oldal újratöltése
-                    //elvileg ha kitöröljük/frissítjük az éttermeket
-                    //akkor frissül a weboldal is?? csak valamiért nem frissül 
-                    
-                    console.log(res.data);
-                    console.log($scope.ettermek);
-                    //console.log($scope.ettermek[1].Nev);
-                    console.log("Jó");
-                } else {
-                    
-                    console.log(res.data);
-                    console.log("Nem jó");
-                }
-            });
+        //console.log($rootScope.feltetel);
+        if ($rootScope.feltetel==" ") {
+            $rootScope.feltetel=" 1";
         } 
+        
+
+        // megoldani hogy vagy hozzáadjuk a viewtable be a szűréseket
+        // vagy a szűrést külön végezzük és az alapján a viewtable ből kikérjük   ?
+        dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel).then(function(res) {
+            if (res.data.length > 0) {
+                
+                $rootScope.ettermek=res.data;
+                //az include olt oldal újratöltése
+                //elvileg ha kitöröljük/frissítjük az éttermeket
+                //akkor frissül a weboldal is?? csak valamiért nem frissül 
+                
+                console.log(res.data);
+                console.log($rootScope.ettermek);
+                //console.log($scope.ettermek[1].Nev);
+                console.log("Jó");
+            } else {
+                
+                console.log(res.data);
+                console.log("Nem jó");
+            }
+        });
+
     }
     
 
