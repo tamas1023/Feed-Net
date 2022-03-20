@@ -64,7 +64,7 @@
               <a class="nav-link" aria-current="page" href="#!/" >Főoldal</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" ng-if="loggedIn==true" href="#!/kedvencek">Kedvencek</a>
+              <a class="nav-link" ng-if="loggedIn==true&&logJog=='admin'||logJog=='user'" href="#!/kedvencek">Kedvencek</a>
             </li>
             <li class="nav-item">
               <a class="nav-link"  href="#!/gyik">GYIK</a>
