@@ -7,7 +7,8 @@
       <table class="table table-striped table-sm">
         <thead>
           <tr>
-            <th>Név</th>
+            <th>Étterem</th>
+            <th>Felhasználó</th>
             <th>Tipus</th>
             <th>Leiras</th>
             <td></td>
@@ -15,7 +16,8 @@
         </thead>
         <tbody>
           <tr class="animate" ng-repeat="adat in hibak | filter:{Nev:search}" ng-click="selectRow($index)">
-            <td>{{adat.Nev}}</td>
+            <td>{{adat.Etterem_ID}}</td>
+            <td>{{adat.Felhasznalo_ID}}</td>
             <td>{{adat.Tipus}}</td>
             <td>{{adat.Leiras}}</td>
             <td><button class=" btn btn-danger" ng-click="egyvalaszt($index)" data-bs-toggle="modal" data-bs-target="#torol"><i class="bi bi-x-lg" ></i></button></td></td>
@@ -35,11 +37,11 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Biztosan törölni akarja ezt az adatot?{{torolegyid}}
+              Biztosan törölni akarja ezt az adatot?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
-              <button type="button" class="btn btn-primary" ng-click="torol()">Igen</button>
+              <button type="button" class="btn btn-primary" ng-click="delete()" data-bs-dismiss="modal">Igen</button>
             </div>
           </div>
         </div>

@@ -338,6 +338,39 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //hibajelentések select
+
+        errorselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/errorselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //hibajelentés delete
+
+        errordelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/errordelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

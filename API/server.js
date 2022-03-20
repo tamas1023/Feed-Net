@@ -356,6 +356,22 @@ app.post('/userdelete',(req,res)=>{
   }
 })
 
+  //admin hibajelentés select
+  
+  app.get('/errorselect',(req,res)=>{
+    if(session.Rights=="admin")
+    {
+      dbPool.query(`SELECT * FROM hibajelentes `,(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      })
+    }
+    else
+    {
+      res.json({message:"Nem kérheted ezeket le"});
+    }
+  })
+
     //admin hibajelentés delete
 
 app.post('/errordelete',(req,res)=>{
