@@ -92,20 +92,6 @@
             <li class="nav-item" ng-if="loggedIn==true">
               <a class="nav-link reg"  href="#!/login"><i class="bx bx-log-out"> </i> Kijelentkezés</a>
             </li>
-            <li class="nav-item dropdown"ng-if="logJog=='admin'||logJog=='etterem'" ><!-- -->
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Admin/étterem felület
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin">Éttermek kezelés</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin/felhasznalo">Felhasználókezelés</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/hiba">Hibajelentések</a></li>
-                <li><a class="dropdown-item" ng-if="logJog=='etterem'" href="#!/etteremfoglalas">Étteremfoglalás</a></li>
-              </ul>
-            </li>
-            <li class="nav-item" ng-if="loggedIn==true">
-              <a class="nav-link reg"  href="#!/login"><i class="bx bx-log-out"> </i> Kijelentkezés</a>
-            </li>
           </ul>
         </div>
       </div>

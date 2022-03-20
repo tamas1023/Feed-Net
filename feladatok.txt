@@ -13,6 +13,8 @@ ha nagyobb ha kisebb jól fog úgy működni
 Szűrés: Gomb kattintásra megnézi hogy mi van kipipálva, és backendnek küld egy kérést, és új tölti be az adatokat,
 Esetleg ugyan így a sima kertesésnél
 
+
+
 Kiválasztott html oldal kedvencek és foglalás float miatt nem lehet rá kapcsolni, és azért ilyen 
 hosszú a képmegjelenítő, carousel??
 
@@ -23,6 +25,7 @@ Kiválasztott html oldal foglalás kedvencek mediaonly screen törés, ha közel
 levenni a margin paddingokat ami fölösleges
 
 
+Főoldal:Csillagos értékelés keresés megvalósítása,Éppen nyitva van-e rész megvalósítása
 
 
 Ha sok az étterem lépteléses megoldás hogy ne töltse be azt a sok dolgot egyszerre
