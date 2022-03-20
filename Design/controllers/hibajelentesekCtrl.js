@@ -1,5 +1,4 @@
 app.controller('hibajelentesekCtrl',function($scope,$rootScope,dbfactory){
-    // étterem nevet fogunk ki írni views segítségével a msql ből
     $scope.torolegyid=0;
     $scope.hibak=[];
     dbfactory.errorselect().then(function(res){

@@ -10,6 +10,10 @@ app.run(function($rootScope,dbfactory){
     //be van e jelentezve és a jogosultsága admin/user/etterem
     $rootScope.loggedIn=false;
     $rootScope.logJog="";
+    $rootScope.EtteremEmail=0;
+    dbfactory.email().then(function(res){
+        $rootScope.EtteremEmail=res.data;
+    })
     dbfactory.session().then(function(res){
         //console.log(res.data);
       //  sessionStorage.setItem('User', angular.toJson(res.data));
