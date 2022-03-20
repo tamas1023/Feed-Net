@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 22. 09:04
--- Kiszolgáló verziója: 10.4.6-MariaDB
--- PHP verzió: 7.3.8
+-- Létrehozás ideje: 2022. Már 16. 21:14
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,6 +36,18 @@ CREATE TABLE `ertekeles` (
   `Datum` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `ertekeles`
+--
+
+INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Ertekeles`, `Datum`) VALUES
+(1, 1, 2, 5, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(2, 2, 2, 4, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(3, 3, 2, 3, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
+(4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
+(5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
+(6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41');
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +61,16 @@ CREATE TABLE `etlap` (
   `Ar` int(11) NOT NULL,
   `Leiras` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `etlap`
+--
+
+INSERT INTO `etlap` (`ID`, `Etterem_ID`, `Nev`, `Ar`, `Leiras`) VALUES
+(1, 1, 'Sült Tarja', 1300, 'Frissen sült Tarja'),
+(2, 1, 'Eper Torta', 2300, 'Eperrel megszort zselatin torta'),
+(3, 2, 'Sör', 450, '3 deciliteres árpa sör'),
+(4, 2, 'félédes bor', 900, 'fél literes félédes bor');
 
 -- --------------------------------------------------------
 
@@ -70,8 +92,30 @@ CREATE TABLE `ettermek` (
   `Ferohely` int(11) NOT NULL,
   `Hazhozszallitas` tinyint(1) NOT NULL,
   `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
-  `Statusz` tinyint(1) NOT NULL
+  `Statusz` tinyint(1) NOT NULL,
+  `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `ettermek`
+--
+
+INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Statusz`, `Kep`) VALUES
+(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 1, 'img/rozsaetterem.jpg'),
+(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 1, 'img/kedvencetterem.jpg'),
+(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióval', 1, 'img/rozsaetterem.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- A nézet helyettes szerkezete `ettermek_ertekelesek`
+-- (Lásd alább az aktuális nézetet)
+--
+CREATE TABLE `ettermek_ertekelesek` (
+`Nev` varchar(1000)
+,`Kep` varchar(100)
+,`Ertekeles` decimal(12,1)
+);
 
 -- --------------------------------------------------------
 
@@ -84,12 +128,21 @@ CREATE TABLE `felhasznalok` (
   `Email` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Nev` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Jelszo` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `Telefon` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
+  `Telefon` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Regisztracio` datetime NOT NULL,
-  `Belepes` datetime NOT NULL,
+  `Belepes` datetime DEFAULT NULL,
   `Statusz` tinyint(1) NOT NULL,
   `Jog` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `felhasznalok`
+--
+
+INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'admin'),
+(2, 'felhasznalo@gmail.com', 'Felhasznalo', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'user'),
+(3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
 -- --------------------------------------------------------
 
@@ -158,6 +211,15 @@ CREATE TABLE `nyitvatartas` (
   `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Nézet szerkezete `ettermek_ertekelesek`
+--
+DROP TABLE IF EXISTS `ettermek_ertekelesek`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS SELECT `ettermek`.`Nev` AS `Nev`, `ettermek`.`Kep` AS `Kep`, round(avg(`ertekeles`.`Pontszam`),1) AS `Ertekeles` FROM (`ettermek` join `ertekeles`) WHERE `ettermek`.`ID` = `ertekeles`.`Etterem_ID` GROUP BY `ettermek`.`Nev` ;
+
 --
 -- Indexek a kiírt táblákhoz
 --
@@ -167,15 +229,15 @@ CREATE TABLE `nyitvatartas` (
 --
 ALTER TABLE `ertekeles`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
-  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`),
+  ADD KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`) USING BTREE;
 
 --
 -- A tábla indexei `etlap`
 --
 ALTER TABLE `etlap`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `ettermek`
@@ -194,38 +256,38 @@ ALTER TABLE `felhasznalok`
 --
 ALTER TABLE `helyfoglalas`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
-  ADD KEY `etterem_ID` (`Etterem_ID`);
+  ADD KEY `etterem_ID` (`Etterem_ID`),
+  ADD KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `hibajelentes`
 --
 ALTER TABLE `hibajelentes`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`),
-  ADD KEY `etterem_ID` (`Etterem_ID`);
+  ADD KEY `etterem_ID` (`Etterem_ID`),
+  ADD KEY `felhasznalo_ID` (`Felhasznalo_ID`,`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `kedvenc`
 --
 ALTER TABLE `kedvenc`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`),
-  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`);
+  ADD KEY `Felhasznalo_ID` (`Felhasznalo_ID`),
+  ADD KEY `Etterem_ID` (`Etterem_ID`,`Felhasznalo_ID`) USING BTREE;
 
 --
 -- A tábla indexei `kepek`
 --
 ALTER TABLE `kepek`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A tábla indexei `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Etterem_ID` (`Etterem_ID`);
+  ADD KEY `Etterem_ID` (`Etterem_ID`) USING BTREE;
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
@@ -235,25 +297,25 @@ ALTER TABLE `nyitvatartas`
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `etlap`
 --
 ALTER TABLE `etlap`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `ettermek`
 --
 ALTER TABLE `ettermek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `helyfoglalas`

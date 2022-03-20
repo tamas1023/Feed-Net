@@ -1,6 +1,6 @@
 var app= new angular.module('Feed-Net',['ngRoute',]);
 
-app.run(function($rootScope){
+app.run(function($rootScope,dbfactory){
     $rootScope.sidebar=false;
     $rootScope.title="Étterem";
     $rootScope.felvesz=1;
@@ -8,9 +8,19 @@ app.run(function($rootScope){
     $rootScope.selectedetteremID=0;
     $rootScope.logivagyreg=false;
     //be van e jelentezve és a jogosultsága admin/user/etterem
-    $rootScope.loggedIn=true;
-    $rootScope.logJog="user";
-  
+    $rootScope.loggedIn=false;
+    $rootScope.logJog="";
+    dbfactory.session().then(function(res){
+        //console.log(res.data);
+      //  sessionStorage.setItem('User', angular.toJson(res.data));
+        $rootScope.logJog=res.data;
+        if(res.data=="user"||res.data=="admin"||res.data=="etterem")
+        {
+            $rootScope.loggedIn=true;
+        }
+        //$location.path("#!/");
+    })
+   
 });
 app.config(function($routeProvider){
     $routeProvider
@@ -31,6 +41,15 @@ app.config(function($routeProvider){
         controller:'ettermekCtrl'
     })
     .when('/kedvencek',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn))
+                {
+                    $location.path('/');
+                }
+            }
+        },
        
         templateUrl:'kedvencettermek.html',
         controller:'kedvencekCtrl'

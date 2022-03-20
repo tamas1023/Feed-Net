@@ -1,4 +1,4 @@
-<div id="adminegesz">
+<div id="adminegesz" ng-controller="etteremCtrl">
 <div id="adminkereses">
     <div class="container-fluid" >
     <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
@@ -18,35 +18,41 @@
             <label for="floatingInput">Név</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput"ng-model="ujemail" placeholder="tesz1@gmail.com">
+            <input type="email" class="form-control" id="floatingInput" ng-model="ujemail" placeholder="tesz1@gmail.com">
             <label for="floatingInput">Email Cím</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput"ng-model="ujtelefon" placeholder="+">
+            <input type="text" class="form-control" id="floatingInput "ng-model="ujtelefon" placeholder="+">
             <label for="floatingInput">Telefon</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput"ng-model="ujcim" placeholder="+">
+            <input type="text" class="form-control" id="floatingInput" ng-model="ujcim" placeholder="+">
             <label for="floatingInput">Cím</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="number" min="0" class="form-control" id="floatingInput" ng-model="ujferohely" placeholder="+">
+            <label for="floatingInput">Férőhely</label>
           </div>
           <label for="leiras">Leírás:</label>
           <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="ujleiras"></textarea>
           <label for="parkolo">Parkoló:</label>
-          <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="parkolo==1" ><br>
+          <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="ujparkolo==1" ><br>
           <label for="bankkartya">Bankkártya:</label>
-          <input type="checkbox" class="form-check-input" name="bankkartya"ng-model="ujbankkartya" ><br>
+          <input type="checkbox" class="form-check-input" name="bankkartya" ng-model="ujbankkartya" ng-checked="ujbankkartya==1" ><br>
           <label for="glutenmentes">Gluténmentes:</label>
-          <input type="checkbox" class="form-check-input" name="glutenmentes" ng-model="ujglutenmentes" ><br>
+          <input type="checkbox" class="form-check-input" name="glutenmentes" ng-model="ujglutenmentes" ng-checked="ujglutenmentes==1" ><br>
           <label for="terasz">Terasz:</label>
-          <input type="checkbox" class="form-check-input" name="terasz" ng-model="ujterasz" ><br>
+          <input type="checkbox" class="form-check-input" name="terasz" ng-model="ujterasz" ng-checked="ujterasz==1" ><br>
           <label for="berelheto">Bérelhető:</label>
-          <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ><br>
+          <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ng-checked="ujberelheto==1"><br>
           <label for="hazhozszallitas">Házhozszállítás:</label>
-          <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas"><br>
-          <button class="btn btn-warning" ng-if="felvesz==1" ng-click="felvesz()">Felvesz</button>
+          <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas" ng-checked="ujhazhozszallitas==1"><br>
+          <label for="statusz">Státusz:</label>
+          <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="ujstatusz==1"><br>
+          <button class="btn btn-warning" ng-if="felvesz==1" ng-click="insert()">Felvesz</button>
           <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
           <button class="btn btn-warning"ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
-          <button class=" btn btn-danger" ng-click="deleteRecord()" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
+          <!--<button class=" btn btn-danger"  data-bs-toggle="modal" data-bs-target="#torol" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>-->
       </div>
     </div>
   </div>
@@ -66,11 +72,11 @@
     </thead>
     <tbody>
       <tr class="animate" ng-repeat="adat in ettermek | filter:{nev:search}" ng-click="selectRow($index)">
-        <td>{{adat.nev}}</td>
-        <td>{{adat.telefon}}</td>
-        <td>{{adat.cim}}</td>
-        <td>{{adat.leiras}}</td>
-        <td><a href="#!/admin/etlap/{{adat.id}}" ng-click="etterem(adat.id)"> <button class=" btn btn-info" ><i class="bi bi-list"></i></td></button></a>
+        <td>{{adat.Nev}}</td>
+        <td>{{adat.Telefon}}</td>
+        <td>{{adat.Cim}}</td>
+        <td>{{adat.Leiras}}</td>
+        <td><a ng-click="etterem(adat.ID)"> <button class=" btn btn-info" ><i class="bi bi-list"></i></td></button></a>
       </tr>
     </tbody>
     <tfoot>
