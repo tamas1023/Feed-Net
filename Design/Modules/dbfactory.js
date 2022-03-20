@@ -1,6 +1,20 @@
 app.factory('dbfactory', function($http, $q) {
     let url = 'http://localhost:8080';
     return {
+        //email átadás
+        email:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/email').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         //session lekérés
         session:function() {
             let deferred = $q.defer();
@@ -328,6 +342,92 @@ app.factory('dbfactory', function($http, $q) {
                 ID:id
             }
             $http.post(url + '/userdelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //hibajelentések select
+
+        errorselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/errorselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //hibajelentés delete
+
+        errordelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/errordelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // étterem id meghatározása email cím alapján
+        etteremid:function(email) {
+            let data = {
+                Email:email
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremid',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // étterem helyfoglalás select
+
+        etteremselect:function(id) {
+            let data = {
+                EtteremID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // étterem helyfoglalás delete
+
+        etteremdelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremdelete',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },

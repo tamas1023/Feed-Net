@@ -23,6 +23,10 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
                         $rootScope.logivagyreg=false;
                         $rootScope.sidebar=true;
                         $location.path("#!/");
+                        if(res.data[0].Jog=="etterem")
+                        {
+                            $rootScope.EtteremEmail=res.data[0].Email;
+                        }
                         //alert(res.data[0].Jog);
                         //$rootScope.loggedUser = $scope.username;
                         //sessionStorage.setItem('User', angular.toJson($rootScope.logJog));

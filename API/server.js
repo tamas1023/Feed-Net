@@ -27,6 +27,12 @@ app.post('/session',(req,res)=>{
     res.send(session.Rights);
   }
 })
+app.get("/email",(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
+  {
+    res.send(session.Email);
+  }
+})
 app.get('/',(req,res)=>{
   if(session.Rights=="admin")
   {
@@ -43,6 +49,7 @@ app.get('/',(req,res)=>{
 app.get('/logout',(req,res)=>{
     session.Rights="";
     session.LoggedIn=false;
+    session.Email="";
     req.session.destroy();
 
     res.json({message:"ok"});
@@ -65,6 +72,7 @@ app.post('/login', (req, res) => {
         sesssion=req.session
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
+        session.Email=results[0].Email;
         jog=results[0].Jog;
       }
       //console.log(session.LoggedIn);
@@ -185,6 +193,11 @@ app.post('/admindininginsert',(req,res)=>{
       res.json(results);
       console.log('sikeres felvétel');
     });
+    dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', 'PasswordSafe392', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,results)=>{
+      if(err)throw err;
+     // console.log('sikeres insert');
+      res.json({message:"ok"});
+    })
   }
   else
   {
@@ -356,6 +369,22 @@ app.post('/userdelete',(req,res)=>{
   }
 })
 
+  //admin hibajelentés select
+  
+  app.get('/errorselect',(req,res)=>{
+    if(session.Rights=="admin")
+    {
+      dbPool.query(`SELECT hibajelentes.ID,ettermek.Nev as EtNev,felhasznalok.Nev,hibajelentes.Tipus,hibajelentes.Leiras FROM hibajelentes,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID `,(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      })
+    }
+    else
+    {
+      res.json({message:"Nem kérheted ezeket le"});
+    }
+  })
+
     //admin hibajelentés delete
 
 app.post('/errordelete',(req,res)=>{
@@ -372,13 +401,23 @@ app.post('/errordelete',(req,res)=>{
   }
 })
 
-  //etterem rendelések select
+  //étterem is meghatározása
+app.post('/etteremid',(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    dbPool.query(`SELECT ettermek.ID FROM felhasznalok,ettermek WHERE felhasznalok.Email=ettermek.Email AND ettermek.Email="${req.body.Email}"`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    });
+  }
+})
 
+  //etterem rendelések select
 
 app.post("/etteremselect",(req,res)=>{
   if(session.Rights=="etterem")
   {
-    dbPool.query(`SELECT * FROM helyfoglalas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })
@@ -397,7 +436,6 @@ app.post("/etteremdelete",(req,res)=>{
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
         res.json({message:"ok"});
-      
     })
   }
   else
@@ -405,16 +443,6 @@ app.post("/etteremdelete",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
-app.post('/login', (req, res) => {
-  let data = {
-      email: req.body.Email,
-      pass: req.body.passwd,
-  }
-  dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}' AND jelszo='${data.pass}'`, (err, results) => {
-      if (err) throw err;
-      res.json(results);
-  });
-});
 
 app.post('/selectCustom', (req, res) => {
   let data = {
