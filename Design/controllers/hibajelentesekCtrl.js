@@ -8,6 +8,7 @@ app.controller('hibajelentesekCtrl',function($scope,$rootScope,dbfactory){
             $scope.hibak=res.data;
         }
     });
+  
     $scope.egyvalaszt=function(id)
     {
         $scope.torolegyid=$scope.hibak[id].ID;
@@ -15,7 +16,7 @@ app.controller('hibajelentesekCtrl',function($scope,$rootScope,dbfactory){
     $scope.delete=function()
     {
         
-        dbfactory.errordelete( $scope.torolegyid).then(function(res){
+        dbfactory.errordelete($scope.torolegyid).then(function(res){
             dbfactory.errorselect().then(function(res){
                 if(res.data.length>0)
                 {

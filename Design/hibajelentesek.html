@@ -16,8 +16,8 @@
         </thead>
         <tbody>
           <tr class="animate" ng-repeat="adat in hibak | filter:{Nev:search}" ng-click="selectRow($index)">
-            <td>{{adat.Etterem_ID}}</td>
-            <td>{{adat.Felhasznalo_ID}}</td>
+            <td>{{adat.EtNev}}</td>
+            <td>{{adat.Nev}}</td>
             <td>{{adat.Tipus}}</td>
             <td>{{adat.Leiras}}</td>
             <td><button class=" btn btn-danger" ng-click="egyvalaszt($index)" data-bs-toggle="modal" data-bs-target="#torol"><i class="bi bi-x-lg" ></i></button></td></td>

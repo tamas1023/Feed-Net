@@ -361,7 +361,7 @@ app.post('/userdelete',(req,res)=>{
   app.get('/errorselect',(req,res)=>{
     if(session.Rights=="admin")
     {
-      dbPool.query(`SELECT * FROM hibajelentes `,(err,results)=>{
+      dbPool.query(`SELECT hibajelentes.ID,ettermek.Nev as EtNev,felhasznalok.Nev,hibajelentes.Tipus,hibajelentes.Leiras FROM hibajelentes,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID `,(err,results)=>{
         if(err)throw err;
         res.json(results);
       })
