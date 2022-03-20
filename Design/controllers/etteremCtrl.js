@@ -5,6 +5,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
     az adatokat nagy betűsökre (itt is meg a html ben is)
     */ 
+   
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";

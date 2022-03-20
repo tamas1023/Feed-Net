@@ -405,6 +405,27 @@ app.post("/etteremdelete",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+app.post('/login', (req, res) => {
+  let data = {
+      email: req.body.Email,
+      pass: req.body.passwd,
+  }
+  dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}' AND jelszo='${data.pass}'`, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+
+app.post('/selectCustom', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    select:req.body.Select
+  }
+  dbPool.query(`SELECT * FROM ${data.tablename} WHERE  ${data.select}`, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);

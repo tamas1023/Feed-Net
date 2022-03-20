@@ -176,6 +176,23 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        // SELECT WHAT I WANT
+        selectCustom: function(tablename,select) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Select: select
+            }
+            $http.post(url + '/selectCustom',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
          //admin étlap insert
         
          adminfoodinsert:function(etteremID,nev,ar,leiras) {

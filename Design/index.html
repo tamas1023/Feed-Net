@@ -34,6 +34,16 @@
   <script src="controllers/loginCtrl.js"></script>
  
 
+    <script src="controllers/etteremCtrl.js"></script>
+    <script src="controllers/felhasznalokCtrl.js"></script>
+    <script src="controllers/hibajelentesekCtrl.js"></script>
+    <script src="controllers/etteremetlapCtrl.js"></script>
+    <script src="controllers/etteremfoglalasCtrl.js"></script>
+    <script src="controllers/ettermekCtrl.js"></script>
+    <script src="controllers/gyikCtrl.js"></script>
+    <script src="controllers/kedvencekCtrl.js"></script>
+    <script src="controllers/regCtrl.js"></script>
+    <script src="controllers/loginCtrl.js"></script>
     <title class="ng-binding">{{title}}</title>
 
 </head>
@@ -87,51 +97,47 @@
       </div>
     </nav>
   </div>
-  <div ng-show="sidebar==true">
-  <div id="mySidebar" class="sidebar"  >
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <h3>Kategória</h3>
+  <div ng-show="sidebar==true" ng-controller="ettermekCtrl">
+  <div id="mySidebar" class="sidebar">
+    <p href="javascript:void(0)" class="closebtn" onclick="">×</p>
+    <h3>Csillagos értékelés</h3>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
+      <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
+      <label for="" class="szurok">Nyitva van-e?</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
+      <input type="checkbox" ng-model="kartyaszures" ng-checked="kartyaszures==1" >
+      <label for="" class="szurok">Kártyaelfogadó hely</label>
+    </div>
+    <div class="szurokwrap">
+      <input type="checkbox"  ng-model="parkolo" ng-checked="parkolo==1">
+      <label for="" class="szurok">Parlokó</label>
+    </div>
+    <div class="szurokwrap">
+      <input type="checkbox" ng-model="gluten" ng-checked="gluten==1">
+      <label for="" class="szurok">Gluténmentes étel </label>
     </div>
     
-    <h3>Kategória</h3>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
+      <input type="checkbox" ng-model="szallitas" ng-checked="szallitas==1">
+      <label for="" class="szurok">Házhozszállítás</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
-    </div>
-    <h3>Kategória</h3>
-    <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
+      <input type="checkbox" ng-model="terasz" ng-checked="terasz==1">
+      <label for="" class="szurok">Terasz</label>
     </div>
     <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
+      <input type="checkbox" ng-model="wifi" ng-checked="wifi==1">
+      <label for="" class="szurok">Wifi</label>
     </div>
-    <h3>Kategória</h3>
-    <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
-    </div>
-    <div class="szurokwrap">
-      <input type="checkbox" >
-      <label for="" class="szurok">Szűrőelemek</label>
-    </div>
-    <button class="btn btn-success m-2" id="szures">Szűrés</button>
-    <button class="btn btn-secondary m-2" id="megse">Mégse</button>
+    
+      <button class="btn btn-success m-2" id="szures" ng-click="Szures()">Szűrés</button>
+      <button class="btn btn-secondary m-2" id="megse" class="closebtn" onclick="closeNav()">Mégse</button>
+    
+    
   </div>
   <div id="main" class="item">
-    <h5>Szűrés</h5>
+    <h5></h5>
     <button class="opensidebarbtn"  onclick="openNav()">☰ </button>  
    
   </div>
@@ -140,7 +146,20 @@
 
   </div>
   <div id="footer">
-    <h1>Footer</h1>
+    <div class="row p-2 m-0">
+      <div class="col-12 col-md-8 ">
+        <h3><a href="#">Feed-Net</a></h3>
+        <h3>Köszönjük a látogatást!</h3>
+      </div>
+      <div class="col-12 col-md-4">
+          <ul class="m-0">
+              <li>E-mail: admin@admin.hu</li>
+              <li>Telefon: +36408245489</li>
+              
+          </ul>
+      </div>
+      
+    </div>
   </div>
 
 
