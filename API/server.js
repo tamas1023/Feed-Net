@@ -443,6 +443,19 @@ app.post("/etteremdelete",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+app.post("/etteremupdate",(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    dbPool.query(`UPDATE helyfoglalas SET Kezdes=${req.body.Kezdes} Fo=${req.body.Fo} WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+        res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
 
 app.post('/selectCustom', (req, res) => {
   let data = {

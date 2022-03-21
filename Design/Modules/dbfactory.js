@@ -438,6 +438,26 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //étterem helyfoglalás update
+
+        etteremupdate:function(id,fo,ido) {
+            let data = {
+                ID:id,
+                Fo:fo,
+                Kezdes:ido
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

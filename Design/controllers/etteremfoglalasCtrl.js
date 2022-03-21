@@ -26,21 +26,41 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
    
     $scope.torol=function()
     {
-      dbfactory.etteremdelete($scope.deleteid).then(function(r){
-        dbfactory.etteremselect($scope.etteremid).then(function(res){
-            if(res.data.length>0)
-            {
-                $scope.etteremhely=res.data;
-                for(let i=0;i<$scope.etteremhely.length;i++)
+        dbfactory.etteremdelete($scope.id).then(function(r){
+            dbfactory.etteremselect($scope.etteremid).then(function(res){
+                if(res.data.length>0)
                 {
-                    $scope.etteremhely[i].Kezdes=$scope.etteremhely[i].Kezdes.replace("T"," ").replace(".000Z"," ");
+                    $scope.etteremhely=res.data;
+                    for(let i=0;i<$scope.etteremhely.length;i++)
+                    {
+                        $scope.etteremhely[i].Kezdes=$scope.etteremhely[i].Kezdes.replace("T"," ").replace(".000Z"," ");
+                    }
                 }
-            }
-        });
-      })
+            });
+          })
+    }
+    
+    $scope.modosit=function()
+    {
+        //let str=$scope.ujkezdes.toString().replace("T"," ").replace(".000Z"," ");
+        dbfactory.etteremupdate($scope.id,$scope.ujfo,moment($scope.ujkezdes,"YY-MM-DD hh:mm:ss")).then(function(r){
+            dbfactory.etteremselect($scope.etteremid).then(function(res){
+                if(res.data.length>0)
+                {
+                    $scope.etteremhely=res.data;
+                    for(let i=0;i<$scope.etteremhely.length;i++)
+                    {
+                        $scope.etteremhely[i].Kezdes=$scope.etteremhely[i].Kezdes.replace("T"," ").replace(".000Z"," ");
+                    }
+                }
+            });
+          })
     }
     $scope.select=function(id)
     {
-        $scope.deleteid=$scope.etteremhely[id].ID;
+        $scope.id=$scope.etteremhely[id].ID;
+        $scope.ujfo=$scope.etteremhely[id].Fo;
+        $scope.ujkezdes=new Date($scope.etteremhely[id].Kezdes);
+
     }
 })

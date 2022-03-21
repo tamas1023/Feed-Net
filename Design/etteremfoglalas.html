@@ -38,12 +38,20 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Biztosan törlni szeretné ez az adatot?
+             Adatok Módosítása.
+              <div class="form-floating mb-3">
+                <input type="datetime-local" class="form-control" id="floatingInput" ng-model="ujkezdes" placeholder="+">
+                <label for="floatingInput">Kezdés ideje</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingInput" ng-model="ujfo" placeholder="+">
+                <label for="floatingInput">Fő</label>
+              </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" ng-click="torol()" data-bs-dismiss="modal">Törlés</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
-              <!--<button type="button" class="btn btn-primary" ng-click="modosit()" data-bs-dismiss="modal">Igen</button>-->
+              <button type="button" class="btn btn-primary" ng-click="modosit()" data-bs-dismiss="modal">Módosítás</button>
             </div>
           </div>
         </div>
