@@ -193,11 +193,19 @@ app.post('/admindininginsert',(req,res)=>{
       res.json(results);
       console.log('sikeres felvétel');
     });
-    dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', 'PasswordSafe392', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,results)=>{
+    let passwd="ef32600aaedc13042de3712a8c2c1286671c1f37";
+    dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`,(err,results)=>{
       if(err)throw err;
-     // console.log('sikeres insert');
-      res.json({message:"ok"});
+      if(results.length==0)
+      {
+        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
+          if(err)throw err;
+         // console.log('sikeres insert');
+          res.json({message:"ok"});
+        })
+      }
     })
+    
   }
   else
   {
@@ -420,6 +428,7 @@ app.post("/etteremselect",(req,res)=>{
     dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
       if(err)throw err;
       res.json(results);
+      console.log(results);
     })
   }
   else
@@ -446,7 +455,7 @@ app.post("/etteremdelete",(req,res)=>{
 app.post("/etteremupdate",(req,res)=>{
   if(session.Rights=="etterem")
   {
-    dbPool.query(`UPDATE helyfoglalas SET Kezdes=${req.body.Kezdes} Fo=${req.body.Fo} WHERE ID=${req.body.ID}`,(err,results)=>{
+    dbPool.query(`UPDATE helyfoglalas SET Kezdes='${req.body.Kezdes}',Fo=${req.body.Fo} WHERE helyfoglalas.ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
         res.json({message:"ok"});
     })
