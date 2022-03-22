@@ -6,6 +6,7 @@ app.run(function($rootScope,dbfactory){
     $rootScope.felvesz=1;
     $rootScope.felvesz2=1;
     $rootScope.selectedetteremID=0;
+    $rootScope.kivalasztottetteremID=0;
     $rootScope.logivagyreg=false;
     //be van e jelentezve és a jogosultsága admin/user/etterem
     $rootScope.loggedIn=false;
@@ -57,6 +58,11 @@ app.config(function($routeProvider){
        
         templateUrl:'kedvencettermek.html',
         controller:'kedvencekCtrl'
+    })
+    .when('/kivalasztott/:id',{
+        
+        templateUrl:'kivalasztott.html',
+        controller:'kivalasztottCtrl'
     })
     .when('/gyik',{
        

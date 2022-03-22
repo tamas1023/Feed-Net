@@ -142,13 +142,19 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    /*height: 150px;
-    background-color: white;
-    border: 1px solid black;*/
     border-top: 1px solid black;
     padding: 10px;
     margin-bottom: 40px;
     flex-wrap: wrap;
+}
+#etterem a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#etterem a h2{
+    color: var(--szin);
 }
 #ertekeles textarea{
     width: 100%;
