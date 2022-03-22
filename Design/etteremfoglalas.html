@@ -2,7 +2,7 @@
 <div id="adminegesz" ng-controller="etteremfoglalasCtrl">
 <div id="adminkereses" >
    
-    <h1 style="text-align: center;">Az étterem helyfoglalásai</h1>
+    <h1 style="text-align: center; padding-top: 10px;">Az étterem helyfoglalásai</h1>
     <hr>
     <div class="container-fluid" >
         <!--<input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >-->
@@ -21,7 +21,7 @@
             <td>{{adat.Nev}}</td>
             <td>{{adat.Kezdes}}</td>
             <td>{{adat.Fo}}</td>
-            <td> <i ng-click="select($index)" data-bs-toggle="modal" data-bs-target="#modosit" class="bi bi-gear" ></i></td>
+            <td> <i ng-click="select($index)" data-bs-toggle="modal" data-bs-target="#modosit" class="bi bi-x-lg" ></i></td>
           </tr>
         </tbody>
         <tfoot>
@@ -38,20 +38,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-             Adatok Módosítása.
-              <div class="form-floating mb-3">
-                <input type="datetime-local" class="form-control" id="floatingInput" ng-model="ujkezdes" placeholder="+">
-                <label for="floatingInput">Kezdés ideje</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="floatingInput" ng-model="ujfo" placeholder="+">
-                <label for="floatingInput">Fő</label>
-              </div>
+            Biztos szeretné törölni az adatot?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" ng-click="torol()" data-bs-dismiss="modal">Törlés</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
-              <button type="button" class="btn btn-primary" ng-click="modosit()" data-bs-dismiss="modal">Módosítás</button>
+              <!--<button type="button" class="btn btn-primary" ng-click="modosit()" data-bs-dismiss="modal">Módosítás</button>-->
             </div>
           </div>
         </div>

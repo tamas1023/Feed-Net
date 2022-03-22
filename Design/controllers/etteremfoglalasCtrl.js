@@ -2,6 +2,8 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.etteremhely=[];
     $scope.etteremid=0;
+    //$scope.maxfo=0;
+    //$scope.helyfoglalva=0;
     dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
         if(r.data.length>0)
         {
@@ -37,8 +39,22 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
           })
     }
     
-    $scope.modosit=function()
+    /*$scope.modosit=function()
     {
+        dbfactory.etteremfo($scope.etteremid).then(function(res){
+            $scope.maxfo=res.data[0].Ferohely;
+            if($scope.maxfo=="")
+            {
+                $scope.maxfo=0;
+            }
+        });
+        dbfactory.etteremminus($scope.etteremid).then(function(res){
+               $scope.helyfoglalva=res.data[0].Fo;
+               alert($scope.helyfoglalva);
+               alert($scope.maxfo+"-"+$scope.helyfoglalva+"="+($scope.maxfo-$scope.helyfoglalva));
+        })
+
+
         let year=$scope.ujkezdes.getFullYear();
         let month=$scope.ujkezdes.getMonth()+1;
         let day=$scope.ujkezdes.getDate();
@@ -80,7 +96,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
                 }
             });
           })
-    }
+    }*/
     $scope.select=function(id)
     {
         $scope.id=$scope.etteremhely[id].ID;

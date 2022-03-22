@@ -458,6 +458,41 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //étterem maxférőhely meghatározása
+
+        etteremfo:function(id) {
+            let data = {
+                ID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremfo',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //étteremben helyetfoglaltak száma 
+
+        etteremminus:function(id) {
+            let data = {
+                ID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremminus',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();
