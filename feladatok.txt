@@ -27,5 +27,7 @@ levenni a margin paddingokat ami fölösleges
 
 Főoldal:Csillagos értékelés keresés megvalósítása,Éppen nyitva van-e rész megvalósítása
 
+Főoldal: menü icon, boxiconná átváltás, gomb ami kitörli a szűrést, kikapcsolás == bezárás
+
 
 Ha sok az étterem lépteléses megoldás hogy ne töltse be azt a sok dolgot egyszerre
