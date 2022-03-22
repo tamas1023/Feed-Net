@@ -12,9 +12,9 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
                 $scope.etteremhely=res.data;
                 for(let i=0;i<$scope.etteremhely.length;i++)
                 {
-                   alert($scope.etteremhely[i].Kezdes);
-                   $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
-                    alert($scope.etteremhely[i].Kezdes);
+                    //alert($scope.etteremhely[i].Kezdes);
+                    $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
+                    //alert($scope.etteremhely[i].Kezdes);
                 }
             }
         });
@@ -30,7 +30,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
                     $scope.etteremhely=res.data;
                     for(let i=0;i<$scope.etteremhely.length;i++)
                     {
-                        $scope.etteremhely[i].Kezdes=$scope.etteremhely[i].Kezdes.replace("T"," ").replace(".000Z"," ");
+                        $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
                     }
                 }
             });
@@ -66,7 +66,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
             seconds="0"+seconds;
         }
         let str=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-        alert(str);
+        //alert(str);
         //alert(moment($scope.ujkezdes,"YY-MM-DD hh:mm:ss"));
         dbfactory.etteremupdate($scope.id,$scope.ujfo,str).then(function(r){
             dbfactory.etteremselect($scope.etteremid).then(function(res){
@@ -75,7 +75,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
                     $scope.etteremhely=res.data;
                     for(let i=0;i<$scope.etteremhely.length;i++)
                     {
-                        $scope.etteremhely[i].Kezdes=$scope.etteremhely[i].Kezdes.replace("T"," ").replace(".000Z"," ");
+                        $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
                     }
                 }
             });
