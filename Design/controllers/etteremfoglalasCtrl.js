@@ -2,6 +2,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.etteremhely=[];
     $scope.etteremid=0;
+    $scope.mostido;
     //$scope.maxfo=0;
     //$scope.helyfoglalva=0;
     dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
@@ -12,6 +13,8 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
             if(res.data.length>0)
             {
                 $scope.etteremhely=res.data;
+                $scope.mostido=moment(res.data[0].ido).format('YYYY MM DD HH:mm:ss');
+                //alert($scope.mostido);
                 for(let i=0;i<$scope.etteremhely.length;i++)
                 {
                     //alert($scope.etteremhely[i].Kezdes);
