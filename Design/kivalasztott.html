@@ -1,20 +1,18 @@
-  <div ng-controller="kivalasztottCtrl">
-    <div class="jobboldal">
+  <div ng-controller="kivalasztottCtrl" >
+    <div class="jobboldal" ng-repeat="ett in etterem">
       <div id="kivalasztottegesz" class=" m-0 ">
         <div class="row">
-          <div class="col-7 ">
-            <h1>Kiválaszott étterem</h1>
+          <div class="col-12 col-sm-12 col-md-7">
+            <h1>{{ett.Nev}}</h1>
           </div>
-          <div class="col-5 gombok ">
+          <div class="col-12 col-sm-12 col-md-5 gombok ">
             <button class="btn btn-primary">Kedvencekhez </button>
               <button class="btn btn-primary">Foglalás</button>
           </div>
         </div>
-        <!--<div id="kivalasztott" class="col-12 col-md-12">
-          <h2>Képek sliderrel megjelenítve</h2>
-        </div>-->
         
-          <div id="carouselExampleIndicators" style="top: 50px;" class="carousel slide" data-bs-ride="carousel">
+        
+          <div id="carouselExampleIndicators"  class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -31,11 +29,11 @@
                 <img src="img/kedvencetterem.jpg" class=" " alt="...">
               </div>
             </div>
-            <button class="carousel-control-prev" style="top:70px;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" style="top:70px;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
@@ -76,11 +74,11 @@
             
           </div>
           <div id="kivalasztott" class="col-12 col-md-4">
-            <p>6500 Baja, I. ker. Tanya 7.</p>
-            <p>+36 70 777 777</p>
-            <p>tanyacsardabaja@freemail.hu</p>
+            <p>{{ett.Cim}}</p>
+            <p>{{ett.Telefon}}</p>
+            <p>{{ett.Email}}</p>
             <p>http://dunapartitanyacsarda.hu/</p>
-            <p>fb.com/tanyacsarda/</p>
+            <p>FB/A többi egyém média</p>
             <a href="">probléma jelentés</a>
           </div>
         </div>

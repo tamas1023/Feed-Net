@@ -271,12 +271,15 @@ a:hover{
 }
 
 .gombok{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
 }
 .gombok button{
-    float: right;
+    /*float: right;*/
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 #cimresz{
     width: 100%;
@@ -479,4 +482,10 @@ letter-spacing: 3px;
  div>.container-fluid
 {
     margin-top: 5px;margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .gombok{
+        display: block;
+    }
 }

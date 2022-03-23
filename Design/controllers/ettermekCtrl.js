@@ -89,11 +89,13 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
     }
     $scope.Valasztas=function ($id) {
         //andrás tól ezzel állítjuk be pl ng-clickre
-        console.log($id);
+        //console.log($id);
         $rootScope.kivalasztottetteremID=$id;
-        
 
-        $location.url('/kivalasztott/'+$rootScope.kivalasztottetteremID);
+        //$location.url('/kivalasztott/'+$rootScope.kivalasztottetteremID);
+        // erre megcsinálni, hogy erre elküldi és majd a link ből ki kell olvasni a számot
+
+        $location.url('/kivalasztott');
     }
 
 });
