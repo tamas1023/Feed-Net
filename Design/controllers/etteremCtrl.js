@@ -48,7 +48,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     {
         //alert($scope.ujparkolo);
         dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-            
+            $scope.unselectRow();
             dbfactory.admindingingselect().then(function(res){
                 if(res.data.length>0)
                 {

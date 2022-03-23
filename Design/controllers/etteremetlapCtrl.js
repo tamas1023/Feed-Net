@@ -6,6 +6,7 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         $scope.ujar=null;
         $scope.ujleirasetel=null;
         $scope.etlap=[];
+        $scope.torolegyid=0;
         //alert($rootScope.selectedetteremID);
         dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
             if(res.data.length>0)
@@ -45,9 +46,13 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                 });
             })
         }
+        $scope.egyvalaszt=function(id)
+        {
+            $scope.torolegyid=$scope.etlap[id].ID;
+        }
         $scope.deleteRecord=function()
         {
-            dbfactory.adminfooddelete($scope.ujID).then(function(res){
+            dbfactory.adminfooddelete($scope.torolegyid).then(function(res){
                 dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
                     if(res.data.length>0)
                     {

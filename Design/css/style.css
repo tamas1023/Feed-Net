@@ -478,3 +478,14 @@ letter-spacing: 3px;
 {
     background-color: red;
 }
+.visszaetterem
+{
+    margin-top: 20px;
+    margin-bottom: 5px; 
+    color: black;
+}
+.menucolor
+{
+    color: white; 
+    background-color: var(--menu);
+}
