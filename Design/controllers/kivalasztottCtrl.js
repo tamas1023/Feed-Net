@@ -7,15 +7,14 @@ app.controller('kivalasztottCtrl',function($rootScope,$scope,dbfactory,$route){
     $rootScope.ettermek=[];
 
     //andrás tól ezzel állítjuk be pl ng-clickre
+
+    //megnézni andrás hogy csinálta az admin étlap kiválasztást, és az alapján ugyan úgy megcsinálni
     
-    $rootScope.kivalasztottetteremID=$id;
-        $scope.etlap=[{id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-       
-        {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
+    $rootScope.kivalasztottetteremID;
+    $rootScope.alapfeltetel=" ID="+$rootScope.kivalasztottetteremID;
+    console.log($rootScope.alapfeltetel)
 
-    $location.url('/admin/etlap/'+$rootScope.kivalasztottetteremID);
-
-    dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+    dbfactory.selectCustom("ettermek",$rootScope.alapfeltetel).then(function(res) {
         if (res.data.length > 0) { 
             $rootScope.nincsetterem="";
             $rootScope.ettermek=res.data;

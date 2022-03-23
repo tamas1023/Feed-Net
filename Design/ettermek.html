@@ -9,8 +9,8 @@
     <div id="ettermek"  class="row m-0 p-0">
       <h1>{{nincsetterem}}</h1>
       <div id="etterem" ng-repeat="ett in ettermek | filter:{Nev:keres}" class="col-12 col-md-6 col-s-12">
-        <a  href="#!/kivalasztott/{{ett.ID}}">
-          
+        <a  href="#" ng-click="Valasztas(ett.ID)">
+          <!--  href="#!/kivalasztott/{{ett.ID}}"  -->
           <img src="{{ett.Kep}}" alt="">
           <br><br>
           <h2>{{ett.Nev}}</h2>

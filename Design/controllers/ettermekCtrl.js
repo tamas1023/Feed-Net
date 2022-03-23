@@ -1,4 +1,4 @@
-app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
+app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$location){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
     $rootScope.feltetel="";
@@ -87,12 +87,13 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
     }
-    $scope.Valasztas=function (id) {
+    $scope.Valasztas=function ($id) {
         //andrás tól ezzel állítjuk be pl ng-clickre
-        console.log(id);
-        $rootScope.kivalasztottetteremID=id;
+        console.log($id);
+        $rootScope.kivalasztottetteremID=$id;
         
-        //location.url('/kivalasztott/'+$rootScope.kivalasztottetteremID);
+
+        $location.url('/kivalasztott/'+$rootScope.kivalasztottetteremID);
     }
 
 });
