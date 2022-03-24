@@ -59,17 +59,18 @@ app.config(function($routeProvider){
         templateUrl:'kedvencettermek.html',
         controller:'kedvencekCtrl'
     })
+    /*
     .when('/kivalasztott/',{
         
         templateUrl:'kivalasztott.html',
         controller:'kivalasztottCtrl'
-    })
-    /* ez még nem jó
+    })*/
+    
     .when('/kivalasztott/:id',{
         
         templateUrl:'kivalasztott.html',
         controller:'kivalasztottCtrl'
-    })*/
+    })
     .when('/gyik',{
        
         templateUrl:'gyik.html',

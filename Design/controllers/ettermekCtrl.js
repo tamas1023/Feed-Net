@@ -87,15 +87,8 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
     }
-    $scope.Valasztas=function ($id) {
-        //andrás tól ezzel állítjuk be pl ng-clickre
-        //console.log($id);
-        $rootScope.kivalasztottetteremID=$id;
-
-        //$location.url('/kivalasztott/'+$rootScope.kivalasztottetteremID);
-        // erre megcsinálni, hogy erre elküldi és majd a link ből ki kell olvasni a számot
-
-        $location.url('/kivalasztott');
+    $scope.Valasztas=function ($id) { 
+        $location.url('/kivalasztott/'+$id);
     }
 
 });
