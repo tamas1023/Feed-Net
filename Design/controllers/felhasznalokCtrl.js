@@ -84,9 +84,10 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
                             }
                         });
                     })
+                    $scope.unselectRow();
                 }
             }
-            $scope.unselectRow();
+           
         })
      }
      $scope.update=function()

@@ -188,20 +188,20 @@ app.post('/admindininginsert',(req,res)=>{
       hazhozszallitas:req.body.Hazhozszallitas,
       statusz:req.body.Statusz
     }
-    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz})`,(err,results)=>{
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz},'')`,(err,results)=>{
       if(err)throw err;
       res.json(results);
-      console.log('sikeres felvétel');
+      //console.log('sikeres felvétel');
     });
     let passwd="ef32600aaedc13042de3712a8c2c1286671c1f37";
     dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`,(err,results)=>{
       if(err)throw err;
       if(results.length==0)
       {
-        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
+        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.nev}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
           if(err)throw err;
          // console.log('sikeres insert');
-          res.json({message:"ok"});
+         // res.send("ok");
         })
       }
     })

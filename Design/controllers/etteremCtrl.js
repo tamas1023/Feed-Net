@@ -48,7 +48,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     {
         //alert($scope.ujparkolo);
         dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-            $scope.unselectRow();
+            
             dbfactory.admindingingselect().then(function(res){
                 if(res.data.length>0)
                 {
@@ -91,21 +91,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
 
        $location.url('/admin/etlap/'+$rootScope.selectedetteremID);
     }
-    $scope.selectRowEtlap=function($id)
-    {
-        $scope.ujID=$scope.etlap[$id].id;
-        $scope.ujnevetel=$scope.etlap[$id].nev;
-        $scope.ujar=$scope.etlap[$id].ar;
-        $scope.ujleirasetel=$scope.etlap[$id].leiras;
-        $rootScope.felvesz2=0;
-    }
-    $scope.unselectRowEtlap=function(){
-        $rootScope.felvesz2=1;
-        $scope.ujnevetel=null;
-        $scope.ujar=null;
-        $scope.ujleirasetel=null;
-        
-    }
     $scope.visszavaltasetterem=function()
     {
         $scope.ujID=null;
@@ -128,23 +113,30 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
             }
             else
             {
-                $scope.ujparkolo=($scope.ujparkolo)? true : false;
-                $scope.ujbankkartya=($scope.ujbankkartya)? true : false;
-                $scope.ujglutenmentes=($scope.ujglutenmentes)? true : false;
-                $scope.ujterasz=($scope.ujterasz)? true : false;
-                $scope.ujberelheto=( $scope.ujberelheto)? true : false;
-                $scope.ujhazhozszallitas=( $scope.ujhazhozszallitas)? true : false;
-                $scope.ujstatusz=( $scope.ujstatusz)? true : false;
-                dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-                    dbfactory.admindingingselect().then(function(res){
-                        if(res.data.length>0)
-                        {
-                            $scope.ettermek=res.data;
-                        }
-                       //console.log(res.data.length);
-                    });
-                })
-                
+                if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null)
+                {
+                    alert('a kellő adatok nincsenek kitöltve ')
+                }
+                else
+                {
+                    $scope.ujparkolo=($scope.ujparkolo)? true : false;
+                    $scope.ujbankkartya=($scope.ujbankkartya)? true : false;
+                    $scope.ujglutenmentes=($scope.ujglutenmentes)? true : false;
+                    $scope.ujterasz=($scope.ujterasz)? true : false;
+                    $scope.ujberelheto=( $scope.ujberelheto)? true : false;
+                    $scope.ujhazhozszallitas=( $scope.ujhazhozszallitas)? true : false;
+                    $scope.ujstatusz=( $scope.ujstatusz)? true : false;
+                    dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                        dbfactory.admindingingselect().then(function(res){
+                            if(res.data.length>0)
+                            {
+                                $scope.ettermek=res.data;
+                            }
+                        //console.log(res.data.length);
+                        });
+                    })
+                    $scope.unselectRow();
+                }
             }
         })
        
