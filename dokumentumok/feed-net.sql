@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 22. 13:23
+-- Létrehozás ideje: 2022. Már 24. 12:23
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -92,18 +92,21 @@ CREATE TABLE `ettermek` (
   `Ferohely` int(11) NOT NULL,
   `Hazhozszallitas` tinyint(1) NOT NULL,
   `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Tipus` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `Statusz` tinyint(1) NOT NULL,
-  `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
+  `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Weboldal` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Facebook` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `ettermek`
 --
 
-INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Statusz`, `Kep`) VALUES
-(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 1, 'img/rozsaetterem.jpg'),
-(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 1, 'img/kedvencetterem.jpg'),
-(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióvall', 1, 'img/rozsaetterem.jpg');
+INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Statusz`, `Kep`, `Weboldal`, `Facebook`) VALUES
+(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 1, 'img/rozsaetterem.jpg', NULL, NULL),
+(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 'img/kedvencetterem.jpg', NULL, NULL),
+(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 1, 'img/rozsaetterem.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -148,7 +151,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-03-20 17:44:41', 1, 'admin'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-03-24 11:07:36', 1, 'admin'),
 (2, 'felhasznalo@gmail.com', 'Felhasznalo', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
@@ -202,8 +205,24 @@ CREATE TABLE `kedvenc` (
 CREATE TABLE `kepek` (
   `ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
-  `Kepek` bit(64) NOT NULL
+  `Kepek` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `kepek`
+--
+
+INSERT INTO `kepek` (`ID`, `Etterem_ID`, `Kepek`) VALUES
+(1, 1, 'img/rozsaetterem.jpg'),
+(2, 1, 'img/rozsaetterem.jpg'),
+(3, 1, 'img/rozsaetterem.jpg'),
+(4, 1, 'img/rozsaetterem.jpg'),
+(5, 1, 'img/kedvencetterem.jpg'),
+(6, 2, 'img/kedvencetterem.jpg'),
+(7, 2, 'img/kedvencetterem.jpg'),
+(8, 2, 'img/kedvencetterem.jpg'),
+(9, 3, 'img/rozsaetterem.jpg'),
+(10, 3, 'img/rozsaetterem.jpg');
 
 -- --------------------------------------------------------
 
@@ -347,7 +366,7 @@ ALTER TABLE `kedvenc`
 -- AUTO_INCREMENT a táblához `kepek`
 --
 ALTER TABLE `kepek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT a táblához `nyitvatartas`
