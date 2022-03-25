@@ -3,6 +3,7 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
     $scope.etteremhely=[];
     $scope.etteremid=0;
     $scope.mostido;
+    $scope.regiadat=0;
     //$scope.maxfo=0;
     //$scope.helyfoglalva=0;
     dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
@@ -40,6 +41,11 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
                 }
             });
           })
+    }
+    $scope.regiadatok=function()
+    {
+        $scope.regiadat=($scope.regiadat)? true : false;
+       // alert($scope.regiadat);
     }
     
     /*$scope.modosit=function()
