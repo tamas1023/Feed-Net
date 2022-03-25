@@ -7,6 +7,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.etterem=[];
     $rootScope.kepek=[];
     $id=$routeParams.id;
+    /*
+
+    Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
+    a lenti sor ami mutatja hogy hány kép van, azt is láthatóbbá tenni
+
+    A főoldalon a linkekre ha rávisszük az egeret pointer legyen a kulzor
+     */
     
     $rootScope.alapfeltetel=" ID="+$id;
     //neve és a egyéb adatai
