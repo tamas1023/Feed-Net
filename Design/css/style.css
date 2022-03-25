@@ -489,3 +489,7 @@ letter-spacing: 3px;
     color: white; 
     background-color: var(--menu);
 }
+a.visszavaltascolor
+{
+    color: black;
+}
