@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 24. 12:23
--- Kiszolgáló verziója: 10.4.6-MariaDB
--- PHP verzió: 7.3.8
+-- Létrehozás ideje: 2022. Már 27. 18:58
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,6 +47,20 @@ INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Erte
 (4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
 (5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
 (6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41');
+
+-- --------------------------------------------------------
+
+--
+-- A nézet helyettes szerkezete `ertekelesek`
+-- (Lásd alább az aktuális nézetet)
+--
+CREATE TABLE `ertekelesek` (
+`Nev` varchar(1000)
+,`ID` int(11)
+,`Datum` datetime
+,`Pontszam` int(11)
+,`Ertekeles` mediumtext
+);
 
 -- --------------------------------------------------------
 
@@ -237,6 +251,15 @@ CREATE TABLE `nyitvatartas` (
   `Nyitas` time NOT NULL,
   `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Nézet szerkezete `ertekelesek`
+--
+DROP TABLE IF EXISTS `ertekelesek`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ertekelesek`  AS SELECT `felhasznalok`.`Nev` AS `Nev`, `ettermek`.`ID` AS `ID`, `ertekeles`.`Datum` AS `Datum`, `ertekeles`.`Pontszam` AS `Pontszam`, `ertekeles`.`Ertekeles` AS `Ertekeles` FROM ((`ertekeles` join `felhasznalok`) join `ettermek`) WHERE `ertekeles`.`Felhasznalo_ID` = `felhasznalok`.`ID` AND `ettermek`.`ID` = `ertekeles`.`Etterem_ID` ;
 
 -- --------------------------------------------------------
 
