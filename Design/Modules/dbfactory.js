@@ -404,9 +404,10 @@ app.factory('dbfactory', function($http, $q) {
 
         // étterem helyfoglalás select
 
-        etteremselect:function(id) {
+        etteremselect:function(id,felt) {
             let data = {
-                EtteremID:id
+                EtteremID:id,
+                Feltetel:felt
             }
             let deferred = $q.defer();
             $http.post(url + '/etteremselect',data).then(

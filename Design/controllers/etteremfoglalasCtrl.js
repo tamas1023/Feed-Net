@@ -4,33 +4,37 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
     $scope.etteremid=0;
     $scope.mostido;
     $scope.regiadat=0;
+    $scope.feltetel=" AND CURRENT_TIMESTAMP<Kezdes";
     //$scope.maxfo=0;
     //$scope.helyfoglalva=0;
-    dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
-        if(r.data.length>0)
-        {
-            $scope.etteremid=r.data[0].ID;
-             dbfactory.etteremselect($scope.etteremid).then(function(res){
-            if(res.data.length>0)
+    $scope.selectrendeles=function()
+     {
+        dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
+            if(r.data.length>0)
             {
-                $scope.etteremhely=res.data;
-                $scope.mostido=moment(res.data[0].ido).format('YYYY MM DD HH:mm:ss');
-                //alert($scope.mostido);
-                for(let i=0;i<$scope.etteremhely.length;i++)
+                $scope.etteremid=r.data[0].ID;
+                 dbfactory.etteremselect($scope.etteremid,$scope.feltetel).then(function(res){
+                if(res.data.length>0)
                 {
-                    //alert($scope.etteremhely[i].Kezdes);
-                    $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
-                    //alert($scope.etteremhely[i].Kezdes);
+                    $scope.etteremhely=res.data;
+                    $scope.mostido=moment(res.data[0].ido).format('YYYY MM DD HH:mm:ss');
+                    //alert($scope.mostido);
+                    for(let i=0;i<$scope.etteremhely.length;i++)
+                    {
+                        //alert($scope.etteremhely[i].Kezdes);
+                        $scope.etteremhely[i].Kezdes=moment($scope.etteremhely[i].Kezdes).format('YYYY MM DD HH:mm:ss');
+                        //alert($scope.etteremhely[i].Kezdes);
+                    }
                 }
+            });
             }
         });
-        }
-    });
-   
+     };
+    $scope.selectrendeles();
     $scope.torol=function()
     {
         dbfactory.etteremdelete($scope.id).then(function(r){
-            dbfactory.etteremselect($scope.etteremid).then(function(res){
+            dbfactory.etteremselect($scope.etteremid,$scope.feltetel).then(function(res){
                 if(res.data.length>0)
                 {
                     $scope.etteremhely=res.data;
@@ -45,7 +49,17 @@ app.controller('etteremfoglalasCtrl',function($scope,$rootScope,dbfactory){
     $scope.regiadatok=function()
     {
         $scope.regiadat=($scope.regiadat)? true : false;
-       // alert($scope.regiadat);
+        if($scope.regiadat)
+        {
+            $scope.feltetel=" AND CURRENT_TIMESTAMP<Kezdes";
+            $scope.selectrendeles();
+        }
+        else
+        {
+            $scope.feltetel=" ";
+            $scope.selectrendeles();
+        }
+        //alert($scope.regiadat);
     }
     
     /*$scope.modosit=function()

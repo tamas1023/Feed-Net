@@ -427,7 +427,7 @@ app.post("/etteremselect",(req,res)=>{
   {
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,CONVERT_TZ(helyfoglalas.Kezdes,'+00:00','+01:00') as Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=1
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}
-    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev,CURRENT_TIMESTAMP AS ido FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID} ORDER BY helyfoglalas.Kezdes DESC`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev,CURRENT_TIMESTAMP AS ido FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID} ${req.body.Feltetel} ORDER BY helyfoglalas.Kezdes DESC`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log(results);
