@@ -75,8 +75,8 @@
                 <div class="col-md-4 col-sm-12">
                   Felszereltség:
                 </div>
-                <div class="col-md-8 col-sm-12">
-                  Parkoló
+                <div class="col-md-8 col-sm-12 ng-binding">
+                  {{felszerelt}}
                 </div>
               </div>
               
@@ -110,7 +110,12 @@
           
           
         </div>
-        
+        <div class="ertekelesek" ng-repeat="ertekeles in ertekelesek">
+          <h1>{{ertekeles.Nev}}</h1>
+          <h1>{{ertekeles.Datum}}</h1>
+          <h1>{{ertekeles.Pontszam}}</h1>
+          <h1>{{ertekeles.Ertekeles}}</h1>
+        </div>
 
       </div>
 

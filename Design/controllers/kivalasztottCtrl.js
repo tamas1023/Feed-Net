@@ -7,6 +7,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.etterem=[];
     $rootScope.kepek=[];
     $id=$routeParams.id;
+    $rootScope.feltetelek=[];
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -15,12 +16,15 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     A főoldalon a linkekre ha rávisszük az egeret pointer legyen a kulzor
      */
     
+    
+    $rootScope.felszereltseg=[];
     $rootScope.alapfeltetel=" ID="+$id;
     //neve és a egyéb adatai
     dbfactory.selectCustom("ettermek",$rootScope.alapfeltetel).then(function(res) {
         if (res.data.length > 0) { 
             $rootScope.etterem=res.data;  
-            
+            $rootScope.felszereltseg=res.data;
+            Felszerelesek();
         } 
         else{
             console.log(res.data);
@@ -37,11 +41,61 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             console.log(res.data);
         }
     });
-    //Felszereltségek pl: egy string be összetesszük az alapján
-    //hogy 0 vagy 1 e és azt iratjuk ki
-    $scope.felszereltseg="";
-    //az etterem tömbből kiolvasni az összes felszereltséget
-    //és kézzel 
+
+    Felszerelesek=function () {
+        $rootScope.feltetelek=[];
+        //console.log($rootScope.felszereltseg[0]);
+        if ($rootScope.felszereltseg[0].Bankkartya==1) {
+            //$rootScope.feltetelek+="Bankkártya elfogadó hely, ";
+            $rootScope.feltetelek.push({"felt":"Bankkártya elfogadó hely"});
+            
+        }   
+        if ($rootScope.felszereltseg[0].Parkolo==1) {
+            //$rootScope.feltetelek+="Parkolás, ";
+            $rootScope.feltetelek.push({"felt":"Parkolás"});
+        }
+        if ($rootScope.felszereltseg[0].Glutenmentes==1) {
+            //$rootScope.feltetelek+="Gluténmentes, ";
+            $rootScope.feltetelek.push({"felt":"Gluténmentes"});
+        }
+        if ($rootScope.felszereltseg[0].Hazhozszallitas==1) {
+            //$rootScope.feltetelek+="Házhozszállítás, ";
+            $rootScope.feltetelek.push({"felt":"Házhozszállítás"});
+        }
+        if ($rootScope.felszereltseg[0].Terasz==1) {
+            //$rootScope.feltetelek+="Terasz, ";
+            $rootScope.feltetelek.push({"felt":"Terasz"});
+        }
+        if ($rootScope.felszereltseg[0].Wifi) {
+            //$rootScope.feltetelek+="Wifi, ";
+            $rootScope.feltetelek.push({"felt":"Wifi"});
+        }
+        $scope.felszerelt=" ";
+        
+         for (let i = 0; i < $rootScope.feltetelek.length; i++) {
+            
+            if (i==$scope.feltetelek.length-1) {
+                $scope.felszerelt+=" "+$rootScope.feltetelek[i].felt+" ";
+            }
+            else{
+                $scope.felszerelt+=" "+$rootScope.feltetelek[i].felt+", ";
+            }
+        }
+            
+    }
+   //értékelések lekérdezése
+   $scope.ertekelesek=[];
+   dbfactory.selectCustom("ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+    if (res.data.length > 0) { 
+        $scope.ertekelesek=res.data;
+        console.log($scope.ertekelesek);
+    } 
+    else{
+        console.log(res.data);
+    }
+});
     
+    
+        
 });
 
