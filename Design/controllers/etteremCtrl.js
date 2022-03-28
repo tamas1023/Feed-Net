@@ -1,10 +1,5 @@
 app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
 
-
-    /* db factory ha lesz akkor itt fellül kell mit a location 
-    a  kisbetűs neveket min id nev lehet hogy ki kell cserélni majd ha az adatbázisból kapja
-    az adatokat nagy betűsökre (itt is meg a html ben is)
-    */ 
    
     $scope.ettermek=[];
     $scope.title="Étterem";
@@ -19,13 +14,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         }
        //console.log(res.data.length);
     });
-   /* $scope.etlap=[
-        {id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-        {id:2,nev:"Harcsa leves",ar:950,leiras:"Harkcsa hús leves zöldségekkel"},
-        {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-        {id:4,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-        {id:5,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"}
-    ];*/
     $scope.selectRow=function($id){
        $scope.ModID=$scope.ettermek[$id].ID;
         $scope.ujnev=$scope.ettermek[$id].Nev;
@@ -56,6 +44,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                 }
                //console.log(res.data.length);
             });
+            $scope.unselectRow();
         })
     }
     $scope.unselectRow=function()
@@ -85,10 +74,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujar=null;
         $scope.ujleirasetel=null;
         $rootScope.selectedetteremID=$id;
-        $scope.etlap=[{id:1,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska egy tálon"},
-       
-        {id:3,nev:"Hal rudacska",ar:1250,leiras:"4 nagy halrudacska két tálon "}];
-
        $location.url('/admin/etlap/'+$rootScope.selectedetteremID);
     }
     $scope.visszavaltasetterem=function()

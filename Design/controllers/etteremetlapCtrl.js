@@ -36,15 +36,23 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
             
         $scope.insertEtlap=function()
         {
-            dbfactory.adminfoodinsert($rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar, $scope.ujleirasetel).then(function(res){
-                dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
-                    if(res.data.length>0)
-                    {
-                        $scope.etlap=res.data;
-                    }
-                   //console.log(res.data.length);
-                });
-            })
+            if($scope.ujnevetel==null|| $scope.ujar==null|| $scope.ujleirasetel==null)
+            {
+                alert('a kellő adatok nincsenek kitöltve ');
+            }
+            else
+            {
+                dbfactory.adminfoodinsert($rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar, $scope.ujleirasetel).then(function(res){
+                    dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.etlap=res.data;
+                        }
+                       //console.log(res.data.length);
+                    });
+                })
+            }
+           
         }
         $scope.egyvalaszt=function(id)
         {

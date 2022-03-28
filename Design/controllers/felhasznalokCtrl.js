@@ -56,39 +56,46 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
      }
      $scope.insert=function()
      { 
-        dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
-            if(res.data.length>0)
-            {
-                alert('Ez az email cím már foglalat');
-            }
-            else
-            {
-                $scope.ujstatusz=($scope.ujstatusz) ? true:false;
-               
-                let pattern =  /^[a-zA-Z0-9]{8,}$/;
-                if(!$scope.ujpass.match(pattern))
+        if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujjog==null||$scope.ujstatusz==null)
+        {
+            alert('a kellő adatok nincsenek kitöltve ')
+        }
+        else
+        {
+            dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
+                if(res.data.length>0)
                 {
-                    alert('A jelszó nep felel meg a minimális követelményeknek');
+                    alert('Ez az email cím már foglalat');
                 }
                 else
                 {
-                    if($scope.ujtelefon==null)
+                    $scope.ujstatusz=($scope.ujstatusz) ? true:false;
+                
+                    let pattern =  /^[a-zA-Z0-9]{8,}$/;
+                    if(!$scope.ujpass.match(pattern))
                     {
-                        $scope.ujtelefon="";
+                        alert('A jelszó nep felel meg a minimális követelményeknek');
                     }
-                    dbfactory.userinsert($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,CryptoJS.SHA1($scope.ujpass).toString(),$scope.ujjog,$scope.ujstatusz).then(function(res){
-                        dbfactory.userselect().then(function(res){
-                            if(res.data.length>0)
-                            {
-                                $scope.felhasznalok=res.data;
-                            }
-                        });
-                    })
-                    $scope.unselectRow();
+                    else
+                    {
+                        if($scope.ujtelefon==null)
+                        {
+                            $scope.ujtelefon="";
+                        }
+                        dbfactory.userinsert($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,CryptoJS.SHA1($scope.ujpass).toString(),$scope.ujjog,$scope.ujstatusz).then(function(res){
+                            dbfactory.userselect().then(function(res){
+                                if(res.data.length>0)
+                                {
+                                    $scope.felhasznalok=res.data;
+                                }
+                            });
+                        })
+                        $scope.unselectRow();
+                    }
                 }
-            }
-           
-        })
+            
+            })
+        }
      }
      $scope.update=function()
      { 
