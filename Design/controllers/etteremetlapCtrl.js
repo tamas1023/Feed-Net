@@ -51,6 +51,7 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                        //console.log(res.data.length);
                     });
                 })
+                $scope.unselectRowEtlap();
             }
            
         }

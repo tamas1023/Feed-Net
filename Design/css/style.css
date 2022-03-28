@@ -8,7 +8,7 @@
     --lesshighlight:#6b6864; /*Szűrés*/
     --footer:#b46306;
     --menu:#b46306;
-
+    --menuhover:#c06600;
 
 }
 body {
@@ -492,4 +492,15 @@ letter-spacing: 3px;
 a.visszavaltascolor
 {
     color: black;
+}
+.dropdown-menu
+{
+    background-color: var(--menu);
+}
+.dropdown-menu>li>a{
+    color: white;
+}
+.dropdown-menu>li>a:hover
+{   color: white;
+    background-color: var(--menuhover);
 }
