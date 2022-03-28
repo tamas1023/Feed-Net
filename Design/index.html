@@ -103,8 +103,9 @@
   <div id="mySidebar" class="sidebar">
     <p href="javascript:void(0)" class="closebtn" onclick="">×</p>
     <h3>Értékelés</h3>
+     <!--
     <div class="rating-css">
-      
+     
       <div class="star-icon">
         <input type="radio" name="rating1" id="rating1" >
         <label for="rating1" class="fa fa-star" ng-click="Csillag(1)"></label>
@@ -117,7 +118,24 @@
         <input type="radio" name="rating1" id="rating5" >
         <label for="rating5" class="fa fa-star" ng-click="Csillag(5)"></label>
       </div>
+
+      
     </div>
+    -->
+    <fieldset class="star-rating">
+      <div>
+        <input type="radio" name="rating" value="1" id="rating1" />
+        <label for="rating1" ng-click="Csillag(1)"><span>1</span></label>
+        <input type="radio" name="rating" value="2" id="rating2" />
+        <label for="rating2" ng-click="Csillag(2)"><span>2</span></label>
+        <input type="radio" name="rating" value="3" id="rating3" />
+        <label for="rating3" ng-click="Csillag(3)"><span>3</span></label>
+        <input type="radio" name="rating" value="4" id="rating4" />
+        <label for="rating4" ng-click="Csillag(4)"><span>4</span></label>
+        <input type="radio" name="rating" value="5" id="rating5" />
+        <label for="rating5" ng-click="Csillag(5)"><span>5</span></label>
+      </div>
+    </fieldset>
   
     <div class="szurokwrap">
       <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
