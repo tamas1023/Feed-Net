@@ -16,7 +16,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     A főoldalon a linkekre ha rávisszük az egeret pointer legyen a kulzor
      */
     
-    
+    $rootScope.sidebar=false;
     $rootScope.felszereltseg=[];
     $rootScope.alapfeltetel=" ID="+$id;
     //neve és a egyéb adatai
