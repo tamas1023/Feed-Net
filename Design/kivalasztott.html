@@ -110,11 +110,22 @@
           
           
         </div>
-        <div class="ertekelesek" ng-repeat="ertekeles in ertekelesek">
-          <h1>{{ertekeles.Nev}}</h1>
-          <h1>{{ertekeles.Datum}}</h1>
-          <h1>{{ertekeles.Pontszam}}</h1>
-          <h1>{{ertekeles.Ertekeles}}</h1>
+        <div class="ertekelesek " ng-repeat="ertekeles in ertekelesek">
+          <div class="row">
+            <div class="col-sm-12 col-md-4">
+              
+              <h3>{{ertekeles.Nev}}</h3>
+              <p>{{ertekeles.Datum}}</p>
+              <p>{{ertekeles.Pontszam}}</p>
+            </div>
+            <div class="col-sm-12 col-md-8">
+              
+              <h3>{{ertekeles.Ertekeles}}</h3>
+            </div>
+          </div>
+         
+          
+          
         </div>
 
       </div>

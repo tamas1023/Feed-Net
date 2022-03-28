@@ -88,7 +88,15 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
    dbfactory.selectCustom("ertekelesek",$rootScope.alapfeltetel).then(function(res) {
     if (res.data.length > 0) { 
         $scope.ertekelesek=res.data;
-        console.log($scope.ertekelesek);
+        //console.log($scope.ertekelesek);
+        
+        for (let i = 0; i < $scope.ertekelesek.length; i++) {
+            
+            //vagy amikor lekérjük akkor már csak a dátumját kérjük le pl
+            //vagy átírni a nézettáblát hogy csak az év hónap és napot mutassa
+            $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
+        }
+        
     } 
     else{
         console.log(res.data);
