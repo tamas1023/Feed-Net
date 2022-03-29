@@ -188,20 +188,20 @@ app.post('/admindininginsert',(req,res)=>{
       hazhozszallitas:req.body.Hazhozszallitas,
       statusz:req.body.Statusz
     }
-    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz})`,(err,results)=>{
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz},'')`,(err,results)=>{
       if(err)throw err;
       res.json(results);
-      console.log('sikeres felvétel');
+      //console.log('sikeres felvétel');
     });
     let passwd="ef32600aaedc13042de3712a8c2c1286671c1f37";
     dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`,(err,results)=>{
       if(err)throw err;
       if(results.length==0)
       {
-        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
+        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.nev}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
           if(err)throw err;
          // console.log('sikeres insert');
-          res.json({message:"ok"});
+         // res.send("ok");
         })
       }
     })
@@ -427,7 +427,7 @@ app.post("/etteremselect",(req,res)=>{
   {
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,CONVERT_TZ(helyfoglalas.Kezdes,'+00:00','+01:00') as Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=1
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}
-    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev,CURRENT_TIMESTAMP AS ido FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID} ${req.body.Feltetel} ORDER BY helyfoglalas.Kezdes DESC`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log(results);
@@ -454,12 +454,50 @@ app.post("/etteremdelete",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+
+  //étterem módosítás
+
 app.post("/etteremupdate",(req,res)=>{
   if(session.Rights=="etterem")
   {
     dbPool.query(`UPDATE helyfoglalas SET Kezdes='${req.body.Kezdes}',Fo=${req.body.Fo} WHERE helyfoglalas.ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
         res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+  //étterem férőhelyének lekérése
+
+app.post('/etteremfo',(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    //console.log(req.body.ID);
+    dbPool.query(`SELECT Ferohely FROM ettermek WHERE ID=${req.body.ID} `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+     // console.log(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+});
+
+  //étterem helyet foglaltak száma
+
+app.post('/etteremminus',(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+
+    dbPool.query(`SELECT SUM( helyfoglalas.Fo) AS Fo FROM helyfoglalas,ettermek WHERE CURRENT_TIMESTAMP<helyfoglalas.Kezdes AND ettermek.ID=${req.body.ID} AND helyfoglalas.Etterem_ID=${req.body.ID} `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
     })
   }
   else

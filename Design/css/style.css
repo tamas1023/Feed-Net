@@ -8,7 +8,7 @@
     --lesshighlight:#6b6864; /*Szűrés*/
     --footer:#b46306;
     --menu:#b46306;
-
+    --menuhover:#c06600;
 
 }
 body {
@@ -120,14 +120,20 @@ img{
 #kereses input{
     width: 50%;
 }
-#adminkereses{
+.adminkereses{
+
     margin:0 auto;
     margin-top: 5px;
     margin-bottom: 5px;
     background-color: white;
     width: 99%;
+    border-radius: 25px;
+    box-shadow: 1px 2px 1px rgb(73, 66, 66);
     border: 1px solid black;
-
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(101, 110, 117);
 }
 #kereses input#radio{
     width:0%;
@@ -473,4 +479,56 @@ letter-spacing: 3px;
  div>.container-fluid
 {
     margin-top: 5px;margin-bottom: 20px;
+}
+.lejart>td
+{
+    background-color: rgb(189, 96, 96);
+}
+.visszaetterem
+{
+    margin-top: 20px;
+    margin-bottom: 5px; 
+    color: black;
+}
+.menucolor
+{
+    color: white; 
+    background-color: var(--menu);
+}
+a.visszavaltascolor
+{
+    color: white;
+}
+.dropdown-menu
+{
+    background-color: var(--menu);
+}
+.dropdown-menu>li>a{
+    color: white;
+}
+.dropdown-menu>li>a:hover
+{   color: white;
+    background-color: var(--menuhover);
+}
+.accordion-button:not(.collapsed), .collapsed
+{
+    color: white;
+}
+.table
+{
+    border-radius: 10px;
+}
+#h1etterem
+{
+    color: white;
+    text-align: center; 
+    padding-top: 10px;
+}
+.regiadatok
+{
+    color: white;
+}
+div.form-floating>input,#jog
+{
+    border-radius: 25px;
 }
