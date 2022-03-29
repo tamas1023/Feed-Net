@@ -497,7 +497,7 @@ letter-spacing: 3px;
 }
 a.visszavaltascolor
 {
-    color: black;
+    color: white;
 }
 .dropdown-menu
 {
@@ -517,4 +517,14 @@ a.visszavaltascolor
 .table
 {
     border-radius: 10px;
+}
+#h1etterem
+{
+    color: white;
+    text-align: center; 
+    padding-top: 10px;
+}
+.regiadatok
+{
+    color: white;
 }
