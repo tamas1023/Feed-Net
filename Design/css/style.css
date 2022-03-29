@@ -528,3 +528,7 @@ a.visszavaltascolor
 {
     color: white;
 }
+div.form-floating>input,#jog
+{
+    border-radius: 25px;
+}
