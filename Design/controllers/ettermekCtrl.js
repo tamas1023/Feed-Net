@@ -86,6 +86,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
 
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
+        
     }
     $scope.Valasztas=function ($id) { 
         $location.url('/kivalasztott/'+$id);

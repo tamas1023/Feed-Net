@@ -121,7 +121,7 @@
 
       
     </div>
-    -->
+    
     <fieldset class="star-rating" style="padding-left: 30px;">
       <div>
         <input type="radio" name="rating" value="1" id="rating1" />
@@ -136,7 +136,19 @@
         <label for="rating5" ng-click="Csillag(5)"><span>5</span></label>
       </div>
     </fieldset>
-  
+  -->
+  <div class="rating">
+    <input type="radio" name="rating" id="rating-5">
+    <label for="rating-5"  ng-click="Csillag(5)"></label>
+    <input type="radio" name="rating" id="rating-4">
+    <label for="rating-4"  ng-click="Csillag(4)"></label>
+    <input type="radio" name="rating" id="rating-3">
+    <label for="rating-3"  ng-click="Csillag(3)"></label>
+    <input type="radio" name="rating" id="rating-2">
+    <label for="rating-2"  ng-click="Csillag(2)"></label>
+    <input type="radio" name="rating" id="rating-1">
+    <label for="rating-1"  ng-click="Csillag(1)"></label>
+  </div>
     <div class="szurokwrap">
       <input type="checkbox" ng-model="nyitva" ng-checked="nyitva==1">
       <label for="" class="szurok">Nyitva van-e?</label>

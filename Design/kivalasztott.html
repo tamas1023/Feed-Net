@@ -126,15 +126,23 @@
         <div class="ertekelesek " ng-repeat="ertekeles in ertekelesek">
           <div class="row">
             <hr>
-            <div class="col-sm-12 col-md-2">
-              
-              <h3>{{ertekeles.Nev}}</h3>
+            <div class="col-sm-12 col-md-3">
+              <div class="row">
+                <div class="col">
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(1,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(2,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(3,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(4,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(5,ertekeles.Pontszam)}"></i>
+                </div>
+              </div>
+              <p>{{ertekeles.Nev}}</p>
               <p>{{ertekeles.Datum}}</p>
-              <p>{{ertekeles.Pontszam}}</p>
             </div>
-            <div class="col-sm-12 col-md-10">
+            <div class="col-sm-12 col-md-9">
               
               <h3>{{ertekeles.Ertekeles}}</h3>
+              
             </div>
           </div>
          

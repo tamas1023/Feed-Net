@@ -101,6 +101,17 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     else{
         console.log(res.data);
     }
+    $scope.Csillag=function (id) {
+        $rootScope.ertekeles=" Ertekeles >="+id+" ";
+        console.log(id);
+    }
+    $scope.checkValue1 = function(id,pontszam) {
+        console.log(id+" pontszam: "+pontszam);
+        if (id<=pontszam) {
+            console.log("Szinezes");
+            return  " .red";
+        }
+      }
 });
     
     
