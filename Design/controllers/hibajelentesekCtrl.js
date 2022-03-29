@@ -1,5 +1,6 @@
 app.controller('hibajelentesekCtrl',function($scope,$rootScope,dbfactory){
     $scope.torolegyid=0;
+    $rootScope.sidebar=false;
     $scope.hibak=[];
     dbfactory.errorselect().then(function(res){
         if(res.data.length>0)

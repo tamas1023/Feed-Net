@@ -1,5 +1,6 @@
 app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
     $scope.admin=false;
+    $rootScope.sidebar=false;
     $scope.jelszo="";
    // $scope.statusz=0;
     $scope.felhasznalok=[];

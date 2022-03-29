@@ -416,13 +416,13 @@ ol
 
 /*Login és register css részek*/
 .loginheader{
-    background-color: slategray;
+    background-color: var(--menu);
     padding: 20px;
     text-align: center;
     font-weight: bold;
     color: white;
     text-shadow: 0 0 5px black;
-    
+    margin-bottom: 10px;
 }
 .loginlabel,h6
 {
@@ -531,4 +531,28 @@ a.visszavaltascolor
 div.form-floating>input,#jog
 {
     border-radius: 25px;
+}
+div.loginfloating>input
+{  
+    border-radius: 5px;
+    height: 40px;
+
+}
+div.loginfloating
+{
+    padding: 0px;
+}
+.visszabejelentkezes
+{
+    padding: 3px;
+    color: black;
+}
+.visszabejelentkezes:hover
+{
+    color: white;
+    background-color: var(--menu);
+}
+.loginbtn
+{
+    background-color: var(--lesshighlight);
 }

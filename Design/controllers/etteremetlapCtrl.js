@@ -5,6 +5,7 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         $scope.ujnevetel=null;
         $scope.ujar=null;
         $scope.ujleirasetel=null;
+        $rootScope.sidebar=false;
         $scope.etlap=[];
         $scope.torolegyid=0;
         //alert($rootScope.selectedetteremID);

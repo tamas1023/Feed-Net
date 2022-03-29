@@ -1,34 +1,28 @@
 
     <div class="container" ng-controller="regCtrl">
         <header class="loginheader">
-            <h3 class="animate__animated animate__backInUp">Regisztráció</h3>
+            <h3>Regisztráció</h3>
         </header>
         <main class="loginmain">
-            <div class="login-form container">
-                <h3>Regisztráció</h3>
-            
-                <form  class="loginform" >
-                    <div class="form-group sorkoz">
-                        <input type="text" name="username" ng-model="ujnev" placeholder="Név" class="form-control animate__animated animate__backInLeft" required>
+                    <div class="form-group form-floating mb-3 loginfloating">
+                        <input type="text" name="username" ng-model="ujnev" class="form-control" placeholder="Név" required>
+                        <label class="loginlabel"  for="nev">Név</label>
                     </div>
-                    <div class="form-group sorkoz">
-                        <input type="email" name="username" ng-model="ujemail" placeholder="E-mail" class="form-control animate__animated animate__backInLeft" required>
+                    <div class="form-group sorkoz form-floating mb-3 loginfloating">
+                        <input type="email" name="username" ng-model="ujemail" placeholder="E-mail" class="form-control " required>
+                        <label class="loginlabel"  for="email">E-mail</label>
                     </div>
-                    <div class="form-group sorkoz">
-                        <input type="password" name="passwd1" ng-model="ujjelszo" placeholder="Jelszó" class="form-control animate__animated animate__backInRight">
+                    <div class="form-group sorkoz form-floating mb-3 loginfloating">
+                        <input type="password" name="passwd1" ng-model="ujjelszo" placeholder="Jelszó" class="form-control ">
+                        <label class="loginlabel"  for="jelszo">Jelszó</label>
                     </div>
-                    <div class="form-group sorkoz">
-                        <input type="password" name="passwd2" ng-model="ujjelszo2" placeholder="Jelszó újra " class="form-control animate__animated animate__backInUp">
+                    <div class="form-group sorkoz form-floating mb-3 loginfloating">
+                        <input type="password" name="passwd2" ng-model="ujjelszo2" placeholder="Jelszó újra " class="form-control ">
+                        <label class="loginlabel"  for="jelszo2">Jelszó újra</label>
                     </div>
-                    <div class="form-group sorkoz">
+                    <div class="form-group sorkoz form-floating mb-3 loginfloating">
                         <input type="submit" value="Regisztráció" ng-click="reg()"  class="btn btn-secondary">
                     </div>
-                    
-                </form>
-                <a href="#!/login">Vissza a bejelentkezéshez</a>
-            </div>
+                <a href="#!/login" class="visszabejelentkezes">Vissza a bejelentkezéshez</a>
         </main>
-        <footer  class="loginfooter">
-            
-        </footer>
         </div>
