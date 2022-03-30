@@ -12,14 +12,17 @@ app.run(function($rootScope,dbfactory){
     $rootScope.loggedIn=false;
     $rootScope.logJog="";
     $rootScope.EtteremEmail=0;
+    $rootScope.loggedInUserID=0;
     dbfactory.email().then(function(res){
         $rootScope.EtteremEmail=res.data;
     })
     dbfactory.session().then(function(res){
         //console.log(res.data);
       //  sessionStorage.setItem('User', angular.toJson(res.data));
-        $rootScope.logJog=res.data;
-        if(res.data=="user"||res.data=="admin"||res.data=="etterem")
+        $rootScope.logJog=res.data[0].Rights;
+        $rootScope.loggedInUserID=res.data[0].ID;
+        
+        if(res.data[0].Rights=="user"||res.data[0].Rights=="admin"||res.data[0].Rights=="etterem")
         {
             $rootScope.loggedIn=true;
         }

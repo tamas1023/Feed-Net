@@ -10,7 +10,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.csillag=0;
     $rootScope.feltetelek=[];
     
-    console.log($scope.uzenet);
+    $scope.uzenet={};
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -106,10 +106,11 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     else{
         console.log(res.data);
     }
+    });
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
         $rootScope.csillag=id;
-        console.log($scope.uzenet);
+        
     }
     $scope.checkValue1 = function(id,pontszam) {
         
@@ -119,12 +120,38 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
     }
     $scope.ertekel=function () {
-        console.log($scope.uzenet);
-        //kiolvasni az uzenet textarea value jet js ben angularjs nélkül
-        //valamiért nem működik
-        console.log($rootScope.csillag);
+        //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
+        //az érétkelése ha többször is volt ott
+        
+        if ($rootScope.loggedIn==true) {
+            dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
+
+                //újra kell tölteni az értékeléseket, de valamiért még nem jó
+                dbfactory.selectCustom("ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+                    if (res.data.length > 0) { 
+                        $scope.ertekelesek=res.data;
+                        
+                        for (let i = 0; i < $scope.ertekelesek.length; i++) {
+                            $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
+                        }
+                        
+                    } 
+                    else{
+                        console.log(res.data);
+                    }
+                    });
+            });
+        }
+        else{
+            alert("Jelentkezz be az értékeléshez.");
+        }
+        
+
+        //console.log($scope.uzenet.message);
+        //console.log($rootScope.csillag);
+        
     }
-});
+
     
     
         

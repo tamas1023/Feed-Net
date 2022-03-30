@@ -24,7 +24,8 @@ dbPool.getConnection((err,connection)=>{
 app.post('/session',(req,res)=>{
   if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
   {
-    res.send(session.Rights);
+    let jsontomb=[{Rights:session.Rights,ID:session.ID}]
+    res.json(jsontomb);
   }
 })
 app.get("/email",(req,res)=>{
@@ -73,6 +74,7 @@ app.post('/login', (req, res) => {
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
         session.Email=results[0].Email;
+        session.ID=results[0].ID;
         jog=results[0].Jog;
       }
       //console.log(session.LoggedIn);
@@ -467,7 +469,26 @@ app.post("/etteremupdate",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+//ertekeles insert
 
+  app.post('/ratingInsert',(req,res)=>{
+    
+      let data = {
+        Etterem_ID:req.body.Etterem_ID,
+        Felhasznalo_ID:req.body.Felhasznalo_ID,
+        Pontszam:req.body.Pontszam,
+        Ertekeles:req.body.Ertekeles
+    }
+      dbPool.query(`INSERT INTO ertekeles VALUES(NULL,${data.Etterem_ID},'${data.Felhasznalo_ID}',${data.Pontszam},'${data.Ertekeles}',CURRENT_TIME)`,(err,results)=>{
+        if(err)throw console.log(err);
+        
+      })
+    
+    
+  })
+
+
+// egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
   let data = {
     tablename: req.body.Tablename,
