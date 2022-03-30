@@ -7,7 +7,10 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.etterem=[];
     $rootScope.kepek=[];
     $id=$routeParams.id;
+    $rootScope.csillag=0;
     $rootScope.feltetelek=[];
+    
+    console.log($scope.uzenet);
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -15,6 +18,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
 
     A főoldalon a linkekre ha rávisszük az egeret pointer legyen a kulzor
      */
+
+    
     
     $rootScope.sidebar=false;
     $rootScope.felszereltseg=[];
@@ -103,15 +108,22 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     }
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
-        console.log(id);
+        $rootScope.csillag=id;
+        console.log($scope.uzenet);
     }
     $scope.checkValue1 = function(id,pontszam) {
-        console.log(id+" pontszam: "+pontszam);
+        
         if (id<=pontszam) {
-            console.log("Szinezes");
+            
             return  " .red";
         }
-      }
+    }
+    $scope.ertekel=function () {
+        console.log($scope.uzenet);
+        //kiolvasni az uzenet textarea value jet js ben angularjs nélkül
+        //valamiért nem működik
+        console.log($rootScope.csillag);
+    }
 });
     
     

@@ -99,7 +99,7 @@
         <div id="ertekeles" class="row">
           
           <div class="col col-12">
-            <textarea name="" id="" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
+            <textarea name="uzenet" id="" ng-model="uzenet" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
           </div>
           <div class="col col-8">
             <fieldset class="star-rating">
@@ -118,7 +118,7 @@
             </fieldset>
           </div>
           <div class="col col-4">
-            <button class="btn btn-success float-end">Értékelem</button>
+            <button class="btn btn-success float-end" ng-click="ertekel()">Értékelem</button>
           </div>
           
           
