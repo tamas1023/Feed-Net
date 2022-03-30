@@ -556,3 +556,24 @@ div.loginfloating
 {
     background-color: var(--lesshighlight);
 }
+#regdiv
+{
+    padding-bottom: 15px;
+     padding-right: 15px;
+}
+.accord_item
+{
+    border-radius: 25px !important;
+}
+.regiswitch
+{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+@media (max-width:280px)
+{
+    #regdiv
+    {
+        position: relative !important;
+    }
+}

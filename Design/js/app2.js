@@ -115,6 +115,19 @@ app.config(function($routeProvider){
         templateUrl:'hibajelentesek.html',
         controller:'hibajelentesekCtrl'
     })
+    .when('/admin/ertekeles',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="admin"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'ertekeles.html',
+        controller:'ertekelesCtrl'
+    })
     .when('/etteremfoglalas',{
         resolve:
         {

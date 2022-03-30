@@ -385,6 +385,40 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //értékelések select
+
+
+        ratingselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/ratingselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // értékelés delete
+
+        ratingdelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/ratingdelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         // étterem id meghatározása email cím alapján
         etteremid:function(email) {
             let data = {

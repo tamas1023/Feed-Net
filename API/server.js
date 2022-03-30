@@ -409,6 +409,36 @@ app.post('/errordelete',(req,res)=>{
   }
 })
 
+//rating select
+app.get('/ratingselect',(req,res)=>{
+  if(session.Rights=="admin")
+  {
+    dbPool.query(`SELECT  ertekeles.ID,ettermek.Nev as EtNev,felhasznalok.Nev,ertekeles.Ertekeles,ertekeles.Pontszam,ertekeles.Datum FROM ertekeles,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+//rating delete
+
+app.post('/ratingdelete',(req,res)=>{
+  if(session.Rights=="admin")
+  {
+    dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
   //étterem is meghatározása
 app.post('/etteremid',(req,res)=>{
   if(session.Rights=="etterem")

@@ -34,18 +34,8 @@
   <script src="controllers/kedvencekCtrl.js"></script>
   <script src="controllers/regCtrl.js"></script>
   <script src="controllers/loginCtrl.js"></script>
- 
-
-    <script src="controllers/etteremCtrl.js"></script>
-    <script src="controllers/felhasznalokCtrl.js"></script>
-    <script src="controllers/hibajelentesekCtrl.js"></script>
-    <script src="controllers/etteremetlapCtrl.js"></script>
-    <script src="controllers/etteremfoglalasCtrl.js"></script>
-    <script src="controllers/ettermekCtrl.js"></script>
-    <script src="controllers/gyikCtrl.js"></script>
-    <script src="controllers/kedvencekCtrl.js"></script>
-    <script src="controllers/regCtrl.js"></script>
-    <script src="controllers/loginCtrl.js"></script>
+  <script src="controllers/ertekelesCtrl.js"></script>
+  
     <title class="ng-binding">{{title}}</title>
 
 </head>
@@ -80,7 +70,7 @@
             <li class="nav-item" ng-if="loggedIn==false">
               <a class="nav-link reg" href="#!/reg">Regisztráció</a>
             </li>
-            <li class="nav-item dropdown" ng-if="logJog=='admin'||logJog=='etterem'" ><!-- -->
+            <li class="nav-item dropdown" ng-if="logJog=='admin'" ><!-- -->
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Admin/étterem felület
               </a>
@@ -88,8 +78,11 @@
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin">Éttermek kezelés</a></li>
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin/felhasznalo">Felhasználókezelés</a></li>
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/hiba">Hibajelentések</a></li>
-                <li><a class="dropdown-item" ng-if="logJog=='etterem'" href="#!/etteremfoglalas">Étteremfoglalás</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/ertekeles">Értékelések</a></li>
               </ul>
+            </li>
+            <li class="nav-item" ng-if="logJog=='etterem'">
+              <a class="nav-link"  href="#!/etteremfoglalas">Étteremfoglalás</a>
             </li>
             <li class="nav-item" ng-if="loggedIn==true">
               <a class="nav-link reg"  href="#!/login"><i class="bx bx-log-out"> </i> Kijelentkezés</a>

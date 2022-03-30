@@ -7,6 +7,7 @@ var opened=false;
 let width = innerWidth;
 let height = innerHeight;
 
+
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 let topnavopened=false;
