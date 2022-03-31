@@ -24,6 +24,12 @@ body {
 .check {
     color: red;
 }
+.notShow{
+    display: none;
+}
+.show{
+    display: block;
+}
 
 /*Star rating system*/
 /*

@@ -11,6 +11,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.feltetelek=[];
     
     $scope.uzenet={};
+    $scope.hiba=false;
+
+    
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -90,7 +93,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     }
    //értékelések lekérdezése
    $scope.ertekelesek=[];
-   dbfactory.selectCustom("ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+   dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
     if (res.data.length > 0) { 
         $scope.ertekelesek=res.data;
         //console.log($scope.ertekelesek);
@@ -119,32 +122,49 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             return  " .red";
         }
     }
+    $scope.checkID = function($felhasznaloID) {
+        
+        if ($felhasznaloID==$rootScope.loggedInUserID) {
+            
+            return  " .show";
+        }
+        
+    }
     $scope.ertekel=function () {
         //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
         //az érétkelése ha többször is volt ott
         
-        if ($rootScope.loggedIn==true) {
-            dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
-
-                //újra kell tölteni az értékeléseket, de valamiért még nem jó
-                dbfactory.selectCustom("ertekelesek",$rootScope.alapfeltetel).then(function(res) {
-                    if (res.data.length > 0) { 
-                        $scope.ertekelesek=res.data;
-                        
-                        for (let i = 0; i < $scope.ertekelesek.length; i++) {
-                            $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
-                        }
-                        
-                    } 
-                    else{
-                        console.log(res.data);
-                    }
-                    });
-            });
+        if ($rootScope.csillag=="") {
+            //Csillagok megadása kötelező!ű
+            $scope.hiba=true;
         }
         else{
-            alert("Jelentkezz be az értékeléshez.");
+            if ($rootScope.loggedIn==true) {
+            
+                dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
+                    
+                    //újra kell tölteni az értékeléseket, de valamiért még nem jó
+                    dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
+                        
+                        if (res.data.length > 0) { 
+                            $scope.ertekelesek=res.data;
+                            $scope.hiba=false;
+                            for (let i = 0; i < $scope.ertekelesek.length; i++) {
+                                $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
+                            }
+                            
+                        } 
+                        else{
+                            console.log(res.data);
+                        }
+                        });
+                });
+            }
+            else{
+                alert("Jelentkezz be az értékeléshez.");
+            }
         }
+        
         
 
         //console.log($scope.uzenet.message);

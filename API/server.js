@@ -481,7 +481,7 @@ app.post("/etteremupdate",(req,res)=>{
     }
       dbPool.query(`INSERT INTO ertekeles VALUES(NULL,${data.Etterem_ID},'${data.Felhasznalo_ID}',${data.Pontszam},'${data.Ertekeles}',CURRENT_TIME)`,(err,results)=>{
         if(err)throw console.log(err);
-        
+        res.json({message:"Felvéve!"});
       })
     
     
