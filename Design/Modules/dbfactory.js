@@ -132,6 +132,21 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        ratingDelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/ratingDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
 
         //admin Étterem
         

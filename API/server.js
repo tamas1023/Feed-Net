@@ -487,6 +487,14 @@ app.post("/etteremupdate",(req,res)=>{
     
   })
 
+  //ertekeles torles
+app.post('/ratingDelete',(req,res)=>{
+  
+    dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+})
 
 // egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
@@ -499,6 +507,8 @@ app.post('/selectCustom', (req, res) => {
       res.json(results);
   });
 });
+
+
 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);

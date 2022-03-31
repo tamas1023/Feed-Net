@@ -115,14 +115,14 @@
           </div>
           </div>
         </div>
-        <h4 ng-if="hiba==true">Csillagok megadása kötelező!</h4>
+        <h4 id="alert" ng-if="hiba==true">Csillagok megadása kötelező!</h4>
         <h2>Értékeld az éttermet!</h2>
         <div id="ertekeles" class="row">
           
-          <div class="col col-12">
+          <div class="col col-12 col-sm-12">
             <textarea name="uzenet" id="" ng-model="uzenet.message" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
           </div>
-          <div class="col col-8">
+          <div class="col  col-sm-8 col-lg-12">
             <fieldset class="star-rating">
               <div>
                 <input type="radio" name="rating" value="1" id="rating1" />
@@ -138,8 +138,8 @@
               </div>
             </fieldset>
           </div>
-          <div class="col col-4">
-            <button class="btn btn-success float-end" ng-click="ertekel()">Értékelem</button>
+          <div class="col col-sm-4 col-lg-12" id="ertekelesgomb">
+            <button class="btn btn-success"  ng-click="ertekel()">Értékelem</button>
           </div>
           
           
@@ -159,12 +159,15 @@
               </div>
               <p>{{ertekeles.Nev}}</p>
               <p>{{ertekeles.Datum}}</p>
+              
             </div>
             <div class="col-sm-12 col-md-9">
               
               <h3>{{ertekeles.Ertekeles}}</h3>
               
-              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
+              
+              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-click="TorolID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
+              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
               <div class="modal fade" id="Torles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -173,15 +176,17 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <h1>Biztos törölni akarja az értékelést?</h1>
+                      
+                      <h1>Biztos törölni akarja az értékelést? </h1>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                      <button type="button" class="btn btn-primary">Törlés</button>
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Torles()">Törlés</button>
                     </div>
                   </div>
                 </div>
               </div>
+              
             </div>
           </div>
          

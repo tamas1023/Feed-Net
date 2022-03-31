@@ -9,7 +9,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $id=$routeParams.id;
     $rootScope.csillag=0;
     $rootScope.feltetelek=[];
-    
+    $rootScope.TorlesID=0;
+    $rootScope.TorlesFelhaszID=0;    
+
     $scope.uzenet={};
     $scope.hiba=false;
 
@@ -27,6 +29,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.sidebar=false;
     $rootScope.felszereltseg=[];
     $rootScope.alapfeltetel=" ID="+$id;
+    $rootScope.feltetel=" Etterem_ID="+$id;
+
+
     //neve és a egyéb adatai
     dbfactory.selectCustom("ettermek",$rootScope.alapfeltetel).then(function(res) {
         if (res.data.length > 0) { 
@@ -39,7 +44,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
     });
     //képek lekérése
-    $rootScope.feltetel=" Etterem_ID="+$id;
+    
     dbfactory.selectCustom("kepek",$rootScope.feltetel).then(function(res) {
         if (res.data.length > 0) { 
             $rootScope.kepek=res.data;  
@@ -130,6 +135,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
         
     }
+    
     $scope.ertekel=function () {
         //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
         //az érétkelése ha többször is volt ott
@@ -143,7 +149,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
                 dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
                     
-                    //újra kell tölteni az értékeléseket, de valamiért még nem jó
+                    
                     dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                         if (res.data.length > 0) { 
@@ -157,23 +163,42 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         else{
                             console.log(res.data);
                         }
-                        });
+                    });
                 });
             }
             else{
                 alert("Jelentkezz be az értékeléshez.");
             }
         }
-        
-        
-
-        //console.log($scope.uzenet.message);
-        //console.log($rootScope.csillag);
-        
+    
     }
-
-    
-    
-        
+    $scope.TorolID = function($ertekelesID,$FelhasznaloID) {
+        $rootScope.TorlesID=$ertekelesID;
+        $rootScope.TorlesFelhaszID=$FelhasznaloID;
+    }
+    $scope.Torles=function () {
+        if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
+            
+            dbfactory.ratingDelete($rootScope.TorlesID).then(function(res){
+                dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
+                        
+                    if (res.data.length > 0) { 
+                        $scope.ertekelesek=res.data;
+                        $scope.hiba=false;
+                        for (let i = 0; i < $scope.ertekelesek.length; i++) {
+                            $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
+                        }
+                        
+                    } 
+                    else{
+                        console.log(res.data);
+                    }
+                });
+            });
+        } else {
+            alert("Nincsen jogod ezt az értékelést törölni");
+        }
+    } 
+    //módosítás   
 });
 

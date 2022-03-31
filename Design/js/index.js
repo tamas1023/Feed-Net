@@ -24,7 +24,7 @@ window.addEventListener('resize',()=>{
       document.getElementById("mySidebar").style.width = "250px";
     }
 
-    console.log("Menu height: "+menuheight);
+    //console.log("Menu height: "+menuheight);
 
 if (width>=767) {
   document.getElementById("main").style.top =Math.round(menuheight)+"px";
@@ -68,8 +68,8 @@ function openNav() {
   function TopNav() {
     let pos=document.getElementById("main");
     let posInfo = pos.getBoundingClientRect();
-    console.log(posInfo.top);
-    console.log("Menu height: "+menuheight);
+    //console.log(posInfo.top);
+    //console.log("Menu height: "+menuheight);
     resizing();
     if(posInfo.top<=56)
         {
