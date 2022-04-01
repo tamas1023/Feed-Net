@@ -107,6 +107,47 @@ body {
   
 
 
+
+  .rating-2 {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+  
+  .rating-0 {
+    filter: grayscale(100%);
+  }
+  
+  .rating-2 > input {
+    display: none;
+  }
+  
+  .rating-2 > label {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    margin-top: auto;
+    background-image:var(--unchecked-image) ;
+    background-repeat: no-repeat;
+    background-size: 76%;
+    transition: .3s;
+  }
+  
+  .rating-2 > input:checked ~ label,
+  .rating-2 > input:checked ~ label ~ label {
+    background-image: var(--checked-image);
+  }
+  
+  
+  .rating-2 > input:not(:checked) ~ label:hover,
+  .rating-2 > input:not(:checked) ~ label:hover ~ label {
+    background-image: var(--hovered-image);
+  }
+
+
+  
+
 .star-rating{
     width: min-content;
     padding-bottom: 10px;

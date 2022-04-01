@@ -108,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Save changes</button>
                 </div>
               </div>
             </div>
@@ -167,25 +167,8 @@
               
               
               <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-click="TorolID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
-              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
-              <div class="modal fade" id="Torles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      
-                      <h1>Biztos törölni akarja az értékelést? </h1>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Torles()">Törlés</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Modositas" ng-click="ModositID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID,ertekeles.Pontszam)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
+              
               
             </div>
           </div>
@@ -193,6 +176,58 @@
           
           
         </div>
+        <div class="modal fade" id="Torles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                <h1>Biztos törölni akarja az értékelést? </h1>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Torles()">Törlés</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="Modositas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1>Értékelés szerkesztése</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="col col-12 col-sm-12">
+                  <textarea name="uzenet" id="" style="width: 100%;" ng-model="uzenet.message2" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
+                </div>
+                <div class="col  col-sm-8 col-lg-12">
+                  <div class="rating-2">
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-5-1">
+                    <label for="rating-5-1" ng-checked="teszt"  ng-click="Csillag(5)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-4-1">
+                    <label for="rating-4-1" ng-checked="teszt" ng-click="Csillag(4)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-3-1">
+                    <label for="rating-3-1" ng-checked="teszt" ng-click="Csillag(3)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-2-1">
+                    <label for="rating-2-1"ng-checked="teszt" ng-click="Csillag(2)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-1-1">
+                    <label for="rating-1-1"ng-checked="teszt"  ng-click="Csillag(1)"></label>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Modositas()">Módosítás</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </div>
 

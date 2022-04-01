@@ -11,10 +11,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.feltetelek=[];
     $rootScope.TorlesID=0;
     $rootScope.TorlesFelhaszID=0;    
+    $rootScope.ModositID=0;
+    $rootScope.ModositFelhaszID=0;  
+    $rootScope.ModositPontszam=0;  
 
     $scope.uzenet={};
     $scope.hiba=false;
-
+    $scope.teszt=true;
     
     /*
 
@@ -176,6 +179,14 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         $rootScope.TorlesID=$ertekelesID;
         $rootScope.TorlesFelhaszID=$FelhasznaloID;
     }
+    $scope.ModositID = function($ertekelesID,$FelhasznaloID,$Pontszam) {
+        //betölteni hogy hány csillagos volt az értékelés
+        //ng-checked
+        $rootScope.ModositID=$ertekelesID;
+        $rootScope.ModositFelhaszID=$FelhasznaloID;
+        $rootScope.ModositPontszam=$Pontszam;
+    }
+    
     $scope.Torles=function () {
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
             
@@ -199,6 +210,55 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             alert("Nincsen jogod ezt az értékelést törölni");
         }
     } 
-    //módosítás   
+    //módosítás  
+    $scope.Check=function ($id) {
+        console.log("--------------------");
+        console.log("megnézés");
+        if ($id<=$rootScope.ModositPontszam) {
+            console.log(true);
+            return true;
+        }
+        else{
+            console.log(false);
+            return false;
+        }
+    }
+    
+    $scope.Modositas=function () {
+        if ($rootScope.ModositFelhaszID==$rootScope.loggedInUserID) {
+            console.log($scope.uzenet.message2);
+            console.log($rootScope.csillag);
+            console.log($rootScope.ModositID);
+            if ($rootScope.csillag=="") {
+                //Csillagok megadása kötelező!
+                $scope.hiba=true;
+            }
+            else{
+                $scope.hiba=false;
+            }
+            //módosításnál current date-et frissíteni
+            /*
+            dbfactory.updateCustom("ertekeles",$rootScope.ModositID).then(function(res){
+                dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
+                        
+                    if (res.data.length > 0) { 
+                        $scope.ertekelesek=res.data;
+                        $scope.hiba=false;
+                        for (let i = 0; i < $scope.ertekelesek.length; i++) {
+                            $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
+                        }
+                        
+                    } 
+                    else{
+                        console.log(res.data);
+                    }
+                });
+            });
+            */
+
+        } else {
+            alert("Nincsen jogod ezt az értékelést módosítani");
+        }
+    }
 });
 
