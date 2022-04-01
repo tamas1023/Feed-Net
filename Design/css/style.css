@@ -476,6 +476,9 @@ letter-spacing: 3px;
     right: 0;
     width: 90%;
     height: 40px;
+    padding: 3px;
+    border-radius: 10px;
+    border:0px;
     margin:auto;
 }
  div>.container-fluid
@@ -586,3 +589,8 @@ div.loginfloating
   #content-wrap {
     padding-bottom: 7.5rem;
   }
+#search
+{
+    border-radius: 5px;
+    border:0px;
+}
