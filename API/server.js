@@ -495,6 +495,27 @@ app.post('/ratingDelete',(req,res)=>{
       res.json({message:"ok"});
     })
 })
+//értékelés módosítás
+app.post('/updateCustom',(req,res)=>{
+  
+    let data = {
+      tablename:req.body.Tablename,
+      mitmire:req.body.Mitmire,
+      hol: req.body.Hol,
+      
+    }
+    console.log("Brjött az updatecustom be");
+    console.log(data.tablename);
+    console.log(data.mitmire);
+    console.log(data.hol);
+    console.log(`UPDATE ${data.tablename} SET ${data.mitmire} WHERE ${data.hol}`);
+    dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire} WHERE ${data.hol}`,(err,results)=>{
+      if(err) console.log(err);
+      res.json({message:"ok"});
+      //console.log('sikeres módosítás');
+    });
+  
+})
 
 // egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {

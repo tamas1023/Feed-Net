@@ -132,6 +132,7 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //értékelés törlése
         ratingDelete:function(id) {
             let data = {
                 ID:id
@@ -147,7 +148,25 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
-
+        //értékelés frissítése
+        updateCustom:function(tablename,mitmire,hol) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Mitmire:mitmire,
+                Hol: hol,
+                
+            }
+            $http.post(url + '/updateCustom',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         //admin Étterem
         
         //admin Étterem select

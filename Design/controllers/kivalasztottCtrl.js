@@ -212,23 +212,25 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     } 
     //módosítás  
     $scope.Check=function ($id) {
-        console.log("--------------------");
-        console.log("megnézés");
+        
         if ($id<=$rootScope.ModositPontszam) {
-            console.log(true);
+            $rootScope.csillag= $rootScope.ModositPontszam;
             return true;
         }
         else{
-            console.log(false);
+            $rootScope.csillag= $rootScope.ModositPontszam;
             return false;
         }
+        
     }
     
     $scope.Modositas=function () {
         if ($rootScope.ModositFelhaszID==$rootScope.loggedInUserID) {
+            /*
             console.log($scope.uzenet.message2);
             console.log($rootScope.csillag);
             console.log($rootScope.ModositID);
+            */
             if ($rootScope.csillag=="") {
                 //Csillagok megadása kötelező!
                 $scope.hiba=true;
@@ -237,8 +239,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 $scope.hiba=false;
             }
             //módosításnál current date-et frissíteni
-            /*
-            dbfactory.updateCustom("ertekeles",$rootScope.ModositID).then(function(res){
+
+            $scope.hol="ID= "+$rootScope.ModositID;
+            $scope.mitmire="Pontszam= "+$rootScope.csillag+", Ertekeles='"+$scope.uzenet.message2+"'";
+            //"ertekeles","mit mire","hol frissítés"
+            console.log($scope.hol);
+            console.log($scope.mitmire);
+            dbfactory.updateCustom("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 
@@ -254,7 +261,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     }
                 });
             });
-            */
+            
 
         } else {
             alert("Nincsen jogod ezt az értékelést módosítani");
