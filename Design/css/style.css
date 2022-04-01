@@ -6,8 +6,8 @@
 
     --highlight:#3f3e3e;
     --lesshighlight:#6b6864; /*Szűrés*/
-    --footer:#b46306;
-    --menu:#b46306;
+    --footer:#A0AFBA;
+    --menu:#A0AFBA;
     --menuhover:#c06600;
 
 }
@@ -244,7 +244,8 @@ img{
     width: 100%;
     padding: 0;
     background-color: var(--footer);
-    color: white;
+    color: var(--highlight);
+    font-weight: bold;
     margin:0 auto;
     /* a szöveg középre helyezése
     display: flex;
@@ -256,7 +257,7 @@ img{
 }
 a{
     text-decoration: none;
-    color: var(--feher);
+    color: var(--highlight);
 }
 a:hover{
     color: var(--feher);
