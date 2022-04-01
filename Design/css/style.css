@@ -239,6 +239,8 @@ img{
 }
   
 #footer{
+    position: absolute;
+    bottom: 0;
     width: 100%;
     padding: 0;
     background-color: var(--footer);
@@ -577,3 +579,10 @@ div.loginfloating
         position: relative !important;
     }
 }
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  #content-wrap {
+    padding-bottom: 7.5rem;
+  }
