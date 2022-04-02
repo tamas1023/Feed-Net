@@ -100,15 +100,24 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Probléma jelentése</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <h1>Probléma jelentés</h1>
-                </div>
+                  <h4 id="alert" ng-if="hiba2==true">Válaszd ki mit szeretnél jelenteni</h4>
+                 <div class="modalproblems">
+                  <a href="" id="modalproblem" ng-click="Problema('megszunt')">Megszűnt</a>
+                  <a href="" id="modalproblem" ng-click="Problema('dulikacio')">Duplikáció</a>
+                  <a href="" id="modalproblem" ng-click="Problema('rosszadatok')">Rossz adatok</a>
+                  <a href="" id="modalproblem" ng-click="Problema('egyeb')">Egyéb</a>
+                 </div>
+                  <h4>Megjegyzés:</h4>
+                  <textarea name="uzenet" id="" style="width: 100%;" ng-model="uzenet.message3" placeholder=""></textarea>
+                  
+                </div>  
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Save changes</button>
+                  <button type="button" class="btn btn-primary"  ng-click="ProblemaJelentes()">Jelentem</button>
                 </div>
               </div>
             </div>
@@ -165,10 +174,12 @@
               
               <h3>{{ertekeles.Ertekeles}}</h3>
               
-              
-              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-click="TorolID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
-              <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Modositas" ng-click="ModositID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID,ertekeles.Pontszam)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
-              
+              <div id="szerkesztes">
+                <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-click="TorolID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
+                <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Modositas" ng-click="ModositID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID,ertekeles.Pontszam,ertekeles.Ertekeles)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
+                
+              </div>
+             
               
             </div>
           </div>
@@ -224,15 +235,15 @@
                   -->
                   <fieldset class="star-rating">
                     <div>
-                      <input type="radio" ng-checked="Check(1)" ng-click="Csillag(1)" name="rating" value="1" id="rating1-1" />
+                      <input type="radio" ng-checked="Check(1)"  name="rating" value="1" id="rating1-1" />
                       <label for="rating1-1"  ng-click="Csillag(1)"><span>1</span></label>
-                      <input type="radio" ng-checked="Check(2)" ng-click="Csillag(2)" name="rating" value="2" id="rating2-1" />
+                      <input type="radio" ng-checked="Check(2)"  name="rating" value="2" id="rating2-1" />
                       <label for="rating2-1"  ng-click="Csillag(2)"><span>2</span></label>
-                      <input type="radio" ng-checked="Check(3)"  ng-click="Csillag(3)"name="rating" value="3" id="rating3-1" />
+                      <input type="radio" ng-checked="Check(3)"  name="rating" value="3" id="rating3-1" />
                       <label for="rating3-1"  ng-click="Csillag(3)" ><span>3</span></label>
-                      <input type="radio" ng-checked="Check(4)" ng-click="Csillag(4)" name="rating" value="4" id="rating4-1" />
+                      <input type="radio" ng-checked="Check(4)" name="rating" value="4" id="rating4-1" />
                       <label for="rating4-1"  ng-click="Csillag(4)" ><span>4</span></label>
-                      <input type="radio" ng-checked="Check(5)" ng-click="Csillag(5)" name="rating" value="5" id="rating5-1" />
+                      <input type="radio" ng-checked="Check(5)"  name="rating" value="5" id="rating5-1" />
                       <label for="rating5-1"  ng-click="Csillag(5)"><span>5</span></label>
                     </div>
                   </fieldset>

@@ -504,12 +504,8 @@ app.post('/updateCustom',(req,res)=>{
       hol: req.body.Hol,
       
     }
-    console.log("Brjött az updatecustom be");
-    console.log(data.tablename);
-    console.log(data.mitmire);
-    console.log(data.hol);
-    console.log(`UPDATE ${data.tablename} SET ${data.mitmire} WHERE ${data.hol}`);
-    dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire} WHERE ${data.hol}`,(err,results)=>{
+    
+    dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire}, Datum=CURRENT_TIMESTAMP WHERE ${data.hol}`,(err,results)=>{
       if(err) console.log(err);
       res.json({message:"ok"});
       //console.log('sikeres módosítás');

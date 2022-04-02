@@ -17,8 +17,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
 
     $scope.uzenet={};
     $scope.hiba=false;
-    $scope.teszt=true;
-    
+    $scope.hiba2=false;
+   
+    $scope.jelentes="";
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -118,6 +119,29 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         console.log(res.data);
     }
     });
+
+    //
+    //TODO: Étlap beolvasása 
+
+    //probléma jelentés
+    $scope.Problema=function ($problema) {
+        console.log($problema);
+        $scope.jelentes=$problema;
+        console.log($scope.jelentes);
+
+    }
+    $scope.ProblemaJelentes=function () {
+        if ($scope.jelentes=="") {
+            
+            $scope.hiba2=true;
+        } else {
+            $scope.hiba2=false;
+            //probléma elküldése
+        }
+       
+    }
+    
+
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
         $rootScope.csillag=id;
@@ -179,12 +203,15 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         $rootScope.TorlesID=$ertekelesID;
         $rootScope.TorlesFelhaszID=$FelhasznaloID;
     }
-    $scope.ModositID = function($ertekelesID,$FelhasznaloID,$Pontszam) {
+    $scope.ModositID = function($ertekelesID,$FelhasznaloID,$Pontszam,$Uzenet) {
         //betölteni hogy hány csillagos volt az értékelés
         //ng-checked
         $rootScope.ModositID=$ertekelesID;
         $rootScope.ModositFelhaszID=$FelhasznaloID;
+        
         $rootScope.ModositPontszam=$Pontszam;
+        $rootScope.csillag=$Pontszam;
+        $scope.uzenet.message2=$Uzenet;
     }
     
     $scope.Torles=function () {
@@ -214,11 +241,11 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $scope.Check=function ($id) {
         
         if ($id<=$rootScope.ModositPontszam) {
-            $rootScope.csillag= $rootScope.ModositPontszam;
+            
             return true;
         }
         else{
-            $rootScope.csillag= $rootScope.ModositPontszam;
+            
             return false;
         }
         
@@ -243,8 +270,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             $scope.hol="ID= "+$rootScope.ModositID;
             $scope.mitmire="Pontszam= "+$rootScope.csillag+", Ertekeles='"+$scope.uzenet.message2+"'";
             //"ertekeles","mit mire","hol frissítés"
-            console.log($scope.hol);
-            console.log($scope.mitmire);
+            
             dbfactory.updateCustom("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         

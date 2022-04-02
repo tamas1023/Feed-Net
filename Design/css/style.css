@@ -35,7 +35,27 @@ body {
 .show{
     display: block;
 }
-
+#szerkesztes{
+    float: right;
+}
+#szerkesztes a{
+    float: left;
+    padding-left: 10px;
+}
+#modalproblem{
+    color: black;
+    padding: 10px;
+    
+    border: 1px solid black;
+    text-align: center;
+}
+.modalproblems{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-body h4{
+    margin-top: 10px;
+}
 /*Star rating system*/
 /*
 .rating-css {
