@@ -106,10 +106,10 @@
                 <div class="modal-body">
                   <h4 id="alert" ng-if="hiba2==true">Válaszd ki mit szeretnél jelenteni</h4>
                  <div class="modalproblems">
-                  <a href="" id="modalproblem" ng-click="Problema('megszunt')">Megszűnt</a>
-                  <a href="" id="modalproblem" ng-click="Problema('dulikacio')">Duplikáció</a>
-                  <a href="" id="modalproblem" ng-click="Problema('rosszadatok')">Rossz adatok</a>
-                  <a href="" id="modalproblem" ng-click="Problema('egyeb')">Egyéb</a>
+                  <a href=""  ng-class="{problema:Problemae('megszunt')}" class="modalproblem" ng-click="Problema('megszunt')">Megszűnt</a>
+                  <a href=""  ng-class="{problema:Problemae('dulikacio')}" class="modalproblem"  ng-click="Problema('dulikacio')">Duplikáció</a>
+                  <a href=""  ng-class="{problema:Problemae('rosszadatok')}" class="modalproblem"  ng-click="Problema('rosszadatok')">Rossz adatok</a>
+                  <a href=""  ng-class="{problema:Problemae('egyeb')}" class="modalproblem"  ng-click="Problema('egyeb')">Egyéb</a>
                  </div>
                   <h4>Megjegyzés:</h4>
                   <textarea name="uzenet" id="" style="width: 100%;" ng-model="uzenet.message3" placeholder=""></textarea>
@@ -117,7 +117,7 @@
                 </div>  
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                  <button type="button" class="btn btn-primary"  ng-click="ProblemaJelentes()">Jelentem</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  ng-click="ProblemaJelentes()">Jelentem</button>
                 </div>
               </div>
             </div>

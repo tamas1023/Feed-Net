@@ -42,16 +42,22 @@ body {
     float: left;
     padding-left: 10px;
 }
-#modalproblem{
+.modalproblem{
     color: black;
     padding: 10px;
     
     border: 1px solid black;
     text-align: center;
 }
+.modalproblems a:hover{
+    color: var(--ellenkezoszin);
+}
 .modalproblems{
     display: flex;
     justify-content: space-between;
+}
+.problema {
+    color: red;
 }
 .modal-body h4{
     margin-top: 10px;
@@ -277,6 +283,20 @@ img{
  background-color: var(--menu);
  z-index: 100;
 }
+#menu a{
+    text-decoration: none;
+    color: var(--feher);
+}
+#menu a:hover{
+    color: var(--feher);
+}
+a{
+    text-decoration: none;
+    color: var(--feher);
+}
+a:hover{
+    color: var(--feher);
+}
 #egesz{
     background-color: var(--highlight);
     width: 100%;
@@ -446,7 +466,7 @@ img{
     font-size: 20px;
     cursor: pointer;
     background-color: #111;
-    color: white;
+    color: var(--feher);
     padding: 10px 15px;
     border: none;
 }
@@ -459,7 +479,7 @@ img{
     width: 100%;
     padding: 0;
     background-color: var(--footer);
-    color: white;
+    color: var(--feher);
     margin:0 auto;
     /* a szöveg középre helyezése
     display: flex;
@@ -469,13 +489,11 @@ img{
     transition: 0.5s;
     
 }
-a{
-    text-decoration: none;
+#footer a{
     color: var(--feher);
+    
 }
-a:hover{
-    color: var(--feher);
-}
+
 #kivalasztottegesz{
     width: 100%;
     /*padding: 10px;*/
@@ -712,3 +730,4 @@ letter-spacing: 3px;
         display: block;
     }
 }
+

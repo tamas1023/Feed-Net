@@ -125,19 +125,34 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
 
     //probléma jelentés
     $scope.Problema=function ($problema) {
-        console.log($problema);
         $scope.jelentes=$problema;
-        console.log($scope.jelentes);
-
+    }
+    $scope.Problemae=function ($problema) {
+        if ($scope.jelentes==$problema) {
+            return ".problema";
+        } else {
+            return "";
+        }
     }
     $scope.ProblemaJelentes=function () {
-        if ($scope.jelentes=="") {
+        if ($rootScope.loggedIn==true) {
+            if ($scope.jelentes=="") {
             
-            $scope.hiba2=true;
-        } else {
-            $scope.hiba2=false;
-            //probléma elküldése
+                $scope.hiba2=true;
+            } else {
+                $scope.hiba2=false;
+                //probléma elküldése
+                dbfactory.insertProblem("hibajelentes",$rootScope.loggedInUserID,$id,$scope.jelentes,$scope.uzenet.message3).then(function(res){
+                    alert("A hibajelentését elküldtük");
+                });
+                
+            }
+            
         }
+        else{
+            alert("Jelentkezz be a probléma jelentéséhez");
+        }
+        
        
     }
     
@@ -152,6 +167,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if (id<=pontszam) {
             
             return  " .red";
+        }
+        else{
+            return "";
         }
     }
     $scope.checkID = function($felhasznaloID) {
@@ -271,7 +289,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             $scope.mitmire="Pontszam= "+$rootScope.csillag+", Ertekeles='"+$scope.uzenet.message2+"'";
             //"ertekeles","mit mire","hol frissítés"
             
-            dbfactory.updateCustom("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
+            dbfactory.updateRating("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 

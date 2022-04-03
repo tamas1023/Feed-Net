@@ -496,7 +496,7 @@ app.post('/ratingDelete',(req,res)=>{
     })
 })
 //értékelés módosítás
-app.post('/updateCustom',(req,res)=>{
+app.post('/updateRating',(req,res)=>{
   
     let data = {
       tablename:req.body.Tablename,
@@ -508,9 +508,27 @@ app.post('/updateCustom',(req,res)=>{
     dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire}, Datum=CURRENT_TIMESTAMP WHERE ${data.hol}`,(err,results)=>{
       if(err) console.log(err);
       res.json({message:"ok"});
-      //console.log('sikeres módosítás');
+      
     });
   
+})
+//probléma jelentés
+app.post('/insertProblem',(req,res)=>{
+  
+  let data = {
+    tablename:req.body.Tablename,
+    felhasznaloid:req.body.Felhasznalo_ID,
+    etteremid:req.body.Etterem_ID,
+    tipus:req.body.Tipus,
+    leiras:req.body.Leiras, 
+  }
+  
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.felhasznaloid},${data.etteremid},'${data.tipus}','${data.leiras}')`,(err,results)=>{
+    if(err) console.log(err);
+    res.json({message:"ok"});
+    
+  });
+
 })
 
 // egyedi lekérdezés

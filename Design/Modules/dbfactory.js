@@ -149,7 +149,7 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
         //értékelés frissítése
-        updateCustom:function(tablename,mitmire,hol) {
+        updateRating:function(tablename,mitmire,hol) {
             let deferred = $q.defer();
             let data = {
                 Tablename: tablename,
@@ -157,7 +157,27 @@ app.factory('dbfactory', function($http, $q) {
                 Hol: hol,
                 
             }
-            $http.post(url + '/updateCustom',data).then(
+            $http.post(url + '/updateRating',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //probléma jelentés
+        insertProblem:function(tablename,felhasznaloid,etteremid,tipus,leiras) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Felhasznalo_ID:felhasznaloid,
+                Etterem_ID: etteremid,
+                Tipus:tipus,
+                Leiras: leiras,
+            }
+            $http.post(url + '/insertProblem',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },
