@@ -528,6 +528,44 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+        // étterem nyitvatartás select 
+
+        open:function(id) {
+            let data = {
+                EtteremID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/open',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //étterem nyitvatartás update
+
+        openupdate:function(id,nyitas,zaras) {
+            let data = {
+                ID:id,
+                Nyitas:nyitas,
+                Zaras:zaras
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/openupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

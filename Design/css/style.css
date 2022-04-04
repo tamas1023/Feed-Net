@@ -595,3 +595,7 @@ div.loginfloating
     border-radius: 5px;
     border:0px;
 }
+.btnszin
+{
+    background-color: var(--menu);
+}
