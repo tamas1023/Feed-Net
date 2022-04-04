@@ -35,6 +35,7 @@
   <script src="controllers/regCtrl.js"></script>
   <script src="controllers/loginCtrl.js"></script>
   <script src="controllers/ertekelesCtrl.js"></script>
+  <script src="controllers/etteremnyitvatartasCtrl.js"></script>
   
     <title class="ng-binding">{{title}}</title>
 
@@ -82,8 +83,15 @@
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/ertekeles">Értékelések</a></li>
               </ul>
             </li>
-            <li class="nav-item" ng-if="logJog=='etterem'">
-              <a class="nav-link"  href="#!/etteremfoglalas">Étteremfoglalás</a>
+            <li class="nav-item dropdown" ng-if="logJog=='etterem'" ><!-- -->
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Étterem
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremfoglalas">Éttermek kezelés</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremetlap">Étterem étlap</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremnyitvatartas">Étterem nyitvatartás</a></li>
+              </ul>
             </li>
             <li class="nav-item" ng-if="loggedIn==true">
               <a class="nav-link reg"  href="#!/login"><i class="bx bx-log-out"> </i> Kijelentkezés</a>

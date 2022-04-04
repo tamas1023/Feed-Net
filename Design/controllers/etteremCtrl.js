@@ -76,6 +76,11 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $rootScope.selectedetteremID=$id;
        $location.url('/admin/etlap/'+$rootScope.selectedetteremID);
     }
+    $scope.etteremnyitva=function(id)
+    {
+        $rootScope.selectedetteremID=id;
+        $location.url('/admin/etteremnyitva/'+$rootScope.selectedetteremID);
+    }
     $scope.visszavaltasetterem=function()
     {
         $scope.ujID=null;

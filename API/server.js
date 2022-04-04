@@ -216,7 +216,7 @@ app.post('/admindininginsert',(req,res)=>{
   //admin étlap select
 
 app.post('/adminfoodselect',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data = {
       ID:req.body.id
@@ -235,7 +235,7 @@ app.post('/adminfoodselect',(req,res)=>{
   //admin étlap delete
 
 app.post('/adminfooddelete',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     dbPool.query(`DELETE FROM etlap WHERE ID=${req.body.id}`,(err,results)=>{
       if(err)throw err;
@@ -251,7 +251,7 @@ app.post('/adminfooddelete',(req,res)=>{
   //admin étlap felvétel
 
 app.post('/adminfoodinsert',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       etteremid:req.body.EtteremID,
@@ -273,7 +273,7 @@ app.post('/adminfoodinsert',(req,res)=>{
   //admin étlap módosítás
 
 app.post('/adminfoodupdate',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       id:req.body.ID,
@@ -609,7 +609,7 @@ app.post('/profildelete',(req,res)=>{
     {
       dbPool.query(`SELECT * FROM nyitvatartas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
         if(err)throw err;
-        res.json({message:"ok"});
+        res.json(results);
       })
     } else
     {
@@ -627,13 +627,13 @@ app.post('/profildelete',(req,res)=>{
         nyitas:req.body.Nyitas,
         zaras:req.body.Zaras
       }
-    dbPool.query(`UPDATE nyitvatartas SET Nyitas=${data.nyitas},Zaras=${data.zaras} WHERE ID=${data.id}`,(err,results)=>{
+    dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
       res.json({message:"ok"});
     })
     }
     else
     {
-      res.json({message:"Nem érheted ezeket le"});
+      res.json({message:"Nem érheted ezeket el"});
     }
   })
   

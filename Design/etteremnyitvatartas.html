@@ -1,0 +1,55 @@
+<div id="adminegesz" ng-controller="etteremnyitvatartasCtrl">
+  <div class="adminkereses">
+      <div class="table-responsive">
+        <table class="table table-striped table-dark table-sm" >
+            <thead>
+              <tr>
+                <th>Nap</th>
+                <th>Nyitás</th>
+                <th>Zárás</th>
+                <th>Módosítás</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="animate" ng-repeat="adat in nyitas | filter:{Nev:search}" ng-click="select($index)">
+                <td>{{adat.Nap}}</td>
+                <td>{{adat.Nyitas}}</td>
+                <td>{{adat.Zaras}}</td>
+                <td><button class="btn btnszin" ng-click="egyvalaszt(adat.ID)" data-bs-toggle="modal" data-bs-target="#torol"><i class="bi bi-gear" ></i></button></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="text-center">Összesen: {{nyitas.length}} rekord </td>
+              </tr>
+            </tfoot>
+          </table>
+          </div>
+          <div class="modal fade" id="torol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Módosítás</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="" ng-model="ujnyitas" placeholder="">
+                      <label for="floatingInput">Nyitás</label>
+                    </div>
+                    <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="" ng-model="ujzaras" placeholder="">
+                      <label for="floatingInput">Zárás</label>
+                    </div>
+                </div>           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" ng-click="update()" data-bs-dismiss="modal">Módosítás</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>  
+    </div>
+  </div>
