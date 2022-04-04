@@ -124,11 +124,28 @@
           </div>
           </div>
         </div>
+        <div class="Etlap " ng-if="etlapvane==true">
+          <hr>
+          <h1>Étlap</h1>
+          <div  class="col col-lg-12">
+            <ul >
+              <li ng-repeat="etlapelem in etlap">
+                <span class="Etlap_Nev">{{etlapelem.Nev}}</span>
+                <span class="Etlap_Ar">{{etlapelem.Ar}} Ft</span>
+                <span class="Etlap_Leiras">{{etlapelem.Leiras}}</span>
+                
+              </li>
+            </ul>
+            
+          </div>
+        </div>
         <h4 id="alert" ng-if="hiba==true">Csillagok megadása kötelező!</h4>
+        <hr>
         <h2>Értékeld az éttermet!</h2>
         <div id="ertekeles" class="row">
-          
+         
           <div class="col col-12 col-sm-12">
+            
             <textarea name="uzenet" id="" ng-model="uzenet.message" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
           </div>
           <div class="col  col-sm-8 col-lg-12">

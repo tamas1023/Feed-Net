@@ -122,6 +122,20 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
 
     //
     //TODO: Étlap beolvasása 
+    
+    $scope.etlap=[];
+    dbfactory.selectCustom("etlap",$rootScope.feltetel).then(function(res) {
+                        
+        if (res.data.length > 0) { 
+           $scope.etlap=res.data;
+           $scope.etlapvane=true;
+            
+        } 
+        else{
+            $scope.etlapvane=false;
+            console.log(res.data);
+        }
+    });
 
     //probléma jelentés
     $scope.Problema=function ($problema) {

@@ -370,11 +370,19 @@ a:hover{
     width: 100%;
     
 }
-#ertekeles,#kep,#etterem{
+#kep,#etterem{
     display: flex;
     justify-content: center;
     align-items: center;
     border-top: 1px solid black;
+    padding: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+#ertekeles{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     margin-bottom: 40px;
     flex-wrap: wrap;
@@ -528,6 +536,7 @@ a:hover{
     flex-wrap: wrap;
     flex-direction: column;
     align-content: flex-start;
+    word-break: break-word;
 }
 #infok{
     /*display: flex;
@@ -731,3 +740,33 @@ letter-spacing: 3px;
     }
 }
 
+.Etlap{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.Etlap h1{
+    padding: 0;
+    margin: 0;
+    
+}
+.Etlap ul{
+    padding:0;
+    list-style: none;
+}
+
+.Etlap_Nev{
+    float: left;
+    width: 85%;
+    margin-top: 15px;
+}
+.Etlap_Ar{
+    float: right;
+    margin-top: 15px;
+}
+.Etlap_Leiras{
+    float: left;
+    width: 85%;
+    line-height: 130%;
+    font-size: 13px;
+}
