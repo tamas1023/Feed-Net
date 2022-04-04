@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 31. 21:22
--- Kiszolgáló verziója: 10.4.17-MariaDB
--- PHP verzió: 8.0.1
+-- Létrehozás ideje: 2022. Ápr 04. 12:25
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,7 +47,7 @@ INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Erte
 (4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
 (5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
 (6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41'),
-(39, 1, 1, 4, 'Sok választék volt', '2022-03-31 21:19:08');
+(41, 1, 1, 4, 'undefined', '2022-04-01 13:33:41');
 
 -- --------------------------------------------------------
 
@@ -168,8 +168,8 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-03-31 21:16:07', 1, 'admin'),
-(2, 'felhasznalo@gmail.com', 'Felhasznalo', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-03-31 19:31:47', 1, 'user'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-04 11:37:59', 1, 'admin'),
+(2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-01 09:22:28', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
 -- --------------------------------------------------------
@@ -254,6 +254,20 @@ CREATE TABLE `nyitvatartas` (
   `Nyitas` time NOT NULL,
   `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `nyitvatartas`
+--
+
+INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `Nyitas`, `Zaras`) VALUES
+(1, 1, 'Hétfő', '09:00:00', '20:00:00'),
+(2, 1, 'Kedd', '09:00:00', '20:00:00'),
+(3, 1, 'Szerda', '09:00:00', '20:00:00'),
+(4, 1, 'Csütörtök', '09:00:00', '20:00:00'),
+(5, 1, 'Péntek', '09:00:00', '20:00:00'),
+(6, 1, 'Szombat', '09:00:00', '20:00:00'),
+(7, 1, 'Vasárnap', '09:00:00', '20:00:00'),
+(8, 2, 'Hétfő', '09:00:00', '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -350,7 +364,7 @@ ALTER TABLE `nyitvatartas`
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT a táblához `etlap`
@@ -398,7 +412,7 @@ ALTER TABLE `kepek`
 -- AUTO_INCREMENT a táblához `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Megkötések a kiírt táblákhoz
