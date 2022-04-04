@@ -602,7 +602,41 @@ app.post('/profildelete',(req,res)=>{
     res.json({message:"Nem törölhetsz ezeket le"});
   }
 })
+  //nyitvatartás select
 
+  app.post('/open',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      dbPool.query(`SELECT * FROM nyitvatartas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    } else
+    {
+      res.json({message:"Nem érheted ezeket le"});
+    }
+  })
+  
+    //nyitvatartás update
+  
+  app.post('/openupdate',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      let data={
+        id:req.body.ID,
+        nyitas:req.body.Nyitas,
+        zaras:req.body.Zaras
+      }
+    dbPool.query(`UPDATE nyitvatartas SET Nyitas=${data.nyitas},Zaras=${data.zaras} WHERE ID=${data.id}`,(err,results)=>{
+      res.json({message:"ok"});
+    })
+    }
+    else
+    {
+      res.json({message:"Nem érheted ezeket le"});
+    }
+  })
+  
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
