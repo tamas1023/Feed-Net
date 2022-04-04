@@ -547,6 +547,62 @@ app.post('/selectCustom', (req, res) => {
   });
 });
 
+  //profilmódosítás
+
+app.post('/profilmod',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    let data = {
+      id: req.body.ID,
+      email:req.body.Email,
+      nev:req.body.Nev,
+      passwd:req.body.Passwd,
+      telefon:req.body.Telefon,
+    }
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+    
+  }
+  else
+  {
+    res.json({message:"Nem módosíthatod ezeket"});
+  }
+});
+
+  //profilkiválasztás
+
+app.post('/profilselect',(req,res)=>{
+  if(session.Rights=="user")
+  {
+  dbPool.query(`SELECT * FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+  //profil törlése
+  
+app.post('/profildelete',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem törölhetsz ezeket le"});
+  }
+})
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
