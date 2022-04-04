@@ -50,6 +50,7 @@ app.get('/logout',(req,res)=>{
     session.Rights="";
     session.LoggedIn=false;
     session.Email="";
+    session.ID=-1;
     req.session.destroy();
 
     res.json({message:"ok"});
@@ -73,6 +74,7 @@ app.post('/login', (req, res) => {
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
         session.Email=results[0].Email;
+        session.ID=results[0].ID;
         jog=results[0].Jog;
       }
       //console.log(session.LoggedIn);
@@ -561,7 +563,7 @@ app.post('/profilmod',(req,res)=>{
     }
     dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
       if(err)throw err;
-      res.json(results);
+      res.json({message:"ok"});
     })
     
   }
@@ -590,16 +592,23 @@ app.post('/profilselect',(req,res)=>{
   //profil törlése
   
 app.post('/profildelete',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
   {
-    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
-      if(err)throw err;
-      res.json(results);
-    })
+    if(session.ID==req.body.ID)
+    {
+      dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nincs jogod ezeket törlni"})
+    }
   }
   else
   {
-    res.json({message:"Nem törölhetsz ezeket le"});
+    res.json({message:"Nem törölheted ezeket le"});
   }
 })
 

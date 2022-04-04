@@ -141,7 +141,19 @@ app.config(function($routeProvider){
         templateUrl:'etteremfoglalas.html',
         controller:'etteremfoglalasCtrl'
     })
-    
+    .when('/profilmod',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'profilmod.html',
+        controller:'profilmodCtrl'
+    })
 })
 
 

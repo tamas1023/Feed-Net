@@ -528,6 +528,64 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+        //profil select
+
+        profilselect:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/profilselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //profil módosítás
+        
+        profilmod:function(id,email,nev,passwd,telefon) {
+            let data = {
+                ID:id,
+                Email:email,
+                Nev:nev,
+                Passwd:passwd,
+                Telefon:telefon,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/profilmod',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //profil delete
+
+        profildelete:function(id) {
+            let data = {
+                ID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/profildelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

@@ -1,0 +1,42 @@
+<div class="adminkereses">
+    <div class="container-fluid">
+        <h2 class="text-center">Profil Módosítás</h2>
+        <hr>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control"   ng-model="ujnev" placeholder="+">
+            <label for="floatingInput">Név</label>
+          </div>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" ng-model="ujemail" placeholder="teszt@email.com">
+              <label for="floatingInput">Email Cím</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control"   ng-model="ujtelefon" placeholder="teszt@email.com">
+              <label for="floatingInput">Telefon</label>
+            </div> 
+             
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control"  ng-model="ujpass" placeholder="t">
+              <label for="floatingInput">Jelszó</label>
+            </div>
+            <button class="btn btn-warning" ng-click="update()">Módosít</button>
+            <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol" ><i class="bi bi-x-lg" ></i></button></td>
+            <div class="modal fade" id="torol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Törlés</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Biztosan törölni akarja ezt az adatot?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" ng-click="deleteRecord()" data-bs-dismiss="modal">Töröl</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+</div>    
