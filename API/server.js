@@ -469,6 +469,43 @@ app.post("/etteremupdate",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+//Kedvencekhez adás
+app.post('/FavoriteAdd', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.EtteremID},${data.FelhasznaloID}) `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+//Kedvencek törlés
+app.post('/FavoriteDelete', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`DELETE FROM ${data.tablename} WHERE Etterem_ID= ${data.EtteremID} AND Felhasznalo_ID= ${data.FelhasznaloID} `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+
+//Milyen nap van ma
+app.post('/getDate',(req,res)=>{
+  
+  dbPool.query('SELECT Dayofweek(CURRENT_TIMESTAMP) as Nap',(err,results)=>{
+    if (err)throw err;
+    res.send(results);
+     
+  });
+  
+});
+
+
 //ertekeles insert
 
   app.post('/ratingInsert',(req,res)=>{

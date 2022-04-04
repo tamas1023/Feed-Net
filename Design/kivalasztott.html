@@ -6,11 +6,35 @@
             <h1>{{ett.Nev}}</h1>
           </div>
           <div class="col-12 col-sm-12 col-md-5 gombok ">
-            <button class="btn btn-primary">Kedvencekhez </button>
-              <button class="btn btn-primary">Foglalás</button>
+            <button class="btn btn-primary" ng-click="Kedvencek()">{{kedvencfelirat}} </button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Reservation">Foglalás</button>
           </div>
         </div>
-        
+        <div class="modal fade" id="Reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Foglalás</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4> Fő és mikor szeretne menni</h4>
+                <div class="form-floating mb-3 ">
+                  <input type="text" class="form-control" id="floatingInput" ng-model="foglalas.fo" placeholder="Fő">
+                  <label for="floatingInput">Fő</label>
+                </div>
+               <div class="form-floating mb-3 ">
+                  <input type="datetime-local" class="form-control" ng-model="foglalas.datum" id="floatingInput" placeholder="" >
+                  <label for="floatingInput">Dátum</label>
+                </div>
+              </div>  
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Foglalas()" >Foglalás</button>
+              </div>
+            </div>
+          </div>
+        </div>
         
           <div id="carouselExampleIndicators"  class="carousel slide" data-bs-ride="carousel">
             <!-- 
@@ -56,13 +80,23 @@
           <div id="" class="col-12 col-md-8">
             <div id="informaciok">
               <div class="row">
+                <h4>Információk</h4>
                 <div class="col-md-4 col-sm-12">
                   Nyitvatartás:
                 </div>
-                <div class="col-md-8 col-sm-12">
-                  Ma: 12:00 - 21:00 Nyitva Mutass többet
-                  <div ng-repeat="nyitasok in nyitvatartas">
-                    {{nyitasok.Nap}}  {{nyitasok.Nyitas}}  {{nyitasok.Zaras}}  
+                <div class=" col-md-8 col-sm-12">
+                   
+                  Ma: {{aktualisnap.Nyitas}} - {{aktualisnap.Zaras}}  
+                  <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                  
+                  <div class="row openings" ng-repeat="nyitasok in nyitvatartas">
+                    <div class="col ">
+                      {{nyitasok.Nap}}:
+                    </div>
+                    <div class="col">
+                      {{nyitasok.Nyitas}} - {{nyitasok.Zaras}}  
+                    </div>
+                      
                   </div>
                 </div>
               </div>
@@ -89,6 +123,7 @@
             
           </div>
           <div id="kivalasztott" class="col-12 col-md-4">
+            <h4>Kapcsolat</h4>
             <p>{{ett.Cim}}</p>
             <p>{{ett.Telefon}}</p>
             <p>{{ett.Email}}</p>

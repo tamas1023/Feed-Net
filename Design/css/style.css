@@ -21,6 +21,10 @@ body {
     background-color: var(--highlight);
     
 }
+.openings{
+    display: none;
+    transition: 0.5s ;
+}
 #alert{
     
     text-align: center;
@@ -530,7 +534,6 @@ a:hover{
 }
 #kivalasztott{
     display: flex;
-    justify-content: center;
     align-items: flex-start;
     margin-bottom: 10px;
     flex-wrap: wrap;

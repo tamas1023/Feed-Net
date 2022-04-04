@@ -95,7 +95,7 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
-        // SELECT WHAT I WANT
+        // kiválasztom amit én szeretnék játni
         selectCustom: function(tablename,select) {
             let deferred = $q.defer();
             let data = {
@@ -103,6 +103,42 @@ app.factory('dbfactory', function($http, $q) {
                 Select: select
             }
             $http.post(url + '/selectCustom',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Kedvencekhez adás
+        FavoriteAdd: function(tablename,etterem_ID,felhasznalo_ID) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Etterem_ID: etterem_ID,
+                Felhasznalo_ID: felhasznalo_ID,
+            }
+            $http.post(url + '/FavoriteAdd',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Kedvencek törlés
+        FavoriteDelete: function(tablename,etterem_ID,felhasznalo_ID) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Etterem_ID: etterem_ID,
+                Felhasznalo_ID: felhasznalo_ID,
+            }
+            $http.post(url + '/FavoriteDelete',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },
@@ -123,6 +159,19 @@ app.factory('dbfactory', function($http, $q) {
                 Ertekeles:ertekeles
             }
             $http.post(url + '/ratingInsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Milyen nap van ma
+        getDate:function() {
+            let deferred = $q.defer();
+            $http.post(url + '/getDate').then(
                 function(res) {
                     deferred.resolve(res);
                 },

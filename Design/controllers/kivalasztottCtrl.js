@@ -16,8 +16,10 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.ModositPontszam=0;  
 
     $scope.uzenet={};
+    $scope.foglalas={};
     $scope.hiba=false;
     $scope.hiba2=false;
+    
    
     $scope.jelentes="";
     /*
@@ -26,6 +28,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     a lenti sor ami mutatja hogy hány kép van, azt is láthatóbbá tenni
 
     A főoldalon a linkekre ha rávisszük az egeret pointer legyen a kulzor
+
+
+    Előre megjeleníteni a  felhasználó kommentjeit
+
+
+
+
      */
 
     
@@ -100,6 +109,63 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
             
     }
+    //Foglalás  
+    //Current timestamp hoz +12 óra ha sok akkor át kell váltani
+    //és ha még így is több a megadott idő akkor tudjuk elfogadni
+    $scope.Foglalas=function () {
+        
+        console.log($scope.foglalas.fo);
+        console.log($scope.foglalas.datum);
+    }
+
+
+    //Kedvencek lekérdezés
+    dbfactory.selectCustom("kedvenc"," Etterem_ID="+$id+" AND Felhasznalo_ID="+$rootScope.loggedInUserID).then(function(res) {
+        if (res.data.length > 0) { 
+           //bár bele van téve a kedvencek közé
+           $scope.kedvencfelirat="Kedvenced";
+           
+        } 
+        else{
+            //még nincs benne a kedvenceibe
+            $scope.kedvencfelirat="Kedvencekhez";
+        }
+    });
+
+    //Kedvencekhez adás
+    //Kedvenced
+    //Kedvencekhez
+    $scope.kedvencfelirat="";
+    $scope.Kedvencek=function () {
+        if ($rootScope.loggedIn==true) {
+            dbfactory.selectCustom("kedvenc"," Etterem_ID="+$id+" AND Felhasznalo_ID="+$rootScope.loggedInUserID).then(function(res) {
+                if (res.data.length > 0) { 
+                   //már bele van téve a kedvencek közé
+                   //törlés a kedvencekből
+                   dbfactory.FavoriteDelete("kedvenc",$id,$rootScope.loggedInUserID).then(function(res) {
+                    
+    
+                        $scope.kedvencfelirat="Kedvencekhez";
+                    });
+                } 
+                else{
+                    //még nincs benne a kedvenceibe
+                    //hozzáadás a kedvencekhez
+                    dbfactory.FavoriteAdd("kedvenc",$id,$rootScope.loggedInUserID).then(function(res) {
+                    
+    
+                        $scope.kedvencfelirat="Kedvenced";
+                    });
+                    
+                }
+            });
+        } else {
+            alert("Jelentkezz be a kedvencekhez adáshoz");
+        }
+
+        
+    }
+
    //értékelések lekérdezése
    $scope.ertekelesek=[];
    dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
@@ -120,23 +186,69 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     }
     });
     //nyitvatartás
+    //megnézni, mert ha nincs adat a nyitás zárásnál: akkor Zárva van az étterem
     $scope.nyitvatartas=[];
-    dbfactory.selectCustom("nyitvatartas",$rootScope.feltetel).then(function(res) {
+    $scope.nap=-1;
+    $scope.aktualisnap=[];
+    dbfactory.getDate().then(function(res) {
                         
         if (res.data.length > 0) { 
 
-           $scope.nyitvatartas=res.data;
-           
+           $scope.nap=res.data[0].Nap; 
+           dbfactory.selectCustom("nyitvatartas",$rootScope.feltetel).then(function(res) {
+            if (res.data.length > 0) { 
+    
+                $scope.nyitvatartas=res.data;
+                for (let i = 0; i < res.data.length; i++) {
+                    //Beolvasás Ha Vasárnap==1 Hétfő ==2 ,, és ez alapján ki tudom írni az aktuális dátumot
+                    
+                    if ($scope.nap==1 && res.data[i].Nap=="Vasárnap") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==2 && res.data[i].Nap=="Hétfő") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==3 && res.data[i].Nap=="Kedd") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==4 && res.data[i].Nap=="Szerda") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==5 && res.data[i].Nap=="Csütörtök") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==6 && res.data[i].Nap=="Péntek") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    if ($scope.nap==7 && res.data[i].Nap=="Szombat") {
+                        $scope.aktualisnap=res.data[i];
+                        
+                    }
+                    
+                    $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
+                    $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
+
+                    $scope.nyitvatartas[i].Nyitas=moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('HH:mm',true);
+                    $scope.nyitvatartas[i].Zaras=moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('HH:mm',true);
+                }
+                 
+             }        
             
+            
+        });
         } 
         else{
-            
             //console.log(res.data);
         }
     });
-    //megnézni, mert ha nincs adat a nyitás zárásnál: akkor Zárva van az étterem
-    //
-    //TODO: Étlap beolvasása 
+    
+    
     
     $scope.etlap=[];
     dbfactory.selectCustom("etlap",$rootScope.feltetel).then(function(res) {
