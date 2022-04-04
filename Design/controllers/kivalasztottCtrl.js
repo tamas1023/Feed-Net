@@ -119,7 +119,22 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         console.log(res.data);
     }
     });
+    //nyitvatartás
+    $scope.nyitvatartas=[];
+    dbfactory.selectCustom("nyitvatartas",$rootScope.feltetel).then(function(res) {
+                        
+        if (res.data.length > 0) { 
 
+           $scope.nyitvatartas=res.data;
+           
+            
+        } 
+        else{
+            
+            //console.log(res.data);
+        }
+    });
+    //megnézni, mert ha nincs adat a nyitás zárásnál: akkor Zárva van az étterem
     //
     //TODO: Étlap beolvasása 
     
@@ -133,7 +148,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         } 
         else{
             $scope.etlapvane=false;
-            console.log(res.data);
+            //console.log(res.data);
         }
     });
 

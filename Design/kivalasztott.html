@@ -61,6 +61,9 @@
                 </div>
                 <div class="col-md-8 col-sm-12">
                   Ma: 12:00 - 21:00 Nyitva Mutass többet
+                  <div ng-repeat="nyitasok in nyitvatartas">
+                    {{nyitasok.Nap}}  {{nyitasok.Nyitas}}  {{nyitasok.Zaras}}  
+                  </div>
                 </div>
               </div>
               <div class="row">
