@@ -117,21 +117,46 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     //lekérni hogy hány férőhelyes az étterem, és hogy abból van e már foglalás a megadott időre
 
     $scope.Foglalas=function () {
-        
-        //ha a szám undefined amit megadott azt jelenti hogy több mint 100 főre akar foglani
-        console.log($scope.foglalas.fo);
-        console.log($scope.foglalas.datum);
-        console.log($scope.osszferohely);
         $scope.helyfoglalasok=[];
-        dbfactory.selectCustom("helyfoglalas"," Etterem_ID="+$id).then(function(res) {
-            if (res.data.length > 0) { 
+        $scope.maradekferohely=$scope.osszferohely;
+        //ha a szám undefined amit megadott azt jelenti hogy több mint 100 főre akar foglani
+        if ($scope.foglalas.fo ==null ||$scope.foglalas.datum==null ) {
+            alert("Nem adtál meg minden adatot.");
+        }
+        else{
+            /*
+            console.log($scope.foglalas.fo);
+            console.log($scope.foglalas.datum);
+            console.log($scope.osszferohely);
+            */
+            dbfactory.selectCustom("helyfoglalas"," Etterem_ID="+$id).then(function(res) {
+                if (res.data.length > 0) { 
+                    $scope.helyfoglalasok=res.data;
+                   for (let i = 0; i < $scope.helyfoglalasok.length; i++) {
+                    $scope.maradekferohely-=$scope.helyfoglalasok[i].Fo;
+                    $scope.helyfoglalasok[i].Kezdes=moment($scope.helyfoglalasok[i].Kezdes).format('YYYY MM.DD. HH:mm',true);
+                   }
+                   //console.log($scope.maradekferohely);
+                   console.log($scope.foglalas.datum);
+                   /*
+                   $scope.foglalas.datum=moment($scope.foglalas.datum).format('YYYY-MM-DD HH:mm',true);
+                   console.log($scope.foglalas.datum);
+                   
+                   */
+                   
+                   $scope.datum=new Date($scope.foglalas.datum);
+                   $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm',true);
+                   console.log($scope.datum);
+
+                   //console.log($scope.helyfoglalasok);
+
+                   
+                   
+                } 
                
-               
-            } 
-            else{
-                
-            }
-        });
+            });
+        }
+        
     }
 
 
