@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 22. 13:23
+-- Létrehozás ideje: 2022. Ápr 05. 13:23
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -46,7 +46,24 @@ INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Erte
 (3, 3, 2, 3, 'Finom volt az étel amit szolgáltak.', '2022-03-16 20:53:55'),
 (4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
 (5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
-(6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41');
+(6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41'),
+(41, 1, 1, 4, 'undefined', '2022-04-01 13:33:41');
+
+-- --------------------------------------------------------
+
+--
+-- A nézet helyettes szerkezete `ertekelesek`
+-- (Lásd alább az aktuális nézetet)
+--
+CREATE TABLE `ertekelesek` (
+`Nev` varchar(1000)
+,`Felhasznalo_ID` int(11)
+,`Etterem_ID` int(11)
+,`Datum` datetime
+,`Pontszam` int(11)
+,`Ertekeles` mediumtext
+,`Ertekeles_ID` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -92,18 +109,21 @@ CREATE TABLE `ettermek` (
   `Ferohely` int(11) NOT NULL,
   `Hazhozszallitas` tinyint(1) NOT NULL,
   `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
+  `Tipus` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `Statusz` tinyint(1) NOT NULL,
-  `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
+  `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Weboldal` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Facebook` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `ettermek`
 --
 
-INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Statusz`, `Kep`) VALUES
-(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 1, 'img/rozsaetterem.jpg'),
-(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 1, 'img/kedvencetterem.jpg'),
-(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióvall', 1, 'img/rozsaetterem.jpg');
+INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Statusz`, `Kep`, `Weboldal`, `Facebook`) VALUES
+(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 1, 'img/rozsaetterem.jpg', NULL, NULL),
+(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 'img/kedvencetterem.jpg', NULL, NULL),
+(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 1, 'img/rozsaetterem.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -148,8 +168,8 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-03-20 17:44:41', 1, 'admin'),
-(2, 'felhasznalo@gmail.com', 'Felhasznalo', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'user'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-05 11:53:04', 1, 'admin'),
+(2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-01 09:22:28', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
 -- --------------------------------------------------------
@@ -163,9 +183,17 @@ CREATE TABLE `helyfoglalas` (
   `Felhasznalo_ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
   `Kezdes` datetime NOT NULL,
-  `Vege` datetime NOT NULL,
   `Fo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `helyfoglalas`
+--
+
+INSERT INTO `helyfoglalas` (`ID`, `Felhasznalo_ID`, `Etterem_ID`, `Kezdes`, `Fo`) VALUES
+(1, 2, 1, '2022-04-05 11:58:20', 4),
+(2, 1, 1, '2022-04-05 11:58:20', 10),
+(3, 1, 2, '2022-04-05 11:58:20', 10);
 
 -- --------------------------------------------------------
 
@@ -202,8 +230,24 @@ CREATE TABLE `kedvenc` (
 CREATE TABLE `kepek` (
   `ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
-  `Kepek` bit(64) NOT NULL
+  `Kepek` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `kepek`
+--
+
+INSERT INTO `kepek` (`ID`, `Etterem_ID`, `Kepek`) VALUES
+(1, 1, 'img/rozsaetterem.jpg'),
+(2, 1, 'img/rozsaetterem.jpg'),
+(3, 1, 'img/rozsaetterem.jpg'),
+(4, 1, 'img/rozsaetterem.jpg'),
+(5, 1, 'img/kedvencetterem.jpg'),
+(6, 2, 'img/kedvencetterem.jpg'),
+(7, 2, 'img/kedvencetterem.jpg'),
+(8, 2, 'img/kedvencetterem.jpg'),
+(9, 3, 'img/rozsaetterem.jpg'),
+(10, 3, 'img/rozsaetterem.jpg');
 
 -- --------------------------------------------------------
 
@@ -218,6 +262,29 @@ CREATE TABLE `nyitvatartas` (
   `Nyitas` time NOT NULL,
   `Zaras` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `nyitvatartas`
+--
+
+INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `Nyitas`, `Zaras`) VALUES
+(1, 1, 'Hétfő', '09:00:00', '20:00:00'),
+(2, 1, 'Kedd', '09:00:00', '20:00:00'),
+(3, 1, 'Szerda', '09:00:00', '20:00:00'),
+(4, 1, 'Csütörtök', '09:00:00', '20:00:00'),
+(5, 1, 'Péntek', '09:00:00', '20:00:00'),
+(6, 1, 'Szombat', '09:00:00', '20:00:00'),
+(7, 1, 'Vasárnap', '09:00:00', '20:00:00'),
+(8, 2, 'Hétfő', '09:00:00', '20:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Nézet szerkezete `ertekelesek`
+--
+DROP TABLE IF EXISTS `ertekelesek`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ertekelesek`  AS SELECT `felhasznalok`.`Nev` AS `Nev`, `felhasznalok`.`ID` AS `Felhasznalo_ID`, `ettermek`.`ID` AS `Etterem_ID`, `ertekeles`.`Datum` AS `Datum`, `ertekeles`.`Pontszam` AS `Pontszam`, `ertekeles`.`Ertekeles` AS `Ertekeles`, `ertekeles`.`ID` AS `Ertekeles_ID` FROM ((`ertekeles` join `felhasznalok`) join `ettermek`) WHERE `ertekeles`.`Felhasznalo_ID` = `felhasznalok`.`ID` AND `ettermek`.`ID` = `ertekeles`.`Etterem_ID` ;
 
 -- --------------------------------------------------------
 
@@ -305,7 +372,7 @@ ALTER TABLE `nyitvatartas`
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT a táblához `etlap`
@@ -329,7 +396,7 @@ ALTER TABLE `felhasznalok`
 -- AUTO_INCREMENT a táblához `helyfoglalas`
 --
 ALTER TABLE `helyfoglalas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `hibajelentes`
@@ -347,13 +414,13 @@ ALTER TABLE `kedvenc`
 -- AUTO_INCREMENT a táblához `kepek`
 --
 ALTER TABLE `kepek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT a táblához `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Megkötések a kiírt táblákhoz
