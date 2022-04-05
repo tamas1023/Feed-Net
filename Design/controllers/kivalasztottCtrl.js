@@ -19,7 +19,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $scope.foglalas={};
     $scope.hiba=false;
     $scope.hiba2=false;
-    
+    $scope.osszferohely=0;
    
     $scope.jelentes="";
     /*
@@ -50,6 +50,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if (res.data.length > 0) { 
             $rootScope.etterem=res.data;  
             $rootScope.felszereltseg=res.data;
+            $scope.osszferohely=$rootScope.etterem[0].Ferohely;
             Felszerelesek();
         } 
         else{
@@ -112,10 +113,25 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     //Foglalás  
     //Current timestamp hoz +12 óra ha sok akkor át kell váltani
     //és ha még így is több a megadott idő akkor tudjuk elfogadni
+
+    //lekérni hogy hány férőhelyes az étterem, és hogy abból van e már foglalás a megadott időre
+
     $scope.Foglalas=function () {
         
+        //ha a szám undefined amit megadott azt jelenti hogy több mint 100 főre akar foglani
         console.log($scope.foglalas.fo);
         console.log($scope.foglalas.datum);
+        console.log($scope.osszferohely);
+        $scope.helyfoglalasok=[];
+        dbfactory.selectCustom("helyfoglalas"," Etterem_ID="+$id).then(function(res) {
+            if (res.data.length > 0) { 
+               
+               
+            } 
+            else{
+                
+            }
+        });
     }
 
 
