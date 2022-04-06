@@ -137,7 +137,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     $scope.helyfoglalasok[i].Kezdes=moment($scope.helyfoglalasok[i].Kezdes).format('YYYY MM.DD. HH:mm',true);
                    }
                    //console.log($scope.maradekferohely);
-                   console.log($scope.foglalas.datum);
+                   //console.log($scope.foglalas.datum);
                    /*
                    $scope.foglalas.datum=moment($scope.foglalas.datum).format('YYYY-MM-DD HH:mm',true);
                    console.log($scope.foglalas.datum);
@@ -146,8 +146,74 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                    
                    $scope.datum=new Date($scope.foglalas.datum);
                    $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm',true);
-                   console.log($scope.datum);
+                   
+                   let datum=new Date($scope.datum);
+                   datum.setHours(datum.getHours()+12);
+                   let ev=datum.getFullYear();
+                   let honap=datum.getMonth()+1;
+                   let nap=datum.getDate();
+                   let ora=datum.getHours();
+                
+                   console.log("kivalasztott: ");
+                   console.log(ev,honap,nap,ora);
 
+                   let most=new Date();
+                   let mostev=most.getFullYear();
+                   let mosthonap=most.getMonth()+1;
+                   let mostnap=most.getDate();
+                   let mostora=most.getHours();
+                   let mostperc=most.getMinutes();
+                   console.log("Most: ")
+                   console.log(mostev,mosthonap,mostnap,mostora);
+
+                   // meg kell nézni hogy a +12 órában még nyitva van e az étterem
+                   //0 vasárnap ... 6 szombat
+                   let hetmelyiknap=datum.getDay();
+                   let melyiknapszo="";
+                   console.log(hetmelyiknap);
+
+                if (hetmelyiknap==0 ) {
+                    melyiknapszo="Vasárnap";
+                    
+                }
+                if (hetmelyiknap==1 ) {
+                    melyiknapszo="Hétfő";
+                    
+                }
+                if (hetmelyiknap==2 ) {
+                    melyiknapszo="Kedd";
+                    
+                }
+                if (hetmelyiknap==3 ) {
+                    melyiknapszo="Szerda";
+                    
+                }
+                if (hetmelyiknap==4 ) {
+                    melyiknapszo="Csütörtök";
+                    
+                }
+                if (hetmelyiknap==5 ) {
+                    melyiknapszo="Péntek";
+                    
+                }
+                if (hetmelyiknap==6 ) {
+                    melyiknapszo="Szombat";
+                    
+                }
+                console.log(melyiknapszo);
+
+                   //eltelt a 12 óra
+                   if (most<=datum) {
+                       console.log("Elvileg megvan a 12 óra");
+                   }
+                   
+                   else{
+                    console.log("Elvileg nem tud rendelni");
+                   }
+
+
+                   
+                   
                    //console.log($scope.helyfoglalasok);
 
                    
