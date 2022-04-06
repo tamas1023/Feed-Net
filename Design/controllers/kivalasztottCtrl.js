@@ -130,6 +130,12 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             console.log($scope.osszferohely);
             */
             dbfactory.selectCustom("helyfoglalas"," Etterem_ID="+$id).then(function(res) {
+
+
+                //ha nincs rendelés akkor simán fel tudjuk venni, ha akkor nyitva lesz az étterem
+
+
+
                 if (res.data.length > 0) { 
                     $scope.helyfoglalasok=res.data;
                    for (let i = 0; i < $scope.helyfoglalasok.length; i++) {
@@ -143,12 +149,12 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                    console.log($scope.foglalas.datum);
                    
                    */
-                   
+                   //console.log($scope.foglalas.datum);
                    $scope.datum=new Date($scope.foglalas.datum);
                    $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm',true);
                    
                    let datum=new Date($scope.datum);
-                   datum.setHours(datum.getHours()+12);
+                   //datum.setHours(datum.getHours()+12);
                    let ev=datum.getFullYear();
                    let honap=datum.getMonth()+1;
                    let nap=datum.getDate();
@@ -158,12 +164,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                    console.log(ev,honap,nap,ora);
 
                    let most=new Date();
+                   most.setHours(most.getHours()+12);
                    let mostev=most.getFullYear();
                    let mosthonap=most.getMonth()+1;
                    let mostnap=most.getDate();
                    let mostora=most.getHours();
                    let mostperc=most.getMinutes();
-                   console.log("Most: ")
+                   console.log("Most tól 12 óra mulva: ")
                    console.log(mostev,mosthonap,mostnap,mostora);
 
                    // meg kell nézni hogy a +12 órában még nyitva van e az étterem
@@ -172,36 +179,57 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                    let melyiknapszo="";
                    console.log(hetmelyiknap);
 
-                if (hetmelyiknap==0 ) {
+                    if (hetmelyiknap==0 ) {
                     melyiknapszo="Vasárnap";
                     
-                }
-                if (hetmelyiknap==1 ) {
+                    }
+                    if (hetmelyiknap==1 ) {
                     melyiknapszo="Hétfő";
                     
-                }
-                if (hetmelyiknap==2 ) {
+                    }
+                    if (hetmelyiknap==2 ) {
                     melyiknapszo="Kedd";
                     
-                }
-                if (hetmelyiknap==3 ) {
+                    }
+                    if (hetmelyiknap==3 ) {
                     melyiknapszo="Szerda";
                     
-                }
-                if (hetmelyiknap==4 ) {
+                    }
+                    if (hetmelyiknap==4 ) {
                     melyiknapszo="Csütörtök";
                     
-                }
-                if (hetmelyiknap==5 ) {
+                    }
+                    if (hetmelyiknap==5 ) {
                     melyiknapszo="Péntek";
                     
-                }
-                if (hetmelyiknap==6 ) {
+                    }
+                    if (hetmelyiknap==6 ) {
                     melyiknapszo="Szombat";
                     
-                }
-                console.log(melyiknapszo);
+                    }
+                    console.log(melyiknapszo);
+                    let nyitasora;
+                    let nyitasperc;
+                    let zarasora;
+                    let zarasperc;
 
+                    for (let i = 0; i < $scope.nyitvatartas.length; i++) {
+                        if ( $scope.nyitvatartas[i].Nap==melyiknapszo) {
+                            console.log("megfelelonap");
+                            
+                            let nyitas=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('YYYY-MM-DD HH:mm',true));
+                            console.log(nyitas);
+                            nyitasora=nyitas.getHours();
+                            nyitasperc=nyitas.getMinutes();
+                            let zaras=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('YYYY-MM-DD HH:mm',true));
+                            zarasora=zaras.getHours();
+                            zarasperc=zaras.getMinutes();
+                        }
+                    
+                    }
+                    
+                    console.log("Nyitás: "+nyitasora +"-"+nyitasperc+" Zárás: "+zarasora+"-"+zarasperc);
+                
                    //eltelt a 12 óra
                    if (most<=datum) {
                        console.log("Elvileg megvan a 12 óra");
@@ -210,14 +238,10 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                    else{
                     console.log("Elvileg nem tud rendelni");
                    }
-
-
-                   
-                   
-                   //console.log($scope.helyfoglalasok);
-
-                   
-                   
+                   //console.log($scope.helyfoglalasok); 
+                }
+                else{
+                    console.log("Nem jött adat a helyfoglalásból");
                 } 
                
             });
@@ -302,10 +326,12 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if (res.data.length > 0) { 
 
            $scope.nap=res.data[0].Nap; 
+           //console.log($scope.nap);
            dbfactory.selectCustom("nyitvatartas",$rootScope.feltetel).then(function(res) {
             if (res.data.length > 0) { 
     
                 $scope.nyitvatartas=res.data;
+                //console.log($scope.nyitvatartas);
                 for (let i = 0; i < res.data.length; i++) {
                     //Beolvasás Ha Vasárnap==1 Hétfő ==2 ,, és ez alapján ki tudom írni az aktuális dátumot
                     
@@ -337,13 +363,26 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         $scope.aktualisnap=res.data[i];
                         
                     }
-                    
-                    $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
-                    $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
-
+                    /*
+                    console.log("----------------");
+                    console.log($scope.nyitvatartas[i].Nyitas);
+                    console.log($scope.nyitvatartas[i].Zaras);
+                    */
                     $scope.nyitvatartas[i].Nyitas=moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('HH:mm',true);
                     $scope.nyitvatartas[i].Zaras=moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('HH:mm',true);
+                    /*
+                    console.log($scope.nyitvatartas[i].Nyitas);
+                    console.log($scope.nyitvatartas[i].Zaras);
+                    */
                 }
+                /*
+                console.log($scope.aktualisnap);
+                console.log($scope.aktualisnap.Nyitas);
+                console.log($scope.aktualisnap.Zaras);
+                */
+                $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
+                $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
+
                  
              }        
             
