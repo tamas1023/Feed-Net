@@ -34,18 +34,27 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     }
     $scope.update=function()
     {
-        //alert($scope.ujparkolo);
-        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+        dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+            if(res.data.length>0)
+            {
+                alert('Ez az email cím már foglalat');
+            }
+            else
+            {
+                dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
             
-            dbfactory.admindingingselect().then(function(res){
-                if(res.data.length>0)
-                {
-                    $scope.ettermek=res.data;
-                }
-               //console.log(res.data.length);
-            });
-            $scope.unselectRow();
+                    dbfactory.admindingingselect().then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.ettermek=res.data;
+                        }
+                       //console.log(res.data.length);
+                    });
+                    $scope.unselectRow();
+                })
+            }
         })
+       
     }
     $scope.unselectRow=function()
     {

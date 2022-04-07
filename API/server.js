@@ -628,6 +628,7 @@ app.post('/profildelete',(req,res)=>{
         zaras:req.body.Zaras
       }
     dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
       res.json({message:"ok"});
     })
     }
@@ -636,7 +637,49 @@ app.post('/profildelete',(req,res)=>{
       res.json({message:"Nem érheted ezeket el"});
     }
   })
-  
+
+  //nyitvatartás insert
+
+app.post('/openinsert',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="etterem")
+  {
+    let data={
+      EtteremID:req.body.ID,
+      nap:req.body.Nap,
+      nyitas:req.body.Nyitas,
+      zaras:req.body.Zaras
+    }
+    
+  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}','${data.nyitas}','${data.zaras}')`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"ok"});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem érheted ezeket el"});
+  }
+}) 
+
+    //étterem nyitvatartás delete
+    
+app.post('/opendelete',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="etterem")
+  {
+    let data={
+      id:req.body.ID
+    }
+        
+  dbPool.query(`DELETE FROM nyitvatartas WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"ok"});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem Törölheted ezt le"});
+  }
+})
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
