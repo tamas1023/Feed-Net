@@ -567,6 +567,25 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //étterem nyitvatartás delete
+
+        opendelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/opendelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+
             //étterem nyitvatartás insert
 
         openinsert:function(id,nap,nyitas,zaras) {

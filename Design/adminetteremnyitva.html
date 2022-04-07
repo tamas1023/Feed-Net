@@ -10,7 +10,7 @@
           <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <label for="Nap">Nap:</label>
-                <select name="nem" id="jog"ng-model="ujnap" class="form-control" ng-disabled="admin">
+                <select name="nem" id="jog"ng-model="ujnap"  class="form-control" ng-disabled="admin">
                   <option value="Hétfő">Hétfő</option>
                   <option value="Kedd">Kedd</option>
                   <option value="Szerda">Szerda</option>
@@ -47,11 +47,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="animate" ng-repeat="adat in nyitas | filter:{Nev:search}" ng-click="select($index)">
+                <tr class="animate" ng-repeat="adat in nyitas | filter:{Nev:search}" ng-click="select($index,adat.ID)">
                   <td>{{adat.Nap}}</td>
                   <td>{{adat.Nyitas}}</td>
                   <td>{{adat.Zaras}}</td>
-                  <td><button class="btn btn-danger" ng-click="egyvalaszt(adat.ID)" data-bs-toggle="modal" data-bs-target="#torol"><i class="bi bi-x-lg" ></i></button></td>
+                  <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol"><i class="bi bi-x-lg" ></i></button></td>
                 </tr>
               </tbody>
               <tfoot>
@@ -65,21 +65,15 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Módosítás</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Törlés</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <div class="form-floating mb-3 ">
-                        <input type="text" class="form-control" id="" ng-model="ujnyitas" placeholder="">
-                        <label for="floatingInput">Nyitás</label>
-                      </div>
-                      <div class="form-floating mb-3 ">
-                        <input type="text" class="form-control" id="" ng-model="ujzaras" placeholder="">
-                        <label for="floatingInput">Zárás</label>
-                      </div>
+                    
+                    Biztosan törölni szeretnéd ezt az adatot?
                   </div>           
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" ng-click="update()" data-bs-dismiss="modal">Módosítás</button>
+                    <button type="button" class="btn btn-danger" ng-click="delete()" data-bs-dismiss="modal">Törlés</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
                     
                   </div>
