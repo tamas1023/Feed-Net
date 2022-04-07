@@ -636,7 +636,28 @@ app.post('/profildelete',(req,res)=>{
       res.json({message:"Nem érheted ezeket el"});
     }
   })
-  
+
+  //nyitvatartás insert
+
+app.post('/openinsert',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="etterem")
+  {
+    let data={
+      EtteremID:req.body.ID,
+      nap:req.body.Nap,
+      nyitas:req.body.Nyitas,
+      zaras:req.body.Zaras
+    }
+    
+  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}','${data.nyitas}','${data.zaras}')`,(err,results)=>{
+    res.json({message:"ok"});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem érheted ezeket el"});
+  }
+}) 
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
