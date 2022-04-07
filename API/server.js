@@ -504,7 +504,22 @@ app.post('/getDate',(req,res)=>{
   });
   
 });
+//foglalás insert
+app.post('/reservationInsert',(req,res)=>{
+    
+  let data = {
+    Etterem_ID:req.body.Etterem_ID,
+    Felhasznalo_ID:req.body.Felhasznalo_ID,
+    Datum:req.body.Datum,
+    Fo:req.body.Fo
+}
+  dbPool.query(`INSERT INTO helyfoglalas VALUES(NULL,${data.Felhasznalo_ID},${data.Etterem_ID},'${data.Datum}',${data.Fo})`,(err,results)=>{
+    if(err) /*throw*/ console.log(err);
+    res.json({message:"Felvéve!"});
+  })
 
+
+})
 
 //ertekeles insert
 

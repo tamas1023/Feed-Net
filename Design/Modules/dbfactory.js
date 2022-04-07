@@ -168,6 +168,25 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+        //helyfoglalás beillesztése
+        reservationInsert:function(id,loggedInUserID,datum,fo) {
+            let deferred = $q.defer();
+            let data = {
+                Etterem_ID:id,
+                Felhasznalo_ID:loggedInUserID,
+                Datum:datum,
+                Fo:fo
+            }
+            $http.post(url + '/reservationInsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         //Milyen nap van ma
         getDate:function() {
             let deferred = $q.defer();
