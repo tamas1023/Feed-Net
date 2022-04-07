@@ -132,10 +132,30 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     //TODO: ha nincs rendelés akkor simán fel tudjuk venni, ha akkor nyitva lesz az étterem
                     
     
-    
+                    $scope.datum=new Date($scope.foglalas.datum);
+                    $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm:ss',true);
+                    let datum=new Date($scope.datum);
+
+                    //datum.setHours(datum.getHours()+12);
+                    let ev=datum.getFullYear();
+                    let honap=datum.getMonth()+1;
+                    let nap=datum.getDate();
+                    let ora=datum.getHours();
+                    let perc=datum.getMinutes();
+
+
+                    let most=new Date();
+                    most.setHours(most.getHours()+12);
+                    let mostev=most.getFullYear();
+                    let mosthonap=most.getMonth()+1;
+                    let mostnap=most.getDate();
+                    let mostora=most.getHours();
+                    let mostperc=most.getMinutes();
+
+                    //ha van rendelés az étterem ID re
                     if (res.data.length > 0) { 
                         $scope.helyfoglalasok=res.data;
-                       for (let i = 0; i < $scope.helyfoglalasok.length; i++) {
+                        for (let i = 0; i < $scope.helyfoglalasok.length; i++) {
                         $scope.maradekferohely-=$scope.helyfoglalasok[i].Fo;
                         $scope.helyfoglalasok[i].Kezdes=moment($scope.helyfoglalasok[i].Kezdes).format('YYYY MM.DD. HH:mm',true);
                        }
@@ -147,39 +167,20 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                        
                        */
                        //console.log($scope.foglalas.datum);
-                       $scope.datum=new Date($scope.foglalas.datum);
-                       $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm:ss',true);
                        
-                       let datum=new Date($scope.datum);
-                       let datumios=datum.toISOString();
-                       console.log($scope.datum);
-                       
-    
-                       
-                       //datum.setHours(datum.getHours()+12);
-                       let ev=datum.getFullYear();
-                       let honap=datum.getMonth()+1;
-                       let nap=datum.getDate();
-                       let ora=datum.getHours();
-                       let perc=datum.getMinutes();
+                       //console.log($scope.datum);
                     
                        //console.log("kivalasztott: ");
                        //console.log(ev,honap,nap,ora,perc);
     
-                       let most=new Date();
-                       most.setHours(most.getHours()+12);
-                       let mostev=most.getFullYear();
-                       let mosthonap=most.getMonth()+1;
-                       let mostnap=most.getDate();
-                       let mostora=most.getHours();
-                       let mostperc=most.getMinutes();
+                       
                        //console.log("Most tól 12 óra mulva: ")
                       // console.log(mostev,mosthonap,mostnap,mostora);
     
                        // meg kell nézni hogy a +12 órában még nyitva van e az étterem
                        //eltelt a 12 óra
                        if (most<=datum) {
-                            console.log("Elvileg megvan a 12 óra");
+                            //console.log("Elvileg megvan a 12 óra");
     
                             let hetmelyiknap=datum.getDay();
                             let melyiknapszo="";
@@ -241,8 +242,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         
                             }
                         
-                            console.log("Nyitás: "+nyitasora +"-"+nyitasperc+" Zárás: "+zarasora+"-"+zarasperc);
-                            console.log("Megadott idő:"+ora+"-"+perc);
+                            //console.log("Nyitás: "+nyitasora +"-"+nyitasperc+" Zárás: "+zarasora+"-"+zarasperc);
+                            //console.log("Megadott idő:"+ora+"-"+perc);
     
                             //külön kell megnézni, hogy a nyitási időnél  (óra perc) nagyobb
                             // és zárási időnél kisebb (óra, perc)
@@ -302,32 +303,48 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                             //SELECT * FROM `helyfoglalas` WHERE `Kezdes`>='ev-honap-nap-ora-perc-mp' AND Kezdes <='ev-honap-nap+1-ora-perc-mp'
                             let lekerdezesdatum=new Date($scope.datum);
 
-                            lekerdezesdatum.setHours(datum.getHours()+12);
+                            lekerdezesdatum.setHours(datum.getHours()-6);
                             let lekerdezesev=lekerdezesdatum.getFullYear();
                             let lekerdezeshonap=lekerdezesdatum.getMonth()+1;
                             let lekerdezesnap=lekerdezesdatum.getDate();
                             let lekerdezesora=lekerdezesdatum.getHours();
                             let lekerdezesperc=lekerdezesdatum.getMinutes();
 
-                            $scope.feltetel="Kezdes >='"+ev+"-"+honap+"-"+nap+"-"+ora+"-"+perc+"-00' AND Kezdes <='"+lekerdezesev+"-"+lekerdezeshonap+"-"+lekerdezesnap+"-"+lekerdezesora+"-"+lekerdezesperc+"-00' ";
+                            $scope.szabadhely=$scope.osszferohely;
+                            $scope.feltetel="Kezdes <='"+ev+"-"+honap+"-"+nap+"-"+ora+"-"+perc+"-00' AND Kezdes >='"+lekerdezesev+"-"+lekerdezeshonap+"-"+lekerdezesnap+"-"+lekerdezesora+"-"+lekerdezesperc+"-00' ";
+                            //console.log($scope.feltetel);
                             if (nyitas && zaras) {
-                                
                                 dbfactory.selectCustom("helyfoglalas",$scope.feltetel).then(function(res) {
                                     if (res.data.length > 0) { 
-                                        
                                         for (let i = 0; i < res.data.length; i++) {
-                                           $scope.foglalasokszam+=res.data[i].Fo;
+                                            $scope.szabadhely-=res.data[i].Fo;
+                                            // A folgalasokszamot ki kell vonni az összesből, és ha marad még hely , és belefér a megadott főbe amit akar foglani
+                                            //Akkor fel lehet venni
+                                            
                                         }
+                                        if ($scope.foglalas.fo<=$scope.szabadhely) {
+                                            
+                                            dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
+                                                alert("A foglalását sikeresen elmentettük.");
+                                            });
+                                
+                                        } else {
+                                            alert("Nem sikerült elmenteni a foglalást.Nem volt elég hely a foglalás időpontjában.");
+                                        }
+                                        
+                                    } 
+                                    else{
+                                        //ha a megadott időpontokban nincsen még felvéve semmi
+                                        dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
+                                            alert("A foglalását sikeresen elmentettük.");
+                                        });
+
+                                        //console.log(res.data);
                                     }
-                                    console.log($scope.foglalasokszam); 
-
-
-                                    // A folgalasokszamot ki kell vonni az összesből, és ha marad még hely , és belefér a megadott főbe amit akar foglani
-                                    //Akkor fel lehet venni
-
-
-
                                 });
+
+                                    
+
                                 
                                 //SELECT * FROM `helyfoglalas` WHERE Kezdes >="2022.04.10" AND Kezdes <= "2022.04.11"
                                 /*
@@ -337,29 +354,136 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                                 */
     
     
-                                alert("A foglalását sikeresen elmentettük.");
+                               
                             }
                             else{
-                                alert("Nem sikerült elmenteni a foglalást.");
+                                alert("Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.");
                             }
     
                         }
                     
                         else{
-                        console.log("Elvileg nem tud rendelni");
+                        console.log("A mostani idő és a rendelési idő között nem telt et 12 óra");
                         }
-    
-                       //console.log($scope.helyfoglalasok); 
                     }
                     else{
-                        console.log("Nem jött adat a helyfoglalásból");
+
+                        //ha NINCS rendelés az étterem ID re
+
+                        if (most<=datum) {
+                            //console.log("Elvileg megvan a 12 óra");
+    
+                            let hetmelyiknap=datum.getDay();
+                            let melyiknapszo="";
+                            //0 vasárnap ... 6 szombat
+                            //console.log(hetmelyiknap);
+    
+                            if (hetmelyiknap==0 ) {
+                                melyiknapszo="Vasárnap";
+                        
+                            }
+                            if (hetmelyiknap==1 ) {
+                                melyiknapszo="Hétfő";
+                        
+                            }
+                            if (hetmelyiknap==2 ) {
+                                melyiknapszo="Kedd";
+                        
+                            }
+                            if (hetmelyiknap==3 ) {
+                                melyiknapszo="Szerda";
+                        
+                            }
+                            if (hetmelyiknap==4 ) {
+                                melyiknapszo="Csütörtök";
+                        
+                            }
+                            if (hetmelyiknap==5 ) {
+                                melyiknapszo="Péntek";
+                        
+                            }
+                            if (hetmelyiknap==6 ) {
+                                melyiknapszo="Szombat";
+                        
+                            }
+                            let nyitasora;
+                            let nyitasperc;
+                            let zarasora;
+                            let zarasperc;
+                            for (let i = 0; i < $scope.nyitvatartas.length; i++) {
+                                if ( $scope.nyitvatartas[i].Nap==melyiknapszo) {
+                                let nyitas=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('YYYY-MM-DD HH:mm',true));
+                                nyitasora=nyitas.getHours();
+                                nyitasperc=nyitas.getMinutes();
+                                let zaras=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('YYYY-MM-DD HH:mm',true));
+                                zarasora=zaras.getHours();
+                                zarasperc=zaras.getMinutes();
+                                }
+                        
+                            }
+                            let nyitas=false;
+                            let zaras=false;
+                            if (ora>nyitasora) {
+                                nyitas=true;
+                            } else {
+                                if (ora==nyitasora) {
+                                    if (perc>=nyitasperc) {
+                                        nyitas=true;
+                                        } else {
+                                        nyitas=false;
+                                    }
+                                }
+                                else{
+                                    nyitas=false;
+                                }
+                            }
+                            if (ora<zarasora) {
+                                zaras=true;
+                            }
+                            else{
+                                if (ora==zarasora) {
+                                    if (perc<=zarasperc) {
+                                        zaras=true;
+                                    }
+                                    else
+                                    {
+                                        zaras=false;
+                                    }
+                                }
+                                else{
+                                    zaras=false;
+                                }
+                            }
+                            $scope.foglalasokszam=0;
+                            let lekerdezesdatum=new Date($scope.datum);
+
+                            lekerdezesdatum.setHours(datum.getHours()+6);
+                            
+                            
+                            if (nyitas && zaras) {
+                                
+                                dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
+                                    alert("A foglalását sikeresen elmentettük.");
+                                });
+                                //console.log("Nem jött adat a helyfoglalásból");
+                            }
+                            else{
+                                alert("Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.");
+                            }
+    
+                        }
+                    
+                        else{
+                        console.log("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                        }
+
                     } 
                    
                 });
             }
             else
             {
-                alert("Jelentkezz be");
+                alert("Jelentkezz be a foglaláshoz");
             }
             /*
             console.log($scope.foglalas.fo);
