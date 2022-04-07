@@ -111,6 +111,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
     }
     //Foglalás  
+    
     //Current timestamp hoz +12 óra ha sok akkor át kell váltani
     //és ha még így is több a megadott idő akkor tudjuk elfogadni
 
@@ -147,9 +148,11 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                        */
                        //console.log($scope.foglalas.datum);
                        $scope.datum=new Date($scope.foglalas.datum);
-                       $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm',true);
+                       $scope.datum=moment($scope.datum).format('YYYY-MM-DD HH:mm:ss',true);
                        
                        let datum=new Date($scope.datum);
+                       let datumios=datum.toISOString();
+                       console.log($scope.datum);
                        
     
                        
@@ -294,17 +297,44 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                                 //console.log("Zárás után óra");
                             }
                             //ha mind 2 igaz akkor benne van időben
+                            $scope.foglalasokszam=0;
+                            
+                            //SELECT * FROM `helyfoglalas` WHERE `Kezdes`>='ev-honap-nap-ora-perc-mp' AND Kezdes <='ev-honap-nap+1-ora-perc-mp'
+                            let lekerdezesdatum=new Date($scope.datum);
+
+                            lekerdezesdatum.setHours(datum.getHours()+12);
+                            let lekerdezesev=lekerdezesdatum.getFullYear();
+                            let lekerdezeshonap=lekerdezesdatum.getMonth()+1;
+                            let lekerdezesnap=lekerdezesdatum.getDate();
+                            let lekerdezesora=lekerdezesdatum.getHours();
+                            let lekerdezesperc=lekerdezesdatum.getMinutes();
+
+                            $scope.feltetel="Kezdes >='"+ev+"-"+honap+"-"+nap+"-"+ora+"-"+perc+"-00' AND Kezdes <='"+lekerdezesev+"-"+lekerdezeshonap+"-"+lekerdezesnap+"-"+lekerdezesora+"-"+lekerdezesperc+"-00' ";
                             if (nyitas && zaras) {
-                                //valamiért 2 órával kevesebbet ad meg
-                                dbfactory.reservationInsert($id,$rootScope.loggedInUserID,datum,$scope.foglalas.fo).then(function(res) {
+                                
+                                dbfactory.selectCustom("helyfoglalas",$scope.feltetel).then(function(res) {
                                     if (res.data.length > 0) { 
                                         
-                                        
-                                    } 
-                                    else{
-                                        console.log(res.data);
+                                        for (let i = 0; i < res.data.length; i++) {
+                                           $scope.foglalasokszam+=res.data[i].Fo;
+                                        }
                                     }
+                                    console.log($scope.foglalasokszam); 
+
+
+                                    // A folgalasokszamot ki kell vonni az összesből, és ha marad még hely , és belefér a megadott főbe amit akar foglani
+                                    //Akkor fel lehet venni
+
+
+
                                 });
+                                
+                                //SELECT * FROM `helyfoglalas` WHERE Kezdes >="2022.04.10" AND Kezdes <= "2022.04.11"
+                                /*
+                                dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
+                                    
+                                });
+                                */
     
     
                                 alert("A foglalását sikeresen elmentettük.");
