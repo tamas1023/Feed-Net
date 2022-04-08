@@ -85,16 +85,22 @@
                 <div class="col-md-4 col-sm-12">
                   Nyitvatartás:
                 </div>
-                <div class=" col-md-8 col-sm-12">
-                   
-                  Ma: {{aktualisnap.Nyitas}} - {{aktualisnap.Zaras}}  
-                  <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                <div class=" col-md-8 col-sm-12" >
+                   <div ng-if="nyitvavane==true">
+                    Ma: {{aktualisnap.Nyitas}} - {{aktualisnap.Zaras}}
+                    <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                   </div>
+                   <div ng-if="nyitvavane==false">
+                    Ma: {{aktualisnap.Nyitas}}
+                    <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                   </div>
+                  
                   
                   <div class="row openings" ng-repeat="nyitasok in nyitvatartas">
                     <div class="col ">
                       {{nyitasok.Nap}}:
                     </div>
-                    <div class="col">
+                    <div class="col" >
                       {{nyitasok.Nyitas}} - {{nyitasok.Zaras}}  
                     </div>
                       

@@ -562,11 +562,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         console.log(res.data);
     }
     });
+
     //nyitvatartás
     //megnézni, mert ha nincs adat a nyitás zárásnál: akkor Zárva van az étterem
     $scope.nyitvatartas=[];
     $scope.nap=-1;
     $scope.aktualisnap=[];
+    $scope.nyitvavane=true;
     dbfactory.getDate().then(function(res) {
                         
         if (res.data.length > 0) { 
@@ -616,6 +618,17 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     */
                     $scope.nyitvatartas[i].Nyitas=moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('HH:mm',true);
                     $scope.nyitvatartas[i].Zaras=moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('HH:mm',true);
+                   if ($scope.nyitvatartas[i].Nyitas=="Invalid date" || $scope.nyitvatartas[i].Zaras=="Invalid date") {
+                    
+                    $scope.nyitvatartas[i].Nyitas="Zárva";
+                    $scope.nyitvatartas[i].Zaras="Zárva";
+                    
+                    }
+                    else{
+                    
+                    }
+                   
+                    
                     /*
                     console.log($scope.nyitvatartas[i].Nyitas);
                     console.log($scope.nyitvatartas[i].Zaras);
@@ -626,9 +639,25 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 console.log($scope.aktualisnap.Nyitas);
                 console.log($scope.aktualisnap.Zaras);
                 */
+                    console.log($scope.aktualisnap);
+                    $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
+                    $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
+                    if ($scope.aktualisnap.Nyitas=="Invalid date") {
+                        
+                        $scope.aktualisnap.Nyitas="Zárva";
+                        $scope.aktualisnap.Zaras="";
+                        $scope.nyitvavane=false;
+                    }
+                    else{
+                        $scope.nyitvavane=true;
+                    }
+                    
+                    
+
+                /*
                 $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
                 $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
-
+                */
                  
              }        
             
@@ -641,7 +670,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     });
     
     
-    
+    //étlap kiírás
     $scope.etlap=[];
     dbfactory.selectCustom("etlap",$rootScope.feltetel).then(function(res) {
                         
