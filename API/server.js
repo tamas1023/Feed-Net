@@ -24,7 +24,8 @@ dbPool.getConnection((err,connection)=>{
 app.post('/session',(req,res)=>{
   if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
   {
-    res.send(session.Rights);
+    let jsontomb=[{Rights:session.Rights,ID:session.ID}]
+    res.json(jsontomb);
   }
 })
 app.get("/email",(req,res)=>{
@@ -73,6 +74,7 @@ app.post('/login', (req, res) => {
         session.Rights=results[0].Jog;
         session.LoggedIn=true;
         session.Email=results[0].Email;
+        session.ID=results[0].ID;
         jog=results[0].Jog;
       }
       //console.log(session.LoggedIn);
@@ -500,6 +502,120 @@ app.post("/etteremupdate",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+//Kedvencekhez adás
+app.post('/FavoriteAdd', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.EtteremID},${data.FelhasznaloID}) `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+//Kedvencek törlés
+app.post('/FavoriteDelete', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`DELETE FROM ${data.tablename} WHERE Etterem_ID= ${data.EtteremID} AND Felhasznalo_ID= ${data.FelhasznaloID} `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+
+//Milyen nap van ma
+app.post('/getDate',(req,res)=>{
+  
+  dbPool.query('SELECT Dayofweek(CURRENT_TIMESTAMP) as Nap',(err,results)=>{
+    if (err)throw err;
+    res.send(results);
+     
+  });
+  
+});
+//foglalás insert
+app.post('/reservationInsert',(req,res)=>{
+    
+  let data = {
+    Etterem_ID:req.body.Etterem_ID,
+    Felhasznalo_ID:req.body.Felhasznalo_ID,
+    Datum:req.body.Datum,
+    Fo:req.body.Fo
+}
+  dbPool.query(`INSERT INTO helyfoglalas VALUES(NULL,${data.Felhasznalo_ID},${data.Etterem_ID},'${data.Datum}',${data.Fo})`,(err,results)=>{
+    if(err) /*throw*/ console.log(err);
+    res.json({message:"Felvéve!"});
+  })
+
+
+})
+
+//ertekeles insert
+
+  app.post('/ratingInsert',(req,res)=>{
+    
+      let data = {
+        Etterem_ID:req.body.Etterem_ID,
+        Felhasznalo_ID:req.body.Felhasznalo_ID,
+        Pontszam:req.body.Pontszam,
+        Ertekeles:req.body.Ertekeles
+    }
+      dbPool.query(`INSERT INTO ertekeles VALUES(NULL,${data.Etterem_ID},'${data.Felhasznalo_ID}',${data.Pontszam},'${data.Ertekeles}',CURRENT_TIME)`,(err,results)=>{
+        if(err)throw console.log(err);
+        res.json({message:"Felvéve!"});
+      })
+    
+    
+  })
+
+  //ertekeles torles
+app.post('/ratingDelete',(req,res)=>{
+  
+    dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+})
+//értékelés módosítás
+app.post('/updateRating',(req,res)=>{
+  
+    let data = {
+      tablename:req.body.Tablename,
+      mitmire:req.body.Mitmire,
+      hol: req.body.Hol,
+      
+    }
+    
+    dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire}, Datum=CURRENT_TIMESTAMP WHERE ${data.hol}`,(err,results)=>{
+      if(err) console.log(err);
+      res.json({message:"ok"});
+      
+    });
+  
+})
+//probléma jelentés
+app.post('/insertProblem',(req,res)=>{
+  
+  let data = {
+    tablename:req.body.Tablename,
+    felhasznaloid:req.body.Felhasznalo_ID,
+    etteremid:req.body.Etterem_ID,
+    tipus:req.body.Tipus,
+    leiras:req.body.Leiras, 
+  }
+  
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.felhasznaloid},${data.etteremid},'${data.tipus}','${data.leiras}')`,(err,results)=>{
+    if(err) console.log(err);
+    res.json({message:"ok"});
+    
+  });
+
+})
+
 
   //étterem férőhelyének lekérése
 
@@ -536,12 +652,13 @@ app.post('/etteremminus',(req,res)=>{
   }
 })
 
+// egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
   let data = {
     tablename: req.body.Tablename,
     select:req.body.Select
   }
-  dbPool.query(`SELECT * FROM ${data.tablename} WHERE  ${data.select}`, (err, results) => {
+  dbPool.query(`SELECT * FROM ${data.tablename} WHERE ${data.select}`, (err, results) => {
       if (err) throw err;
       res.json(results);
   });

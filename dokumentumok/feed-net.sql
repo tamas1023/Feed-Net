@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Ápr 04. 12:25
+-- Létrehozás ideje: 2022. Ápr 05. 13:23
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -168,7 +168,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-04 11:37:59', 1, 'admin'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-05 11:53:04', 1, 'admin'),
 (2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-01 09:22:28', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
@@ -183,9 +183,17 @@ CREATE TABLE `helyfoglalas` (
   `Felhasznalo_ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
   `Kezdes` datetime NOT NULL,
-  `Vege` datetime NOT NULL,
   `Fo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `helyfoglalas`
+--
+
+INSERT INTO `helyfoglalas` (`ID`, `Felhasznalo_ID`, `Etterem_ID`, `Kezdes`, `Fo`) VALUES
+(1, 2, 1, '2022-04-05 11:58:20', 4),
+(2, 1, 1, '2022-04-05 11:58:20', 10),
+(3, 1, 2, '2022-04-05 11:58:20', 10);
 
 -- --------------------------------------------------------
 
@@ -388,7 +396,7 @@ ALTER TABLE `felhasznalok`
 -- AUTO_INCREMENT a táblához `helyfoglalas`
 --
 ALTER TABLE `helyfoglalas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `hibajelentes`

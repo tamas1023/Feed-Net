@@ -1,11 +1,12 @@
 let egesz=document.getElementById("egesz");
 let menu=document.getElementById("menu");
-var positionInfo = menu.getBoundingClientRect();
-var menuheight = positionInfo.height;
-var menuwidth = positionInfo.width;
-var opened=false;
+let positionInfo = menu.getBoundingClientRect();
+let menuheight = positionInfo.height;
+let menuwidth = positionInfo.width;
+let opened=false;
 let width = innerWidth;
 let height = innerHeight;
+let moreless=true;
 
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -25,7 +26,7 @@ window.addEventListener('resize',()=>{
       document.getElementById("mySidebar").style.width = "250px";
     }
 
-    console.log("Menu height: "+menuheight);
+    //console.log("Menu height: "+menuheight);
 
 if (width>=767) {
   document.getElementById("main").style.top =Math.round(menuheight)+"px";
@@ -69,8 +70,8 @@ function openNav() {
   function TopNav() {
     let pos=document.getElementById("main");
     let posInfo = pos.getBoundingClientRect();
-    console.log(posInfo.top);
-    console.log("Menu height: "+menuheight);
+    //console.log(posInfo.top);
+    //console.log("Menu height: "+menuheight);
     resizing();
     if(posInfo.top<=56)
         {
@@ -122,4 +123,31 @@ function openNav() {
     document.getElementById("footer").style.width = "100%";
     //document.getElementsByClassName("jobboldal").style.width = "100%";
     //TopNav();
+  }
+  function ShowMoreLess() {
+  
+  var openings = document.getElementsByClassName("openings");
+  var linkText = document.getElementById("showmoreless");
+
+  
+  if (moreless==false) {
+    for (let i = 0; i < openings.length; i++) {
+    
+      openings[i].style.display = "none";
+    }
+    
+    linkText.innerHTML = "Mutass többet"; 
+    moreless=true;
+  } 
+  else {
+    for (let i = 0; i < openings.length; i++) {
+    
+      openings[i].style.display = "flex";
+    }
+    
+    linkText.innerHTML = "Mutass kevesebbet"; 
+    moreless=false;
+  }
+
+  
   }

@@ -20,6 +20,7 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
                         //bejeletkezett a felhasználó
                         $rootScope.loggedIn = true;
                         $rootScope.logJog=res.data[0].Jog;
+                        $rootScope.loggedInUserID=res.data[0].ID;
                         $rootScope.logivagyreg=false;
                         $rootScope.sidebar=true;
                         $location.path("#!/");

@@ -31,3 +31,9 @@ Főoldal: menü icon, boxiconná átváltás, gomb ami kitörli a szűrést, kik
 
 
 Ha sok az étterem lépteléses megoldás hogy ne töltse be azt a sok dolgot egyszerre
+
+  <!-- Ha mobilos nézeten vagyunk akkor jobb alsó sarokba ugorjon a szűrés gomb
+      Koppány szerint jobban néz így ki-->
+
+Értékeléseknél, a felhasználó kommentje jelenjen meg legelől, pl: lekérés ha a felhasználó akkor beleteszi többit nem, még 1
+lekérés, ha nem a felhasználó akkor teszi bele

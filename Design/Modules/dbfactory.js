@@ -95,7 +95,166 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
-
+        // kiválasztom amit én szeretnék játni
+        selectCustom: function(tablename,select) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Select: select
+            }
+            $http.post(url + '/selectCustom',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Kedvencekhez adás
+        FavoriteAdd: function(tablename,etterem_ID,felhasznalo_ID) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Etterem_ID: etterem_ID,
+                Felhasznalo_ID: felhasznalo_ID,
+            }
+            $http.post(url + '/FavoriteAdd',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Kedvencek törlés
+        FavoriteDelete: function(tablename,etterem_ID,felhasznalo_ID) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Etterem_ID: etterem_ID,
+                Felhasznalo_ID: felhasznalo_ID,
+            }
+            $http.post(url + '/FavoriteDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //ertekeles beillesztes
+        
+        ratingInsert:function(id,loggedInUserID,csillag,ertekeles) {
+            let deferred = $q.defer();
+            let data = {
+                Etterem_ID:id,
+                Felhasznalo_ID:loggedInUserID,
+                Pontszam:csillag,
+                Ertekeles:ertekeles
+            }
+            $http.post(url + '/ratingInsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //helyfoglalás beillesztése
+        reservationInsert:function(id,loggedInUserID,datum,fo) {
+            let deferred = $q.defer();
+            let data = {
+                Etterem_ID:id,
+                Felhasznalo_ID:loggedInUserID,
+                Datum:datum,
+                Fo:fo
+            }
+            $http.post(url + '/reservationInsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //Milyen nap van ma
+        getDate:function() {
+            let deferred = $q.defer();
+            $http.post(url + '/getDate').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //értékelés törlése
+        ratingDelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/ratingDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //értékelés frissítése
+        updateRating:function(tablename,mitmire,hol) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Mitmire:mitmire,
+                Hol: hol,
+                
+            }
+            $http.post(url + '/updateRating',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+        //probléma jelentés
+        insertProblem:function(tablename,felhasznaloid,etteremid,tipus,leiras) {
+            let deferred = $q.defer();
+            let data = {
+                Tablename: tablename,
+                Felhasznalo_ID:felhasznaloid,
+                Etterem_ID: etteremid,
+                Tipus:tipus,
+                Leiras: leiras,
+            }
+            $http.post(url + '/insertProblem',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         //admin Étterem
         
         //admin Étterem select
@@ -190,23 +349,7 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
-        // SELECT WHAT I WANT
-        selectCustom: function(tablename,select) {
-            let deferred = $q.defer();
-            let data = {
-                Tablename: tablename,
-                Select: select
-            }
-            $http.post(url + '/selectCustom',data).then(
-                function(res) {
-                    deferred.resolve(res);
-                },
-                function(err) {
-                    deferred.reject(err);
-                }
-            );
-            return deferred.promise;
-        },
+        
          //admin étlap insert
         
          adminfoodinsert:function(etteremID,nev,ar,leiras) {
