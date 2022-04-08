@@ -668,7 +668,7 @@ app.post('/selectCustom', (req, res) => {
   //profilmódosítás
 
 app.post('/profilmod',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="etterem"||session.Rights=="admin")
   {
     let data = {
       id: req.body.ID,
@@ -692,7 +692,7 @@ app.post('/profilmod',(req,res)=>{
   //profilkiválasztás
 
 app.post('/profilselect',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="etterem"||session.Rights=="admin")
   {
   dbPool.query(`SELECT * FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
     if(err)throw err;
@@ -708,7 +708,7 @@ app.post('/profilselect',(req,res)=>{
   //profil törlése
   
 app.post('/profildelete',(req,res)=>{
-  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
+  if(session.Rights=="user"||session.Rights=="etterem")
   {
     if(session.ID==req.body.ID)
     {
