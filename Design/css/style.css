@@ -1,7 +1,7 @@
 :root{
 
     --szin:rgb(209, 200, 200);
-    --ellenkezoszin:black;
+    --ellenkezoszin:#3f3e3e;
     --feher: white;
 
     --highlight:#3f3e3e;
@@ -16,7 +16,7 @@
    
     --footer:#A0AFBA;
     --menu:#A0AFBA;
-    --menuhover:#c06600;
+    --menuhover:#95a5af;
 
 }
 body {
@@ -292,7 +292,7 @@ img{
 }
 #menu a{
     text-decoration: none;
-    color: var(--feher);
+    
 }
 #menu a:hover{
     color: var(--feher);
@@ -514,12 +514,12 @@ a:hover{
     
 }
 #footer a{
-    color: var(--feher);
+    
     
 }
 a{
     text-decoration: none;
-    color: var(--highlight);
+    color: var(--ellenkezoszin);
 }
 a:hover{
     color: var(--feher);
@@ -820,10 +820,10 @@ a.visszavaltascolor
     background-color: var(--menu);
 }
 .dropdown-menu>li>a{
-    color: white;
+    color: var(--ellenkezoszin);
 }
 .dropdown-menu>li>a:hover
-{   color: white;
+{   color: var(--feher);
     background-color: var(--menuhover);
 }
 .accordion-button:not(.collapsed), .collapsed
