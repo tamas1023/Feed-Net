@@ -105,6 +105,19 @@ app.config(function($routeProvider){
         templateUrl:'adminetlap.html',
         controller:'etteremetlapCtrl'
     })
+    .when('/admin/etteremnyitva/:id',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="admin"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'adminetteremnyitva.html',
+        controller:'etteremnyitvatartasCtrl'
+    })
     .when('/admin/felhasznalo',{
         resolve:
         {
@@ -131,6 +144,19 @@ app.config(function($routeProvider){
         templateUrl:'hibajelentesek.html',
         controller:'hibajelentesekCtrl'
     })
+    .when('/admin/ertekeles',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="admin"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'ertekeles.html',
+        controller:'ertekelesCtrl'
+    })
     .when('/etteremfoglalas',{
         resolve:
         {
@@ -144,7 +170,32 @@ app.config(function($routeProvider){
         templateUrl:'etteremfoglalas.html',
         controller:'etteremfoglalasCtrl'
     })
-    
+    .when('/etteremetlap',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremetlap.html',
+        controller:'etteremetlapCtrl'
+    })
+    .when('/etteremnyitvatartas',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremnyitvatartas.html',
+        controller:'etteremnyitvatartasCtrl'
+    })
 })
 
 

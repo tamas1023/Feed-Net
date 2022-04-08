@@ -35,24 +35,17 @@
   <script src="controllers/kedvencekCtrl.js"></script>
   <script src="controllers/regCtrl.js"></script>
   <script src="controllers/loginCtrl.js"></script>
- 
-
-    <script src="controllers/etteremCtrl.js"></script>
-    <script src="controllers/felhasznalokCtrl.js"></script>
-    <script src="controllers/hibajelentesekCtrl.js"></script>
-    <script src="controllers/etteremetlapCtrl.js"></script>
-    <script src="controllers/etteremfoglalasCtrl.js"></script>
-    <script src="controllers/ettermekCtrl.js"></script>
-    <script src="controllers/gyikCtrl.js"></script>
-    <script src="controllers/kedvencekCtrl.js"></script>
-    <script src="controllers/regCtrl.js"></script>
-    <script src="controllers/loginCtrl.js"></script>
+  <script src="controllers/ertekelesCtrl.js"></script>
+  <script src="controllers/etteremnyitvatartasCtrl.js"></script>
+  
     <title class="ng-binding">{{title}}</title>
 
 </head>
 <body>
-
-
+<div id="page-container">
+  <div id="content-wrap">
+  <!-- Ha mobilos nézeten vagyunk akkor jobb alsó sarokba ugorjon a szűrés gomb
+      Koppány szerint jobban néz így ki-->
   <div id="menu">
     <nav class="navbar navbar-expand-md navbar-dark" >
       <div class="container-fluid">
@@ -80,7 +73,7 @@
             <li class="nav-item" ng-if="loggedIn==false">
               <a class="nav-link reg" href="#!/reg">Regisztráció</a>
             </li>
-            <li class="nav-item dropdown" ng-if="logJog=='admin'||logJog=='etterem'" ><!-- -->
+            <li class="nav-item dropdown" ng-if="logJog=='admin'" ><!-- -->
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Admin/étterem felület
               </a>
@@ -88,7 +81,17 @@
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin">Éttermek kezelés</a></li>
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin/felhasznalo">Felhasználókezelés</a></li>
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/hiba">Hibajelentések</a></li>
-                <li><a class="dropdown-item" ng-if="logJog=='etterem'" href="#!/etteremfoglalas">Étteremfoglalás</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/ertekeles">Értékelések</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown" ng-if="logJog=='etterem'" ><!-- -->
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Étterem
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremfoglalas">Éttermek kezelés</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremetlap">Étterem étlap</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremnyitvatartas">Étterem nyitvatartás</a></li>
               </ul>
             </li>
             <li class="nav-item" ng-if="loggedIn==true">
@@ -193,6 +196,7 @@
   <div id="egesz"  ng-view>
 
   </div>
+</div>
   <div id="footer">
     <div class="row p-2 m-0">
       <div class="col-12 col-md-8 ">
@@ -211,6 +215,8 @@
   </div>
 
 
-  <script src="js/index.js"></script>
+    <script src="js/index.js"></script>
+
+  </div>
 </body>
 </html>

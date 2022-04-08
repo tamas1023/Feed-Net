@@ -190,20 +190,20 @@ app.post('/admindininginsert',(req,res)=>{
       hazhozszallitas:req.body.Hazhozszallitas,
       statusz:req.body.Statusz
     }
-    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz})`,(err,results)=>{
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz},'')`,(err,results)=>{
       if(err)throw err;
       res.json(results);
-      console.log('sikeres felvétel');
+      //console.log('sikeres felvétel');
     });
     let passwd="ef32600aaedc13042de3712a8c2c1286671c1f37";
     dbPool.query(`SELECT * FROM felhasznalok WHERE Email='${data.email}'`,(err,results)=>{
       if(err)throw err;
       if(results.length==0)
       {
-        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.name}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
+        dbPool.query(`INSERT INTO felhasznalok VALUES (NULL, '${data.email}', '${data.nev}', '${passwd}', NULL, CURRENT_TIME, NULL, '1', 'etterem');`,(err,r)=>{
           if(err)throw err;
          // console.log('sikeres insert');
-          res.json({message:"ok"});
+         // res.send("ok");
         })
       }
     })
@@ -218,7 +218,7 @@ app.post('/admindininginsert',(req,res)=>{
   //admin étlap select
 
 app.post('/adminfoodselect',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data = {
       ID:req.body.id
@@ -237,7 +237,7 @@ app.post('/adminfoodselect',(req,res)=>{
   //admin étlap delete
 
 app.post('/adminfooddelete',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     dbPool.query(`DELETE FROM etlap WHERE ID=${req.body.id}`,(err,results)=>{
       if(err)throw err;
@@ -253,7 +253,7 @@ app.post('/adminfooddelete',(req,res)=>{
   //admin étlap felvétel
 
 app.post('/adminfoodinsert',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       etteremid:req.body.EtteremID,
@@ -275,7 +275,7 @@ app.post('/adminfoodinsert',(req,res)=>{
   //admin étlap módosítás
 
 app.post('/adminfoodupdate',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       id:req.body.ID,
@@ -411,6 +411,36 @@ app.post('/errordelete',(req,res)=>{
   }
 })
 
+//rating select
+app.get('/ratingselect',(req,res)=>{
+  if(session.Rights=="admin")
+  {
+    dbPool.query(`SELECT  ertekeles.ID,ettermek.Nev as EtNev,felhasznalok.Nev,ertekeles.Ertekeles,ertekeles.Pontszam,ertekeles.Datum FROM ertekeles,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+//rating delete
+
+app.post('/ratingdelete',(req,res)=>{
+  if(session.Rights=="admin")
+  {
+    dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
   //étterem is meghatározása
 app.post('/etteremid',(req,res)=>{
   if(session.Rights=="etterem")
@@ -429,7 +459,7 @@ app.post("/etteremselect",(req,res)=>{
   {
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,CONVERT_TZ(helyfoglalas.Kezdes,'+00:00','+01:00') as Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=1
                   //SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}
-    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,helyfoglalas.Fo,helyfoglalas.Kezdes,felhasznalok.Nev,CURRENT_TIMESTAMP AS ido FROM helyfoglalas,felhasznalok WHERE felhasznalok.ID=helyfoglalas.Felhasznalo_ID AND Etterem_ID=${req.body.EtteremID} ${req.body.Feltetel} ORDER BY helyfoglalas.Kezdes DESC`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log(results);
@@ -456,6 +486,9 @@ app.post("/etteremdelete",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+
+  //étterem módosítás
+
 app.post("/etteremupdate",(req,res)=>{
   if(session.Rights=="etterem")
   {
@@ -583,6 +616,42 @@ app.post('/insertProblem',(req,res)=>{
 
 })
 
+
+  //étterem férőhelyének lekérése
+
+app.post('/etteremfo',(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    //console.log(req.body.ID);
+    dbPool.query(`SELECT Ferohely FROM ettermek WHERE ID=${req.body.ID} `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+     // console.log(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+});
+
+  //étterem helyet foglaltak száma
+
+app.post('/etteremminus',(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+
+    dbPool.query(`SELECT SUM( helyfoglalas.Fo) AS Fo FROM helyfoglalas,ettermek WHERE CURRENT_TIMESTAMP<helyfoglalas.Kezdes AND ettermek.ID=${req.body.ID} AND helyfoglalas.Etterem_ID=${req.body.ID} `,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
 // egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
   let data = {
@@ -595,8 +664,96 @@ app.post('/selectCustom', (req, res) => {
   });
 });
 
+  //profilmódosítás
 
+app.post('/profilmod',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    let data = {
+      id: req.body.ID,
+      email:req.body.Email,
+      nev:req.body.Nev,
+      passwd:req.body.Passwd,
+      telefon:req.body.Telefon,
+    }
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+    
+  }
+  else
+  {
+    res.json({message:"Nem módosíthatod ezeket"});
+  }
+});
 
+  //profilkiválasztás
+
+app.post('/profilselect',(req,res)=>{
+  if(session.Rights=="user")
+  {
+  dbPool.query(`SELECT * FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
+  }
+  else
+  {
+    res.json({message:"Nem kérheted ezeket le"});
+  }
+})
+
+  //profil törlése
+  
+app.post('/profildelete',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem törölhetsz ezeket le"});
+  }
+})
+  //nyitvatartás select
+
+  app.post('/open',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      dbPool.query(`SELECT * FROM nyitvatartas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      })
+    } else
+    {
+      res.json({message:"Nem érheted ezeket le"});
+    }
+  })
+  
+    //nyitvatartás update
+  
+  app.post('/openupdate',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      let data={
+        id:req.body.ID,
+        nyitas:req.body.Nyitas,
+        zaras:req.body.Zaras
+      }
+    dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
+      res.json({message:"ok"});
+    })
+    }
+    else
+    {
+      res.json({message:"Nem érheted ezeket el"});
+    }
+  })
+  
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });

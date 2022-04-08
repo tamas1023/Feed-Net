@@ -528,6 +528,40 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //értékelések select
+
+
+        ratingselect:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/ratingselect').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // értékelés delete
+
+        ratingdelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/ratingdelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         // étterem id meghatározása email cím alapján
         etteremid:function(email) {
             let data = {
@@ -547,9 +581,10 @@ app.factory('dbfactory', function($http, $q) {
 
         // étterem helyfoglalás select
 
-        etteremselect:function(id) {
+        etteremselect:function(id,felt) {
             let data = {
-                EtteremID:id
+                EtteremID:id,
+                Feltetel:felt
             }
             let deferred = $q.defer();
             $http.post(url + '/etteremselect',data).then(
@@ -601,6 +636,79 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //étterem maxférőhely meghatározása
+
+        etteremfo:function(id) {
+            let data = {
+                ID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremfo',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //étteremben helyetfoglaltak száma 
+
+        etteremminus:function(id) {
+            let data = {
+                ID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/etteremminus',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        // étterem nyitvatartás select 
+
+        open:function(id) {
+            let data = {
+                EtteremID:id,
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/open',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //étterem nyitvatartás update
+
+        openupdate:function(id,nyitas,zaras) {
+            let data = {
+                ID:id,
+                Nyitas:nyitas,
+                Zaras:zaras
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/openupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

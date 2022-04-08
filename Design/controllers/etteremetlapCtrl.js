@@ -5,15 +5,35 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         $scope.ujnevetel=null;
         $scope.ujar=null;
         $scope.ujleirasetel=null;
+        $rootScope.sidebar=false;
         $scope.etlap=[];
+        $scope.torolegyid=0;
         //alert($rootScope.selectedetteremID);
-        dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
-            if(res.data.length>0)
-            {
-                $scope.etlap=res.data;
-            }
-           //console.log(res.data.length);
-        });
+       if($rootScope.logJog=="etterem"){ 
+           dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
+                if(r.data.length>0)
+                {
+                    $rootScope.selectedetteremID=r.data[0].ID;
+                    dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.etlap=res.data;
+                        }
+                       //console.log(res.data.length);
+                    });
+                }   
+            });
+        }
+        else
+        {
+            dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                if(res.data.length>0)
+                {
+                    $scope.etlap=res.data;
+                }
+            //console.log(res.data.length);
+            });
+        }
         $scope.visszavaltas=function(){
             $location.path('#!/admin');
         }
@@ -35,19 +55,32 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
             
         $scope.insertEtlap=function()
         {
-            dbfactory.adminfoodinsert($rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar, $scope.ujleirasetel).then(function(res){
-                dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
-                    if(res.data.length>0)
-                    {
-                        $scope.etlap=res.data;
-                    }
-                   //console.log(res.data.length);
-                });
-            })
+            if($scope.ujnevetel==null|| $scope.ujar==null|| $scope.ujleirasetel==null)
+            {
+                alert('a kellő adatok nincsenek kitöltve ');
+            }
+            else
+            {
+                dbfactory.adminfoodinsert($rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar, $scope.ujleirasetel).then(function(res){
+                    dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.etlap=res.data;
+                        }
+                       //console.log(res.data.length);
+                    });
+                })
+                $scope.unselectRowEtlap();
+            }
+           
+        }
+        $scope.egyvalaszt=function(id)
+        {
+            $scope.torolegyid=$scope.etlap[id].ID;
         }
         $scope.deleteRecord=function()
         {
-            dbfactory.adminfooddelete($scope.ujID).then(function(res){
+            dbfactory.adminfooddelete($scope.torolegyid).then(function(res){
                 dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
                     if(res.data.length>0)
                     {
