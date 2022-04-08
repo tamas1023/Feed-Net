@@ -62,24 +62,34 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
         })
      }
      $scope.insert=function()
-     { let zaras=new Date(moment.parseZone($scope.ujzaras).format('YYYY MM DD HH:mm:ss'));
-     let zarasora=zaras.getHours();
-     let zarasperc=zaras.getMinutes();
-     let zarasvegleges=zarasora+":"+zarasperc;
-
-     let nyitas=new Date(moment.parseZone($scope.ujnyitas).format('YYYY MM DD HH:mm:ss'));
-     let nyitasora=nyitas.getHours();
-     let nyitasperc=nyitas.getMinutes();
-     let nyitasvegleges=nyitasora+":"+nyitasperc;
-        
-        dbfactory.openinsert($rootScope.selectedetteremID,$scope.ujnap,nyitasvegleges,zarasvegleges).then(function(res){
-            dbfactory.open($rootScope.selectedetteremID).then(function(res){
-                if(res.data.length>0)
-                {
-                    $scope.nyitas=res.data;
-                }
-            });
-        })
+     {
+         if($scope.ujnap==null||$scope.ujnyitas==null||$scope.ujzaras==null)
+         {
+             alert('Nincsenek az adatok megava');
+         }
+         else
+         {
+            let zaras=new Date(moment.parseZone($scope.ujzaras).format('YYYY MM DD HH:mm:ss'));
+            let zarasora=zaras.getHours();
+            let zarasperc=zaras.getMinutes();
+            let zarasvegleges=zarasora+":"+zarasperc;
+       
+            let nyitas=new Date(moment.parseZone($scope.ujnyitas).format('YYYY MM DD HH:mm:ss'));
+            let nyitasora=nyitas.getHours();
+            let nyitasperc=nyitas.getMinutes();
+            let nyitasvegleges=nyitasora+":"+nyitasperc;
+               
+               dbfactory.openinsert($rootScope.selectedetteremID,$scope.ujnap,nyitasvegleges,zarasvegleges).then(function(res){
+                $scope.unselectRow();
+                dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                       if(res.data.length>0)
+                       {
+                           $scope.nyitas=res.data;
+                       }  
+                   });
+               })
+         } 
+     
      }
      $scope.unselectRow=function()
      {
