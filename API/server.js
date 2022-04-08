@@ -24,7 +24,8 @@ dbPool.getConnection((err,connection)=>{
 app.post('/session',(req,res)=>{
   if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
   {
-    res.send(session.Rights);
+    let jsontomb=[{Rights:session.Rights,ID:session.ID}]
+    res.json(jsontomb);
   }
 })
 app.get("/email",(req,res)=>{
@@ -218,7 +219,7 @@ app.post('/admindininginsert',(req,res)=>{
   //admin étlap select
 
 app.post('/adminfoodselect',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data = {
       ID:req.body.id
@@ -237,7 +238,7 @@ app.post('/adminfoodselect',(req,res)=>{
   //admin étlap delete
 
 app.post('/adminfooddelete',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     dbPool.query(`DELETE FROM etlap WHERE ID=${req.body.id}`,(err,results)=>{
       if(err)throw err;
@@ -253,7 +254,7 @@ app.post('/adminfooddelete',(req,res)=>{
   //admin étlap felvétel
 
 app.post('/adminfoodinsert',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       etteremid:req.body.EtteremID,
@@ -275,7 +276,7 @@ app.post('/adminfoodinsert',(req,res)=>{
   //admin étlap módosítás
 
 app.post('/adminfoodupdate',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data={
       id:req.body.ID,
@@ -502,6 +503,120 @@ app.post("/etteremupdate",(req,res)=>{
     res.json({message:"Nem kérheted ezeket le"});
   }
 })
+//Kedvencekhez adás
+app.post('/FavoriteAdd', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.EtteremID},${data.FelhasznaloID}) `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+//Kedvencek törlés
+app.post('/FavoriteDelete', (req, res) => {
+  let data = {
+    tablename: req.body.Tablename,
+    EtteremID:req.body.Etterem_ID,
+    FelhasznaloID:req.body.Felhasznalo_ID,
+  }
+  dbPool.query(`DELETE FROM ${data.tablename} WHERE Etterem_ID= ${data.EtteremID} AND Felhasznalo_ID= ${data.FelhasznaloID} `, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+  });
+});
+
+//Milyen nap van ma
+app.post('/getDate',(req,res)=>{
+  
+  dbPool.query('SELECT Dayofweek(CURRENT_TIMESTAMP) as Nap',(err,results)=>{
+    if (err)throw err;
+    res.send(results);
+     
+  });
+  
+});
+//foglalás insert
+app.post('/reservationInsert',(req,res)=>{
+    
+  let data = {
+    Etterem_ID:req.body.Etterem_ID,
+    Felhasznalo_ID:req.body.Felhasznalo_ID,
+    Datum:req.body.Datum,
+    Fo:req.body.Fo
+}
+  dbPool.query(`INSERT INTO helyfoglalas VALUES(NULL,${data.Felhasznalo_ID},${data.Etterem_ID},'${data.Datum}',${data.Fo})`,(err,results)=>{
+    if(err) /*throw*/ console.log(err);
+    res.json({message:"Felvéve!"});
+  })
+
+
+})
+
+//ertekeles insert
+
+  app.post('/ratingInsert',(req,res)=>{
+    
+      let data = {
+        Etterem_ID:req.body.Etterem_ID,
+        Felhasznalo_ID:req.body.Felhasznalo_ID,
+        Pontszam:req.body.Pontszam,
+        Ertekeles:req.body.Ertekeles
+    }
+      dbPool.query(`INSERT INTO ertekeles VALUES(NULL,${data.Etterem_ID},'${data.Felhasznalo_ID}',${data.Pontszam},'${data.Ertekeles}',CURRENT_TIME)`,(err,results)=>{
+        if(err)throw console.log(err);
+        res.json({message:"Felvéve!"});
+      })
+    
+    
+  })
+
+  //ertekeles torles
+app.post('/ratingDelete',(req,res)=>{
+  
+    dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+})
+//értékelés módosítás
+app.post('/updateRating',(req,res)=>{
+  
+    let data = {
+      tablename:req.body.Tablename,
+      mitmire:req.body.Mitmire,
+      hol: req.body.Hol,
+      
+    }
+    
+    dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire}, Datum=CURRENT_TIMESTAMP WHERE ${data.hol}`,(err,results)=>{
+      if(err) console.log(err);
+      res.json({message:"ok"});
+      
+    });
+  
+})
+//probléma jelentés
+app.post('/insertProblem',(req,res)=>{
+  
+  let data = {
+    tablename:req.body.Tablename,
+    felhasznaloid:req.body.Felhasznalo_ID,
+    etteremid:req.body.Etterem_ID,
+    tipus:req.body.Tipus,
+    leiras:req.body.Leiras, 
+  }
+  
+  dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,${data.felhasznaloid},${data.etteremid},'${data.tipus}','${data.leiras}')`,(err,results)=>{
+    if(err) console.log(err);
+    res.json({message:"ok"});
+    
+  });
+
+})
+
 
   //étterem férőhelyének lekérése
 
@@ -538,12 +653,13 @@ app.post('/etteremminus',(req,res)=>{
   }
 })
 
+// egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
   let data = {
     tablename: req.body.Tablename,
     select:req.body.Select
   }
-  dbPool.query(`SELECT * FROM ${data.tablename} WHERE  ${data.select}`, (err, results) => {
+  dbPool.query(`SELECT * FROM ${data.tablename} WHERE ${data.select}`, (err, results) => {
       if (err) throw err;
       res.json(results);
   });
@@ -611,7 +727,84 @@ app.post('/profildelete',(req,res)=>{
     res.json({message:"Nem törölheted ezeket le"});
   }
 })
+  //nyitvatartás select
 
+  app.post('/open',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      dbPool.query(`SELECT * FROM nyitvatartas WHERE Etterem_ID=${req.body.EtteremID}`,(err,results)=>{
+        if(err)throw err;
+        res.json(results);
+      })
+    } else
+    {
+      res.json({message:"Nem érheted ezeket le"});
+    }
+  })
+  
+    //nyitvatartás update
+  
+  app.post('/openupdate',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="etterem")
+    {
+      let data={
+        id:req.body.ID,
+        nyitas:req.body.Nyitas,
+        zaras:req.body.Zaras
+      }
+    dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+    }
+    else
+    {
+      res.json({message:"Nem érheted ezeket el"});
+    }
+  })
+
+  //nyitvatartás insert
+
+app.post('/openinsert',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="etterem")
+  {
+    let data={
+      EtteremID:req.body.ID,
+      nap:req.body.Nap,
+      nyitas:req.body.Nyitas,
+      zaras:req.body.Zaras
+    }
+    
+  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}','${data.nyitas}','${data.zaras}')`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"ok"});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem érheted ezeket el"});
+  }
+}) 
+
+    //étterem nyitvatartás delete
+    
+app.post('/opendelete',(req,res)=>{
+  if(session.Rights=="admin"||session.Rights=="etterem")
+  {
+    let data={
+      id:req.body.ID
+    }
+        
+  dbPool.query(`DELETE FROM nyitvatartas WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:"ok"});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem Törölheted ezt le"});
+  }
+})
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });

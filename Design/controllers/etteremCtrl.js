@@ -7,6 +7,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.sidebar=false;
     $scope.etteremad=1;
     $scope.ModID=0;
+    $scope.email="";
     dbfactory.admindingingselect().then(function(res){
         if(res.data.length>0)
         {
@@ -18,6 +19,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
        $scope.ModID=$scope.ettermek[$id].ID;
         $scope.ujnev=$scope.ettermek[$id].Nev;
         $scope.ujemail=$scope.ettermek[$id].Email;
+        $scope.email=$scope.ettermek[$id].Email;
         $scope.ujtelefon=$scope.ettermek[$id].Telefon;
         $scope.ujcim=$scope.ettermek[$id].Cim;
         $scope.ujleiras=$scope.ettermek[$id].Leiras;
@@ -33,19 +35,59 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $rootScope.felvesz=0;
     }
     $scope.update=function()
-    {
-        //alert($scope.ujparkolo);
-        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
-            
-            dbfactory.admindingingselect().then(function(res){
+    {   
+        if($scope.ujemail!=$scope.ujemail)
+        {
+            dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
                 {
-                    $scope.ettermek=res.data;
+                    alert('Ez az email cím már foglalat');
                 }
-               //console.log(res.data.length);
-            });
-            $scope.unselectRow();
-        })
+                else
+                {
+                    if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null)
+                    {
+                        alert('a kellő adatok nincsenek kitöltve ')
+                    }
+                    else
+                    {
+                        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                    
+                            dbfactory.admindingingselect().then(function(res){
+                                if(res.data.length>0)
+                                {
+                                    $scope.ettermek=res.data;
+                                }
+                            //console.log(res.data.length);
+                            });
+                            $scope.unselectRow();
+                        })
+                    }
+                }
+            })
+        }
+        else
+        { 
+            if($scope.ujnev==""|| $scope.ujemail==null||$scope.ujtelefon==""||$scope.ujcim==""||$scope.ujleiras=="")
+            {
+                alert('a kellő adatok nincsenek kitöltve ')
+            }
+            else
+            {
+                dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+            
+                    dbfactory.admindingingselect().then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.ettermek=res.data;
+                        }
+                    //console.log(res.data.length);
+                    });
+                    $scope.unselectRow();
+                })
+            }
+        }
+       
     }
     $scope.unselectRow=function()
     {
@@ -75,6 +117,11 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujleirasetel=null;
         $rootScope.selectedetteremID=$id;
        $location.url('/admin/etlap/'+$rootScope.selectedetteremID);
+    }
+    $scope.etteremnyitva=function(id)
+    {
+        $rootScope.selectedetteremID=id;
+        $location.url('/admin/etteremnyitva/'+$rootScope.selectedetteremID);
     }
     $scope.visszavaltasetterem=function()
     {

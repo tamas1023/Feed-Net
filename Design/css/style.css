@@ -1,14 +1,22 @@
 :root{
 
     --szin:rgb(209, 200, 200);
-    --ellenkezoszin:black;
+    --ellenkezoszin:#3f3e3e;
     --feher: white;
 
     --highlight:#3f3e3e;
     --lesshighlight:#6b6864; /*Szűrés*/
+    
+
+    --star-rating-size: 25px;
+    --unchecked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='%23fff' stroke='%23666' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    --checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    --hovered-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='red' stroke='%23fff' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    --max-stars: 5;
+   
     --footer:#A0AFBA;
     --menu:#A0AFBA;
-    --menuhover:#c06600;
+    --menuhover:#95a5af;
 
 }
 body {
@@ -16,8 +24,53 @@ body {
     background-color: var(--highlight);
     
 }
-
+.openings{
+    display: none;
+    transition: 0.5s ;
+}
+#alert{
+    
+    text-align: center;
+    border: 3px solid red;
+}
+.check {
+    color: red;
+}
+.notShow{
+    display: none;
+}
+.show{
+    display: block;
+}
+#szerkesztes{
+    float: right;
+}
+#szerkesztes a{
+    float: left;
+    padding-left: 10px;
+}
+.modalproblem{
+    color: black;
+    padding: 10px;
+    
+    border: 1px solid black;
+    text-align: center;
+}
+.modalproblems a:hover{
+    color: var(--ellenkezoszin);
+}
+.modalproblems{
+    display: flex;
+    justify-content: space-between;
+}
+.problema {
+    color: red;
+}
+.modal-body h4{
+    margin-top: 10px;
+}
 /*Star rating system*/
+/*
 .rating-css {
     height: 50px;
     width: 200px;
@@ -46,6 +99,178 @@ body {
     transform: scale(0.8);
     transition: 0.3s ease;
 }
+*/
+.rating {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    padding-left: 30px;
+  }
+  
+  .rating-0 {
+    filter: grayscale(100%);
+  }
+  
+  .rating > input {
+    display: none;
+  }
+  
+  .rating > label {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    margin-top: auto;
+    background-image:var(--unchecked-image) ;
+    background-repeat: no-repeat;
+    background-size: 76%;
+    transition: .3s;
+  }
+  
+  .rating > input:checked ~ label,
+  .rating > input:checked ~ label ~ label {
+    background-image: var(--checked-image);
+  }
+  
+  
+  .rating > input:not(:checked) ~ label:hover,
+  .rating > input:not(:checked) ~ label:hover ~ label {
+    background-image: var(--hovered-image);
+  }
+  
+
+
+/*
+  .rating-2 {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+  
+  .rating-0 {
+    filter: grayscale(100%);
+  }
+  
+  .rating-2 > input {
+    display: none;
+  }
+  
+  .rating-2 > label {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    margin-top: auto;
+    background-image:var(--unchecked-image) ;
+    background-repeat: no-repeat;
+    background-size: 76%;
+    transition: .3s;
+  }
+  
+  .rating-2 > input:checked ~ label,
+  .rating-2 > input:checked ~ label ~ label {
+    background-image: var(--checked-image);
+  }
+  
+  
+  .rating-2 > input:not(:checked) ~ label:hover,
+  .rating-2 > input:not(:checked) ~ label:hover ~ label {
+    background-image: var(--hovered-image);
+  }
+    */
+
+  
+
+.star-rating{
+    width: min-content;
+    padding-bottom: 10px;
+    border: 0;
+}
+
+.star-rating>div {
+    position: relative;
+    height: var(--star-rating-size);
+    width: calc(var(--star-rating-size) * var(--max-stars));
+    background-image: var(--unchecked-image); 
+    background-size: var(--star-rating-size) var(--star-rating-size);
+}
+
+.star-rating label {
+    position: absolute;
+    height: 100%;
+    background-size: var(--star-rating-size) var(--star-rating-size);
+}
+
+.star-rating label:nth-of-type(1) {
+    z-index: 10;
+    width: calc(100% / var(--max-stars) * 1);
+}
+
+.star-rating label:nth-of-type(2) {
+    z-index: 9;
+    width: calc(100% / var(--max-stars) * 2);
+}
+
+.star-rating label:nth-of-type(3) {
+    z-index: 8;
+    width: calc(100% / var(--max-stars) * 3);
+}
+
+.star-rating label:nth-of-type(4) {
+    z-index: 7;
+    width: calc(100% / var(--max-stars) * 4);
+}
+
+.star-rating label:nth-of-type(5) {
+    z-index: 6;
+    width: calc(100% / var(--max-stars) * 5);
+}
+.star-rating input:checked + label,
+.star-rating input:focus + label{
+    background-image: var(--checked-image); 
+}
+.star-rating input:checked + label:hover,
+.star-rating label:hover{
+    background-image: var(--hovered-image); 
+}
+
+
+.star-rating input,
+.star-rating label>span{
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px; 
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+    clip: rect(1px, 1px, 1px, 1px); /*maybe deprecated but we need to support legacy browsers */
+    clip-path: inset(50%); /*modern browsers, clip-path works inwards from each corner*/
+    white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+}
+
+.star-rating>div:focus-within{
+    /*Ha ki akarjuk emelni
+    outline: 0.25rem solid lightblue;
+    */
+    
+    
+}
+
+.star-value{
+  font-size: 5rem;
+  margin: 0.2rem;
+}
+
+
+
+
+
+
+
+
+
 
 
 .accordion-button {
@@ -64,6 +289,20 @@ img{
  width: 100%;
  background-color: var(--menu);
  z-index: 100;
+}
+#menu a{
+    text-decoration: none;
+    
+}
+#menu a:hover{
+    color: var(--feher);
+}
+a{
+    text-decoration: none;
+    color: var(--feher);
+}
+a:hover{
+    color: var(--feher);
 }
 #egesz{
     background-color: var(--highlight);
@@ -144,21 +383,39 @@ img{
     width: 100%;
     
 }
-#ertekeles,#kep,#etterem{
+#kep,#etterem{
     display: flex;
     justify-content: center;
     align-items: center;
-    /*height: 150px;
-    background-color: white;
-    border: 1px solid black;*/
     border-top: 1px solid black;
     padding: 10px;
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
+#ertekeles{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+#etterem a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#etterem a h2{
+    color: var(--szin);
+}
 #ertekeles textarea{
     width: 100%;
     height: 100px;
+}
+#ertekelesgomb{
+    display: flex;
+    justify-content: flex-end;
 }
 #etterem h2{
     margin-left: 10px;
@@ -183,7 +440,7 @@ img{
 }
 .szurokwrap{
     padding-bottom: 10px;
-    padding-left: 60px;
+    padding-left: 30px;
 }
 #megse{
     background-color: var(--highlight);
@@ -212,6 +469,7 @@ img{
     display: block;
     transition: 0.3s;
 }
+
   
 #mySidebar a:hover {
     color: #f1f1f1;
@@ -229,7 +487,7 @@ img{
     font-size: 20px;
     cursor: pointer;
     background-color: #111;
-    color: white;
+    color: var(--feher);
     padding: 10px 15px;
     border: none;
 }
@@ -255,13 +513,19 @@ img{
     transition: 0.5s;
     
 }
+#footer a{
+    
+    
+}
 a{
     text-decoration: none;
-    color: var(--highlight);
+    color: var(--ellenkezoszin);
 }
 a:hover{
     color: var(--feher);
+    
 }
+
 #kivalasztottegesz{
     width: 100%;
     /*padding: 10px;*/
@@ -274,12 +538,15 @@ a:hover{
 }
 
 .gombok{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
 }
 .gombok button{
-    float: right;
+    /*float: right;*/
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 #cimresz{
     width: 100%;
@@ -287,12 +554,12 @@ a:hover{
 }
 #kivalasztott{
     display: flex;
-    justify-content: center;
     align-items: flex-start;
     margin-bottom: 10px;
     flex-wrap: wrap;
     flex-direction: column;
     align-content: flex-start;
+    word-break: break-word;
 }
 #infok{
     /*display: flex;
@@ -472,6 +739,12 @@ letter-spacing: 3px;
     padding-left: 2px;
     padding-right:2px ;
 }
+@media (max-width: 444px) {
+
+    #ertekelesgomb{
+        display: block;
+    }
+}
 }
 
   @media (max-width: 420px) {
@@ -498,6 +771,43 @@ letter-spacing: 3px;
 {
     margin-top: 5px;margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+    .gombok{
+        display: block;
+    }
+}
+
+.Etlap{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.Etlap h1{
+    padding: 0;
+    margin: 0;
+    
+}
+.Etlap ul{
+    padding:0;
+    list-style: none;
+}
+
+.Etlap_Nev{
+    float: left;
+    width: 85%;
+    margin-top: 15px;
+}
+.Etlap_Ar{
+    float: right;
+    margin-top: 15px;
+}
+.Etlap_Leiras{
+    float: left;
+    width: 85%;
+    line-height: 130%;
+    font-size: 13px;
+}
 .lejart>td
 {
     background-color: rgb(189, 96, 96);
@@ -522,10 +832,10 @@ a.visszavaltascolor
     background-color: var(--menu);
 }
 .dropdown-menu>li>a{
-    color: white;
+    color: var(--ellenkezoszin);
 }
 .dropdown-menu>li>a:hover
-{   color: white;
+{   color: var(--feher);
     background-color: var(--menuhover);
 }
 .accordion-button:not(.collapsed), .collapsed
@@ -606,4 +916,8 @@ div.loginfloating
 {
     border-radius: 5px;
     border:0px;
+}
+.btnszin
+{
+    background-color: var(--menu);
 }

@@ -1,4 +1,4 @@
-app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
+app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$location){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
     $rootScope.feltetel="";
@@ -10,7 +10,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
         if (res.data.length > 0) { 
             $rootScope.nincsetterem="";
             $rootScope.ettermek=res.data;
-            console.log($rootScope.ettermek);
+            
         } 
         
     });
@@ -86,8 +86,11 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route){
 
     $scope.Csillag=function (id) {
         $rootScope.ertekeles=" Ertekeles >="+id+" ";
+        
     }
-    
+    $scope.Valasztas=function ($id) { 
+        $location.url('/kivalasztott/'+$id);
+    }
 
 });
 

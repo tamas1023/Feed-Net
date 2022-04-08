@@ -1,100 +1,76 @@
-<!DOCTYPE html>
-
-<html lang="hu" ng-app="elsoApp">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="css/style.css">
-
-    <script src="js/angular.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/angular-animate.min.js"></script>
-    
-    <script src="js/app.js"></script>
-
-    <title class="ng-binding">{{title}}</title>
-
-</head>
-<body>
-  <div id="menu">
-    <nav class="navbar navbar-expand-md navbar-dark" >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Feed-Net</a>
-        <button class="navbar-toggler " onclick="TopNav()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav me-auto mb-lg-0" id="navitems">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="index.html">Főoldal</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="kedvencettermek.html">Kedvencek</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="gyik.html">GYIK</a>
-            </li>
-            
-            <li class="nav-item">
-              <a class="nav-link login" href="login.html"><i class="bx bx-log-in"> </i> Bejelentkezés</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link reg" href="reg.html">Regisztráció</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
- 
-
-  
-    <div class="jobboldal">
+  <div ng-controller="kivalasztottCtrl" >
+    <div class="jobboldal" ng-repeat="ett in etterem">
       <div id="kivalasztottegesz" class=" m-0 ">
         <div class="row">
-          <div class="col-7 ">
-            <h1>Kiválaszott étterem</h1>
+          <div class="col-12 col-sm-12 col-md-7">
+            <h1>{{ett.Nev}}</h1>
           </div>
-          <div class="col-5 gombok ">
-            <button class="btn btn-primary">Kedvencekhez </button>
-              <button class="btn btn-primary">Foglalás</button>
+          <div class="col-12 col-sm-12 col-md-5 gombok ">
+            <button class="btn btn-primary" ng-click="Kedvencek()">{{kedvencfelirat}} </button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Reservation">Foglalás</button>
           </div>
         </div>
-         
+        <div class="modal fade" id="Reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Foglalás</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4> Összes férőhely: {{osszferohely}} fő</h4>
+                <p>A rendelését 12 órával előre tudjuk legkorábban felvenni.</p>
+                <div class="form-floating mb-3 ">
+                  <input type="number" max="100" min="1" class="form-control" id="floatingInput" ng-model="foglalas.fo" value="1">
+                  <label for="floatingInput">Fő</label>
+                </div>
+               <div class="form-floating mb-3 ">
+                  <input type="datetime-local" class="form-control" ng-model="foglalas.datum" id="floatingInput" placeholder="" >
+                  <label for="floatingInput">Dátum</label>
+                </div>
+              </div>  
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Foglalas()" >Foglalás</button>
+              </div>
+            </div>
+          </div>
+        </div>
         
-        
-        
-        <!--<div id="kivalasztott" class="col-12 col-md-12">
-          <h2>Képek sliderrel megjelenítve</h2>
-        </div>-->
-        
-          <div id="carouselExampleIndicators" style="top: 50px;" class="carousel slide" data-bs-ride="carousel">
+          <div id="carouselExampleIndicators"  class="carousel slide" data-bs-ride="carousel">
+            <!-- 
+              Ide is kell egy ng repeat hogy tudjunk az összes között mozogni
+
+              csak 1 legyen aktív az első  pl: ng-if ha az index e 0 vagy 1 ?? a legelső csak
+              akkor  legyen aktiv--> 
             <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" ng-repeat="kep in kepek" ng-if="$index==0" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$index}}" class="active" aria-current="true" aria-label="Slide {{$index}}"></button>
+              <button type="button" ng-repeat="kep in kepek" ng-if="$index>0" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$index}}" aria-label="Slide {{$index}}" ></button>
+              
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/kedvencetterem.jpg" class=" " alt="...">
+              <!-- csak 1 legyen aktív az első  pl: ng-if ha az index e 0 vagy 1 ?? a legelső csak
+              akkor  legyen aktiv--> 
+              <div class="carousel-item active" ng-repeat="kep in kepek" ng-if="$index==0" >
+                <img src="{{kep.Kepek}}" class=" " alt="...">
               </div>
+              <div class="carousel-item" ng-repeat="kep in kepek" ng-if="$index>0">
+                <img src="{{kep.Kepek}}" class=" " alt="...">
+              </div>
+              <!--  
               <div class="carousel-item">
                 <img src="img/rozsaetterem.jpg" class=" " alt="...">
               </div>
               <div class="carousel-item">
                 <img src="img/kedvencetterem.jpg" class=" " alt="...">
               </div>
+              -->
             </div>
-            <button class="carousel-control-prev" style="top:70px;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" style="top:70px;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
@@ -105,11 +81,30 @@
           <div id="" class="col-12 col-md-8">
             <div id="informaciok">
               <div class="row">
+                <h4>Információk</h4>
                 <div class="col-md-4 col-sm-12">
                   Nyitvatartás:
                 </div>
-                <div class="col-md-8 col-sm-12">
-                  Ma: 12:00 - 21:00 Nyitva Mutass többet
+                <div class=" col-md-8 col-sm-12" >
+                   <div ng-if="nyitvavane==true">
+                    Ma: {{aktualisnap.Nyitas}} - {{aktualisnap.Zaras}}
+                    <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                   </div>
+                   <div ng-if="nyitvavane==false">
+                    Ma: {{aktualisnap.Nyitas}}
+                    <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
+                   </div>
+                  
+                  
+                  <div class="row openings" ng-repeat="nyitasok in nyitvatartas">
+                    <div class="col ">
+                      {{nyitasok.Nap}}:
+                    </div>
+                    <div class="col" >
+                      {{nyitasok.Nyitas}} - {{nyitasok.Zaras}}  
+                    </div>
+                      
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -117,15 +112,15 @@
                   Konyha Típus:
                 </div>
                 <div class="col-md-8 col-sm-12">
-                  Magyar
+                  {{ett.Tipus}}
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-sm-12">
                   Felszereltség:
                 </div>
-                <div class="col-md-8 col-sm-12">
-                  Parkoló
+                <div class="col-md-8 col-sm-12 ng-binding">
+                  {{felszerelt}}
                 </div>
               </div>
               
@@ -135,42 +130,199 @@
             
           </div>
           <div id="kivalasztott" class="col-12 col-md-4">
-            <p>6500 Baja, I. ker. Tanya 7.</p>
-            <p>+36 70 777 777</p>
-            <p>tanyacsardabaja@freemail.hu</p>
+            <h4>Kapcsolat</h4>
+            <p>{{ett.Cim}}</p>
+            <p>{{ett.Telefon}}</p>
+            <p>{{ett.Email}}</p>
             <p>http://dunapartitanyacsarda.hu/</p>
-            <p>fb.com/tanyacsarda/</p>
-            <a href="">probléma jelentés</a>
+            
+            <a href=""  data-bs-toggle="modal" data-bs-target="#exampleModal">probléma jelentés</a>
+            <!-- Button trigger modal -->
+          
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Probléma jelentése</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <h4 id="alert" ng-if="hiba2==true">Válaszd ki mit szeretnél jelenteni</h4>
+                 <div class="modalproblems">
+                  <a href=""  ng-class="{problema:Problemae('megszunt')}" class="modalproblem" ng-click="Problema('megszunt')">Megszűnt</a>
+                  <a href=""  ng-class="{problema:Problemae('dulikacio')}" class="modalproblem"  ng-click="Problema('dulikacio')">Duplikáció</a>
+                  <a href=""  ng-class="{problema:Problemae('rosszadatok')}" class="modalproblem"  ng-click="Problema('rosszadatok')">Rossz adatok</a>
+                  <a href=""  ng-class="{problema:Problemae('egyeb')}" class="modalproblem"  ng-click="Problema('egyeb')">Egyéb</a>
+                 </div>
+                  <h4>Megjegyzés:</h4>
+                  <textarea name="uzenet" id="" style="width: 100%;" ng-model="uzenet.message3" placeholder=""></textarea>
+                  
+                </div>  
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  ng-click="ProblemaJelentes()">Jelentem</button>
+                </div>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
-        
+        <div class="Etlap " ng-if="etlapvane==true">
+          <hr>
+          <h1>Étlap</h1>
+          <div  class="col col-lg-12">
+            <ul >
+              <li ng-repeat="etlapelem in etlap">
+                <span class="Etlap_Nev">{{etlapelem.Nev}}</span>
+                <span class="Etlap_Ar">{{etlapelem.Ar}} Ft</span>
+                <span class="Etlap_Leiras">{{etlapelem.Leiras}}</span>
+                
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+        <h4 id="alert" ng-if="hiba==true">Csillagok megadása kötelező!</h4>
+        <hr>
         <h2>Értékeld az éttermet!</h2>
         <div id="ertekeles" class="row">
-          
-          <div class="col col-12">
-            <textarea name="" id="" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
+         
+          <div class="col col-12 col-sm-12">
+            
+            <textarea name="uzenet" id="" ng-model="uzenet.message" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
           </div>
-          <div class="col col-8">
-            <h2><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i></h2>
+          <div class="col  col-sm-8 col-lg-12">
+            <fieldset class="star-rating">
+              <div>
+                <input type="radio" name="rating" value="1" id="rating1" />
+                <label for="rating1" ng-click="Csillag(1)"><span>1</span></label>
+                <input type="radio" name="rating" value="2" id="rating2" />
+                <label for="rating2" ng-click="Csillag(2)"><span>2</span></label>
+                <input type="radio" name="rating" value="3" id="rating3" />
+                <label for="rating3" ng-click="Csillag(3)"><span>3</span></label>
+                <input type="radio" name="rating" value="4" id="rating4" />
+                <label for="rating4" ng-click="Csillag(4)"><span>4</span></label>
+                <input type="radio" name="rating" value="5" id="rating5" />
+                <label for="rating5" ng-click="Csillag(5)"><span>5</span></label>
+              </div>
+            </fieldset>
           </div>
-          <div class="col col-4">
-            <button class="btn btn-success float-end">Értékelem</button>
+          <div class="col col-sm-4 col-lg-12" id="ertekelesgomb">
+            <button class="btn btn-success"  ng-click="ertekel()">Értékelem</button>
           </div>
           
           
         </div>
-        
+        <div class="ertekelesek " ng-repeat="ertekeles in ertekelesek">
+          <div class="row">
+            <hr>
+            <div class="col-sm-12 col-md-3">
+              <div class="row">
+                <div class="col">
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(1,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(2,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(3,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(4,ertekeles.Pontszam)}"></i>
+                  <i class='bx bxs-star' ng-class="{check: checkValue1(5,ertekeles.Pontszam)}"></i>
+                </div>
+              </div>
+              <p>{{ertekeles.Nev}}</p>
+              <p>{{ertekeles.Datum}}</p>
+              
+            </div>
+            <div class="col-sm-12 col-md-9">
+              
+              <h3>{{ertekeles.Ertekeles}}</h3>
+              
+              <div id="szerkesztes">
+                <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Torles" ng-click="TorolID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Törlés</a>
+                <a href="" class="notShow" data-bs-toggle="modal" data-bs-target="#Modositas" ng-click="ModositID(ertekeles.Ertekeles_ID,ertekeles.Felhasznalo_ID,ertekeles.Pontszam,ertekeles.Ertekeles)" ng-class="{show:checkID(ertekeles.Felhasznalo_ID) }">Módosítás</a>
+                
+              </div>
+             
+              
+            </div>
+          </div>
+         
+          
+          
+        </div>
+        <div class="modal fade" id="Torles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                <h1>Biztos törölni akarja az értékelést? </h1>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Torles()">Törlés</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="Modositas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1>Értékelés szerkesztése</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="col col-12 col-sm-12">
+                  <textarea name="uzenet" id="" style="width: 100%;" ng-model="uzenet.message2" placeholder="Tipp: Egy jó értékelés kitér az ételek, italok és a szolgáltatás minőségére."></textarea>
+                </div>
+                <div class="col  col-sm-8 col-lg-12">
+
+                  <!--  
+                  <div class="rating-2">
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-5-1">
+                    <label for="rating-5-1" ng-checked="teszt"  ng-click="Csillag(5)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-4-1">
+                    <label for="rating-4-1" ng-checked="teszt" ng-click="Csillag(4)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-3-1">
+                    <label for="rating-3-1" ng-checked="teszt" ng-click="Csillag(3)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-2-1">
+                    <label for="rating-2-1"ng-checked="teszt" ng-click="Csillag(2)"></label>
+                    <input type="radio" name="rating" ng-checked="teszt" id="rating-1-1">
+                    <label for="rating-1-1"ng-checked="teszt"  ng-click="Csillag(1)"></label>
+                  </div>
+                  -->
+                  <fieldset class="star-rating">
+                    <div>
+                      <input type="radio" ng-checked="Check(1)"  name="rating" value="1" id="rating1-1" />
+                      <label for="rating1-1"  ng-click="Csillag(1)"><span>1</span></label>
+                      <input type="radio" ng-checked="Check(2)"  name="rating" value="2" id="rating2-1" />
+                      <label for="rating2-1"  ng-click="Csillag(2)"><span>2</span></label>
+                      <input type="radio" ng-checked="Check(3)"  name="rating" value="3" id="rating3-1" />
+                      <label for="rating3-1"  ng-click="Csillag(3)" ><span>3</span></label>
+                      <input type="radio" ng-checked="Check(4)" name="rating" value="4" id="rating4-1" />
+                      <label for="rating4-1"  ng-click="Csillag(4)" ><span>4</span></label>
+                      <input type="radio" ng-checked="Check(5)"  name="rating" value="5" id="rating5-1" />
+                      <label for="rating5-1"  ng-click="Csillag(5)"><span>5</span></label>
+                    </div>
+                  </fieldset>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Modositas()">Módosítás</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </div>
 
     </div>
     
-  
-  <div id="footer">
-    <h1>Footer</h1>
   </div>
-
-
-  <script src="js/index.js"></script>
-</body>
-</html>
+  
+    
