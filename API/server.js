@@ -805,6 +805,29 @@ app.post('/opendelete',(req,res)=>{
     res.json({message:"Nem Törölheted ezt le"});
   }
 })
+
+  //helyfoglalás select
+  
+  app.post('/reservationSelect',(req,res)=>{
+    if(session.Rights=="admin"||session.Rights=="user")
+    {
+      let data={
+        id:req.body.ID
+      }
+          
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+    }
+    else
+    {
+      res.json({message:"Nem Kérdezheted ezt le"});
+    }
+  })
+
+    
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
