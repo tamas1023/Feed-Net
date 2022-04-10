@@ -597,6 +597,12 @@ a:hover{
     cursor: pointer;
     right: 100px;
 }
+.profilmod
+{
+    position: absolute;
+    cursor: pointer;
+    right: 120px; 
+}
 
 #gyik{
     display: flex;
@@ -653,6 +659,12 @@ padding: 2px;
         position: relative;
         cursor: pointer;
         right: 0;
+    }
+    .profilmod
+    {
+        position: relative;
+        cursor: pointer;
+        right: 0; 
     }
     .reg
     {

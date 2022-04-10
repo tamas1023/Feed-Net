@@ -51,6 +51,7 @@ app.get('/logout',(req,res)=>{
     session.Rights="";
     session.LoggedIn=false;
     session.Email="";
+    session.ID=-1;
     req.session.destroy();
 
     res.json({message:"ok"});
@@ -667,7 +668,7 @@ app.post('/selectCustom', (req, res) => {
   //profilmódosítás
 
 app.post('/profilmod',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="etterem"||session.Rights=="admin")
   {
     let data = {
       id: req.body.ID,
@@ -678,7 +679,7 @@ app.post('/profilmod',(req,res)=>{
     }
     dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
       if(err)throw err;
-      res.json(results);
+      res.json({message:"ok"});
     })
     
   }
@@ -691,7 +692,7 @@ app.post('/profilmod',(req,res)=>{
   //profilkiválasztás
 
 app.post('/profilselect',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="etterem"||session.Rights=="admin")
   {
   dbPool.query(`SELECT * FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
     if(err)throw err;
@@ -707,16 +708,23 @@ app.post('/profilselect',(req,res)=>{
   //profil törlése
   
 app.post('/profildelete',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="etterem")
   {
-    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
-      if(err)throw err;
-      res.json(results);
-    })
+    if(session.ID==req.body.ID)
+    {
+      dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nincs jogod ezeket törlni"})
+    }
   }
   else
   {
-    res.json({message:"Nem törölhetsz ezeket le"});
+    res.json({message:"Nem törölheted ezeket le"});
   }
 })
   //nyitvatartás select
