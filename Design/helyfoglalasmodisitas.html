@@ -13,17 +13,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="animate" ng-repeat="adat in helyfoglalas | filter:{Nev:search}" ng-click="selectRow($index)">
+          <tr class="animate" ng-repeat="adat in helyfoglalas | filter:{Nev:search}" ng-click="select($index,adat.ID)">
             <td>{{adat.Nev}}</td>
             <td>{{adat.Kezdes}}</td>
             <td>{{adat.Fo}}</td>
-            <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-gear"></i></td></button></td>
+            <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" data-bs-toggle="modal" data-bs-target="#mod" ><i class="bi bi-gear"></i></td></button></td>
             <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol" ><i class="bi bi-x-lg"></i></td></button></td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
+            <td colspan="6" class="text-center">Összesen: {{helyfoglalas.length}} rekord</td>
           </tr>
         </tfoot>
       </table>
@@ -41,6 +41,31 @@
             </div>           
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" ng-click="delete()" data-bs-dismiss="modal">Törlés</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="mod" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Módosítás</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3 ">
+                    <input type="number" max="100" min="1" class="form-control" id="floatingInput" ng-model="ujfo" value="1">
+                    <label for="floatingInput">Fő</label>
+                  </div>
+                 <div class="form-floating mb-3 ">
+                    <input type="datetime-local" class="form-control" ng-model="ujdatum" id="floatingInput" placeholder="" >
+                    <label for="floatingInput">Dátum</label>
+                  </div>
+            </div>           
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" ng-click="update()" data-bs-dismiss="modal">Módosítás</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
               
             </div>

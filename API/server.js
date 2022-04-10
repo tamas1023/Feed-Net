@@ -829,7 +829,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás update  
 
  app.post('/reservationUpdate',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     let data={
       id:req.body.ID,
@@ -850,7 +850,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás delete
 
 app.post("/reservationDelete",(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
