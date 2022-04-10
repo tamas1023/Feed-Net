@@ -99,7 +99,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
         $scope.felszerelt=" ";
         
-         for (let i = 0; i < $rootScope.feltetelek.length; i++) {
+        for (let i = 0; i < $rootScope.feltetelek.length; i++) {
             
             if (i==$scope.feltetelek.length-1) {
                 $scope.felszerelt+=" "+$rootScope.feltetelek[i].felt+" ";
@@ -639,7 +639,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 console.log($scope.aktualisnap.Nyitas);
                 console.log($scope.aktualisnap.Zaras);
                 */
-                    console.log($scope.aktualisnap);
+                    //console.log($scope.aktualisnap);
                     $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
                     $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
                     if ($scope.aktualisnap.Nyitas=="Invalid date") {

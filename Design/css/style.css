@@ -921,3 +921,6 @@ div.loginfloating
 {
     background-color: var(--menu);
 }
+#showmoreless{
+    color: var(--feher);
+}
