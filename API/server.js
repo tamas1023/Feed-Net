@@ -809,7 +809,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás select
   
   app.post('/reservationSelect',(req,res)=>{
-    if(session.Rights=="admin"||session.Rights=="user")
+    if(session.Rights=="user")
     {
       let data={
         id:req.body.ID
@@ -826,8 +826,27 @@ app.post('/opendelete',(req,res)=>{
     }
   })
 
-    
+  //helyfoglalás update  
 
+ app.post('/reservationUpdate',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    let data={
+      id:req.body.ID,
+      kezdes:req.body.Kezdes,
+      fo:req.body.Fo
+    }
+              //UPDATE `helyfoglalas` SET `ID`=[value-1],`Felhasznalo_ID`=[value-2],`Etterem_ID`=[value-3],`Kezdes`=[value-4],`Fo`=[value-5] WHERE 1
+  dbPool.query(`UPDATE helyfoglalas SET Kezdes='${data.kezdes}',Fo=${data.fo} WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
+  }
+  else
+  {
+    res.json({message:"Nem Kérdezheted ezt le"});
+  }
+})
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
