@@ -20,13 +20,20 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
     })
     $scope.deleteRecord=function()
     {
-        dbfactory.profildelete($rootScope.loggedInUserID).then(function(res){
-            $rootScope.loggedIn=false;
-            $rootScope.logJog="";
-            $rootScope.EtteremEmail=0;
-            $rootScope.loggedInUserID=0;
-            $location.url('/');
-        })
+        if($rootScope.logJog=='admin')
+        {
+            alert('Nem törölheted ki magad');
+        }
+        else
+        {
+            dbfactory.profildelete($rootScope.loggedInUserID).then(function(res){
+                $rootScope.loggedIn=false;
+                $rootScope.logJog="";
+                $rootScope.EtteremEmail=0;
+                $rootScope.loggedInUserID=0;
+                $location.url('/');
+            })
+        }
     }
     $scope.update=function()
     {

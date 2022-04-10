@@ -666,6 +666,12 @@ padding: 2px;
         cursor: pointer;
         right: 0; 
     }
+    .rendelesekmod
+    {
+        position: relative !important;
+        cursor: pointer !important;
+        right: 0 !important;
+    }
     .reg
     {
         position: relative;
@@ -920,4 +926,10 @@ div.loginfloating
 .btnszin
 {
     background-color: var(--menu);
+}
+.rendelesekmod
+{
+    position: absolute;
+    cursor: pointer;
+    right: 270px; 
 }

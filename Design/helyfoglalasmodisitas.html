@@ -1,0 +1,50 @@
+<div class="adminkereses" ng-controller="helyfoglalasCtrl">
+    <h2 class="text-center">Helyfoglalásai</h2>
+    <hr>
+      <div class="table-responsive">
+      <table class="table table-dark table-sm" >
+        <thead>
+          <tr>
+            <th>Név</th>
+            <th>Kezdés</th>
+            <th>Fő</th>
+            <th>Módosítás</th>
+            <th>Törlés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="animate" ng-repeat="adat in helyfoglalas | filter:{Nev:search}" ng-click="selectRow($index)">
+            <td>{{adat.Nev}}</td>
+            <td>{{adat.Kezdes}}</td>
+            <td>{{adat.Fo}}</td>
+            <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-gear"></i></td></button></td>
+            <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol" ><i class="bi bi-x-lg"></i></td></button></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
+          </tr>
+        </tfoot>
+      </table>
+      </div>
+      <div class="modal fade" id="torol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Törlés</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+              Biztosan törölni szeretnéd ezt az adatot?
+            </div>           
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" ng-click="delete()" data-bs-dismiss="modal">Törlés</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

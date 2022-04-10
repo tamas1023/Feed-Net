@@ -209,6 +209,19 @@ app.config(function($routeProvider){
         templateUrl:'etteremnyitvatartas.html',
         controller:'etteremnyitvatartasCtrl'
     })
+    .when('/reservationmod',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&($rootScope.logJog=="admin"||$rootScope.logJog=="user")))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'helyfoglalasmodisitas.html',
+        controller:'helyfoglalasCtrl'
+    })
 })
 
 
