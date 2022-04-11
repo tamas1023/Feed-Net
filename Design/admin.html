@@ -1,91 +1,110 @@
 <div id="adminegesz" ng-controller="etteremCtrl">
-<div id="adminkereses">
-    <div class="container-fluid" >
-    <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
-</div>
+  <div class="adminkereses">
+      <div class="container-fluid" >
+      <input class="" id="kereso"  type="search" placeholder="Keresés" ng-model="search" >
+  </div>
 
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item" >
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-      Új Étterem felvétele vagy meglévő szerkesztése
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" ng-model="ujnev" placeholder="Jakab Jozsef">
-            <label for="floatingInput">Név</label>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item accord_item" >
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button accord_item" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Új Étterem felvétele vagy meglévő szerkesztése
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujnev" placeholder="Jakab Jozsef">
+              <label for="floatingInput">Név</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="email" class="form-control" id="floatingInput" ng-model="ujemail" placeholder="tesz1@gmail.com">
+              <label for="floatingInput">Email Cím</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput "ng-model="ujtelefon" placeholder="+">
+              <label for="floatingInput">Telefon</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujcim" placeholder="+">
+              <label for="floatingInput">Cím</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="number" min="0" class="form-control" id="floatingInput" ng-model="ujferohely" placeholder="+">
+              <label for="floatingInput">Férőhely</label>
+            </div>
+            <div class="form-floating mb-3">
+            <textarea name="" id="" class="form-control" style="height: 170px; border-radius: 25px;" placeholder="Leírás" ng-model="ujleiras"></textarea>
+            <label for="">Leírás</label>
+            </div>
+            <div class="form-check form-switch ">
+              <label for="parkolo">Parkoló</label>
+            <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="ujparkolo==1" ><br>
           </div>
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" ng-model="ujemail" placeholder="tesz1@gmail.com">
-            <label for="floatingInput">Email Cím</label>
+          <div class="form-check form-switch ">
+            <label for="bankkartya">Bankkártya</label>
+            <input type="checkbox" class="form-check-input" name="bankkartya" ng-model="ujbankkartya" ng-checked="ujbankkartya==1" ><br>
           </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput "ng-model="ujtelefon" placeholder="+">
-            <label for="floatingInput">Telefon</label>
+           <div class="form-check form-switch ">
+            <label for="glutenmentes">Gluténmentes</label>
+            <input type="checkbox" class="form-check-input" name="glutenmentes" ng-model="ujglutenmentes" ng-checked="ujglutenmentes==1" ><br>
           </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" ng-model="ujcim" placeholder="+">
-            <label for="floatingInput">Cím</label>
+           <div class="form-check form-switch ">
+            <label for="terasz">Terasz</label>
+            <input type="checkbox" class="form-check-input" name="terasz" ng-model="ujterasz" ng-checked="ujterasz==1" ><br>
           </div>
-          <div class="form-floating mb-3">
-            <input type="number" min="0" class="form-control" id="floatingInput" ng-model="ujferohely" placeholder="+">
-            <label for="floatingInput">Férőhely</label>
+          <div class="form-check form-switch ">
+            <label for="berelheto">Bérelhető</label>
+            <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ng-checked="ujberelheto==1"><br>
           </div>
-          <label for="leiras">Leírás:</label>
-          <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="ujleiras"></textarea>
-          <label for="parkolo">Parkoló:</label>
-          <input type="checkbox" class="form-check-input" name="parkolo" ng-model="ujparkolo" ng-checked="ujparkolo==1" ><br>
-          <label for="bankkartya">Bankkártya:</label>
-          <input type="checkbox" class="form-check-input" name="bankkartya" ng-model="ujbankkartya" ng-checked="ujbankkartya==1" ><br>
-          <label for="glutenmentes">Gluténmentes:</label>
-          <input type="checkbox" class="form-check-input" name="glutenmentes" ng-model="ujglutenmentes" ng-checked="ujglutenmentes==1" ><br>
-          <label for="terasz">Terasz:</label>
-          <input type="checkbox" class="form-check-input" name="terasz" ng-model="ujterasz" ng-checked="ujterasz==1" ><br>
-          <label for="berelheto">Bérelhető:</label>
-          <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ng-checked="ujberelheto==1"><br>
-          <label for="hazhozszallitas">Házhozszállítás:</label>
-          <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas" ng-checked="ujhazhozszallitas==1"><br>
-          <label for="statusz">Státusz:</label>
-          <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="ujstatusz==1"><br>
-          <button class="btn btn-warning" ng-if="felvesz==1" ng-click="insert()">Felvesz</button>
-          <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
-          <button class="btn btn-warning"ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
-          <!--<button class=" btn btn-danger"  data-bs-toggle="modal" data-bs-target="#torol" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>-->
+          <div class="form-check form-switch ">
+            <label for="hazhozszallitas">Házhozszállítás</label>
+            <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas" ng-checked="ujhazhozszallitas==1"><br>
+          </div>
+          <div class="form-check form-switch ">
+            <label for="statusz">Státusz</label>
+            <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="ujstatusz==1"><br>
+          </div>
+            <button class="btn btn-warning" ng-if="felvesz==1" ng-click="insert()">Felvesz</button>
+            <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
+            <button class="btn btn-success"ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
+            <!--<button class=" btn btn-danger"  data-bs-toggle="modal" data-bs-target="#torol" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>-->
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
- 
+    <div class="adminkereses">
+      <br>
+        <div class="table-responsive">
+        <table class="table table-dark table-sm" >
+          <thead>
+            <tr>
+              <th>Név</th>
+              <th>Telefon</th>
+              <th>Cím</th>
+              <th>Leírás</th>
+              <th>Nyitva tartás</th>
+              <th>Étlap</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="animate" ng-repeat="adat in ettermek | filter:{Nev:search}" ng-class="{'lejart':adat.Statusz==0}" ng-click="selectRow($index)">
+              <td>{{adat.Nev}}</td>
+              <td>{{adat.Telefon}}</td>
+              <td>{{adat.Cim}}</td>
+              <td>{{adat.Leiras}}</td>
+              <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-calendar-week"></i></td></button></td>
+              <td><a ng-click="etterem(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-list"></i></td></button></a>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
+            </tr>
+          </tfoot>
+        </table>
+        </div>
+      </div>
   </div>
-  <br>
-  <table class="table table-striped table-sm" >
-    <thead>
-      <tr>
-        <th>Név</th>
-        <th>Telefon</th>
-        <th>Cím</th>
-        <th>Leírás</th>
-        <th>Étlap</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="animate" ng-repeat="adat in ettermek | filter:{nev:search}" ng-click="selectRow($index)">
-        <td>{{adat.Nev}}</td>
-        <td>{{adat.Telefon}}</td>
-        <td>{{adat.Cim}}</td>
-        <td>{{adat.Leiras}}</td>
-        <td><a ng-click="etterem(adat.ID)"> <button class=" btn btn-info" ><i class="bi bi-list"></i></td></button></a>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="6" class="text-center">Összesen: {{ettermek.length}} rekord</td>
-      </tr>
-    </tfoot>
-  </table>
-
-  
-</div>
 </div>
