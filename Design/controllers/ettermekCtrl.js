@@ -3,7 +3,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
     $rootScope.logivagyreg=false;
     $rootScope.feltetel="";
     $rootScope.ertekeles="";
-    $rootScope.alapfeltetel="1";
+    $rootScope.alapfeltetel=" Statusz=1";
     $rootScope.ettermek=[];
     $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
     dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
@@ -14,13 +14,8 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
         } 
         
     });
-    $scope.kedvencettermek=[
-        {id:1,nev:"Kedvenc Étterem ",kep:"img/kedvencetterem.jpg",ertekeles:"5 "},
-        {id:1,nev:"Kedvenc Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"5 "},
-        {id:1,nev:"Kedvenc Étterem ",kep:"img/kedvencetterem.jpg",ertekeles:"5 "},
-        {id:1,nev:"Kedvenc Étterem ",kep:"img/rozsaetterem.jpg",ertekeles:"5 "},
-        {id:1,nev:"Kedvenc Étterem ",kep:"img/kedvencetterem.jpg",ertekeles:"5 "},
-    ]
+
+    
 
     //egy gomb ami az összes szűrési feltételt reszeteli
     $scope.Szures=function () {
@@ -72,7 +67,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             }
         } 
         
-        dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel).then(function(res) {
+        dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel+" AND Statusz=1").then(function(res) {
             if (res.data.length > 0) {
                 $rootScope.nincsetterem="";
                 $rootScope.ettermek=res.data;
