@@ -1,4 +1,4 @@
-app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory){
+app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory,$location){
     $rootScope.sidebar=false;
     
     
@@ -47,7 +47,10 @@ app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory){
         }
         
     });
-
+    $scope.Valasztas=function ($id) { 
+        console.log($id);
+        $location.url('/kivalasztott/'+$id);
+    }
     
 
     /*
