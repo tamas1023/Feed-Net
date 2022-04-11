@@ -133,7 +133,7 @@ app.post('/emailcheck',(req,res)=>{
     }
     else
     {
-      res.json({message:"Nem kérheted ezeket le"});
+      res.json({message:"Nem engedélyezett"});
     }
   });
   
@@ -166,7 +166,7 @@ app.post('/admindiningupdate',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -212,7 +212,7 @@ app.post('/admindininginsert',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -231,7 +231,7 @@ app.post('/adminfoodselect',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -247,7 +247,7 @@ app.post('/adminfooddelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -269,7 +269,7 @@ app.post('/adminfoodinsert',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -292,7 +292,7 @@ app.post('/adminfoodupdate',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -310,7 +310,7 @@ app.get("/userselect",(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -335,7 +335,7 @@ app.get("/userselect",(req,res)=>{
     }
     else
     {
-      res.json({message:"Nem kérheted ezeket le"});
+      res.json({message:"Nem engedélyezett"});
     }
   })
 
@@ -360,7 +360,7 @@ app.post('/userupdate',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -376,7 +376,7 @@ app.post('/userdelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -392,7 +392,7 @@ app.post('/userdelete',(req,res)=>{
     }
     else
     {
-      res.json({message:"Nem kérheted ezeket le"});
+      res.json({message:"Nem engedélyezett"});
     }
   })
 
@@ -408,7 +408,7 @@ app.post('/errordelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -423,7 +423,7 @@ app.get('/ratingselect',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -439,7 +439,7 @@ app.post('/ratingdelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
   //étterem is meghatározása
@@ -468,7 +468,7 @@ app.post("/etteremselect",(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -484,7 +484,7 @@ app.post("/etteremdelete",(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -500,7 +500,7 @@ app.post("/etteremupdate",(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 //Kedvencekhez adás
@@ -632,7 +632,7 @@ app.post('/etteremfo',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 });
 
@@ -649,7 +649,7 @@ app.post('/etteremminus',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -685,7 +685,7 @@ app.post('/profilmod',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem módosíthatod ezeket"});
+    res.json({message:"Nem engedélyezett"});
   }
 });
 
@@ -701,7 +701,7 @@ app.post('/profilselect',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem kérheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
 
@@ -724,7 +724,7 @@ app.post('/profildelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem törölheted ezeket le"});
+    res.json({message:"Nem engedélyezett"});
   }
 })
   //nyitvatartás select
@@ -738,7 +738,7 @@ app.post('/profildelete',(req,res)=>{
       })
     } else
     {
-      res.json({message:"Nem érheted ezeket le"});
+      res.json({message:"Nem engedélyezett"});
     }
   })
   
@@ -759,7 +759,7 @@ app.post('/profildelete',(req,res)=>{
     }
     else
     {
-      res.json({message:"Nem érheted ezeket el"});
+      res.json({message:"Nem engedélyezett"});
     }
   })
 
@@ -782,7 +782,7 @@ app.post('/openinsert',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem érheted ezeket el"});
+    res.json({message:"Nem engedélyezett"});
   }
 }) 
 
@@ -802,7 +802,64 @@ app.post('/opendelete',(req,res)=>{
   }
   else
   {
-    res.json({message:"Nem Törölheted ezt le"});
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //helyfoglalás select
+  
+  app.post('/reservationSelect',(req,res)=>{
+    if(session.Rights=="user")
+    {
+      let data={
+        id:req.body.ID
+      }
+          
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+    }
+    else
+    {
+      res.json({message:"Nem engedélyezett"});
+    }
+  })
+
+  //helyfoglalás update  
+
+ app.post('/reservationUpdate',(req,res)=>{
+  if(session.Rights=="user")
+  {
+    let data={
+      id:req.body.ID,
+      kezdes:req.body.Kezdes,
+      fo:req.body.Fo
+    }
+  dbPool.query(`UPDATE helyfoglalas SET Kezdes='${data.kezdes}',Fo=${data.fo} WHERE ID=${data.id}`,(err,results)=>{
+    if(err)throw err;
+    res.json({message:'Ok'});
+  })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //helyfoglalás delete
+
+app.post("/reservationDelete",(req,res)=>{
+  if(session.Rights=="etterem")
+  {
+    dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+        res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
   }
 })
 app.listen(port, ()=>{
