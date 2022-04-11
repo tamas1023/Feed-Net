@@ -34,16 +34,6 @@ app.get("/email",(req,res)=>{
     res.send(session.Email);
   }
 })
-app.get('/',(req,res)=>{
-  if(session.Rights=="admin")
-  {
-    dbPool.query('SELECT * FROM felhasznalok',(err,results)=>{
-      if (err)throw err;
-      res.send(results);
-     // console.log(jog);
-    });
-  }
-});
 
     //Log out
 
@@ -812,10 +802,11 @@ app.post('/opendelete',(req,res)=>{
     if(session.Rights=="user"||session.Rights=="admin")
     {
       let data={
-        id:req.body.ID
+        id:req.body.ID,
+        feltetel:req.body.Feltetel
       }
           
-    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id} ${data.feltetel} ORDER BY Kezdes desc `,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })
@@ -862,6 +853,23 @@ app.post("/reservationDelete",(req,res)=>{
     res.json({message:"Nem engedélyezett"});
   }
 })
+
+  //idő lekérdezése
+
+app.get("/time",(req,res)=>{
+  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
+  {
+    dbPool.query('SELECT CURRENT_TIMESTAMP AS Ido',(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });

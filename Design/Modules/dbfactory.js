@@ -805,9 +805,10 @@ app.factory('dbfactory', function($http, $q) {
 
         //helyfoglalás select
         
-        reservationSelect:function(id) {
+        reservationSelect:function(id,feltetel) {
             let data = {
-                ID:id
+                ID:id,
+                Feltetel:feltetel
             }
             let deferred = $q.defer();
             $http.post(url + '/reservationSelect',data).then(
@@ -849,6 +850,21 @@ app.factory('dbfactory', function($http, $q) {
             }
             let deferred = $q.defer();
             $http.post(url + '/reservationDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //idő kekérdezésse
+        
+        time:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/time').then(
                 function(res) {
                     deferred.resolve(res);
                 },
