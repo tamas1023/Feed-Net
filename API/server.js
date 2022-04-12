@@ -343,7 +343,7 @@ app.post('/userupdate',(req,res)=>{
       jog:req.body.Jog,
       statusz:req.body.Statusz
   }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id};`,(err,results)=>{
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id} AND Jog NOT LIKE 'admin';`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
@@ -667,10 +667,17 @@ app.post('/profilmod',(req,res)=>{
       passwd:req.body.Passwd,
       telefon:req.body.Telefon,
     }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
-      if(err)throw err;
-      res.json({message:"ok"});
-    })
+    if(session.ID==req.body.ID)
+    {
+      dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nincs jogod ezeket Módosítani"})
+    }
     
   }
   else
@@ -806,7 +813,7 @@ app.post('/opendelete',(req,res)=>{
         feltetel:req.body.Feltetel
       }
           
-    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id} ${data.feltetel} ORDER BY Kezdes desc `,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo,helyfoglalas.Etterem_ID FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id} ${data.feltetel} ORDER BY Kezdes desc `,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })

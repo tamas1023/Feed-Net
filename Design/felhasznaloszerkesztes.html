@@ -13,20 +13,20 @@
           <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control"   ng-model="ujnev" placeholder="+">
+                <input type="text" class="form-control" ng-disabled="admin"  ng-model="ujnev" placeholder="+">
                 <label for="floatingInput">Név</label>
               </div>
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" ng-model="ujemail" placeholder="teszt@email.com">
+                  <input type="email" class="form-control" ng-disabled="admin" ng-model="ujemail" placeholder="teszt@email.com">
                   <label for="floatingInput">Email Cím</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control"   ng-model="ujtelefon" placeholder="teszt@email.com">
+                  <input type="text" class="form-control" ng-disabled="admin"   ng-model="ujtelefon" placeholder="teszt@email.com">
                   <label for="floatingInput">Telefon</label>
                 </div> 
                  
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control"  ng-model="ujpass" placeholder="t">
+                  <input type="password" class="form-control" ng-disabled="admin"  ng-model="ujpass" placeholder="t">
                   <label for="floatingInput">Jelszó</label>
                 </div>               
                 <label for="jog">Jog:</label>
@@ -40,7 +40,7 @@
                 <input type="checkbox" class="form-check-input" name="statusz" ng-model="ujstatusz" ng-checked="ujstatusz==1" ng-disabled="admin" ><br>
               </div>
                 <button class="btn btn-warning" ng-if="felvesz==1" ng-click="insert()">Felvesz</button>
-                <button class="btn btn-warning"ng-if="felvesz==0" ng-click="update()">Módosít</button>
+                <button class="btn btn-warning"ng-if="felvesz==0" ng-disabled="admin" ng-click="update()">Módosít</button>
                 <button class="btn btn-success" ng-if="felvesz==0" ng-click="unselectRow()">Vissza</button>
                 <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol" ng-disabled="admin" ng-hide="felvesz==1"><i class="bi bi-x-lg" ></i></button></td>
             </div>

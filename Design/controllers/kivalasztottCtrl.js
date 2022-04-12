@@ -145,7 +145,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
 
 
                     let most=new Date();
-                    most.setHours(most.getHours()+12);
+                    dbfactory.time().then(function(r){
+                        most=new Date(moment.parseZone(r.data[0].Ido).format('YYYY MM DD HH:mm:ss'));
+                        most.setHours(most.getHours()+12);
                     let mostev=most.getFullYear();
                     let mosthonap=most.getMonth()+1;
                     let mostnap=most.getDate();
@@ -363,7 +365,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         }
                     
                         else{
-                        console.log("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                       alert("A mostani idő és a rendelési idő között nem telt et 12 óra");
                         }
                     }
                     else{
@@ -478,6 +480,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         }
 
                     } 
+                    })
+                    
                    
                 });
             }
