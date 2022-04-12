@@ -20,6 +20,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
     //egy gomb ami az összes szűrési feltételt reszeteli
     $scope.Szures=function () {
         
+        
         $scope.feltetelek=[];
         if ($scope.kartyaszures) {
             $scope.feltetelek.push({"felt":"Bankkartya=1"});
@@ -39,6 +40,60 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
         }
         if ($scope.wifi) {
             $scope.feltetelek.push({"felt":"Wifi=1"});
+        }
+        if ($scope.nyitva) {
+            //lekérni a current time ot a backendről
+
+
+            //utána (then be) lekérnni a napot
+
+            // ide majd a lekérdezett n ap jön majd
+            let datum=new Date();
+            let hetmelyiknap=datum.getDay();
+            let melyiknapszo="";
+            //0 vasárnap ... 6 szombat
+            //console.log(hetmelyiknap);
+    
+            if (hetmelyiknap==0 ) {
+                melyiknapszo="Vasárnap";
+                        
+            }
+            if (hetmelyiknap==1 ) {
+                melyiknapszo="Hétfő";
+                        
+            }
+            if (hetmelyiknap==2 ) {
+                melyiknapszo="Kedd";
+                        
+            }
+            if (hetmelyiknap==3 ) {
+                melyiknapszo="Szerda";
+                        
+            }
+            if (hetmelyiknap==4 ) {
+                melyiknapszo="Csütörtök";
+                        
+            }
+            if (hetmelyiknap==5 ) {
+                melyiknapszo="Péntek";
+                        
+                }
+            if (hetmelyiknap==6 ) {
+                melyiknapszo="Szombat";
+                        
+            }
+
+            //lekérni minden egyes étterem nek az aznapi nyitvatartását
+            //és ha a mostani órában nyitva van akkor az étterem id jét
+            //letárolni, és azután az éttermek listát frissíteni
+            //azokkal az elemekkel ami benne van a listában
+            
+            for (let i = 0; i < $scope.nyitvatartas.length; i++) {
+                if ( $scope.nyitvatartas[i].Nap==melyiknapszo) {
+                    
+                }
+        
+            }
         }
         
         $rootScope.feltetel=" ";
