@@ -927,9 +927,9 @@ div.loginfloating
 {
     background-color: var(--menu);
 }
-.rendelesekmod
-{
-    position: absolute;
-    cursor: pointer;
-    right: 270px; 
+#showmoreless{
+    color: var(--feher);
+}
+#problem{
+    color: var(--feher);
 }
