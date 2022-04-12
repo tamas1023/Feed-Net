@@ -16,8 +16,16 @@
             </div> 
              
             <div class="form-floating mb-3">
+              <input type="password" class="form-control"  ng-model="oldpass" placeholder="t">
+              <label for="floatingInput">Régi Jelszó</label>
+            </div>
+            <div class="form-floating mb-3">
               <input type="password" class="form-control"  ng-model="ujpass" placeholder="t">
-              <label for="floatingInput">Jelszó</label>
+              <label for="floatingInput">Új Jelszó</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control"  ng-model="ujpass1" placeholder="t">
+              <label for="floatingInput">Új Jelszó újra</label>
             </div>
             <button class="btn btn-warning" ng-click="update()">Módosít</button>
             <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#torol"ng-disabled="admin" ><i class="bi bi-x-lg" ></i></button></td>
