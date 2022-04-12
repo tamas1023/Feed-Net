@@ -12,6 +12,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             $rootScope.ettermek=res.data;
             
         } 
+        console.log($rootScope.ettermek);
         
     });
 
@@ -50,13 +51,13 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             // ide majd a lekérdezett n ap jön majd
             let datum=new Date();
             $scope.datumseged=new Date();
-            dbfactory.time().then(function(res) {
-                datum=res.data[0].Ido;
-                $scope.datumseged=res.data[0].Ido;
-                datum=moment(datum).format('YYYY-MM-DD HH:mm:ss',true);
+            dbfactory.time().then(function(result) {
+                datum=result.data[0].Ido;
+                $scope.datumseged=result.data[0].Ido;
+                datum=new Date(moment(datum).format('YYYY-MM-DD HH:mm:ss',true));
                 console.log(datum); 
                 
-            });
+
             let hetmelyiknap=datum.getDay();
             console.log(datum);
             console.log(hetmelyiknap);
@@ -191,7 +192,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
                         
                     } 
                     else{
-                        $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
+                        //$rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
                     }
                     
                 });
@@ -200,24 +201,32 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             if ($scope.etteremid!=null) {
                 console.log("Belepett ide");
                 $rootScope.ettermek=[];
+                console.log($rootScope.ettermek);
                 //ha a tömb nem üres
                 $rootScope.nincsetterem="";
                 //megvannak az ID-k és most már csak a listát kell frissíteni
                 dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
                     if (res.data.length > 0) { 
                         for (let i = 0; i < $scope.etteremid.length; i++) {
-                            if ($scope.etteremid[i].ID==res.data[i].ID) {
-                                console.log(res.data[i]);
-                                $rootScope.ettermek.push(res.data[i]);
+                            for (let j = 0; j < res.data.length; j++) {
+                                if ($scope.etteremid[i].ID==res.data[j].ID) {
+                                    console.log(res.data[j]);
+                                    $rootScope.ettermek.push(res.data[j]);
+                                    break;
+                                }
+                                
                             }
+                            
                             
                         }
                         //$rootScope.ettermek=res.data;
                     
                     } 
-                    
+                    console.log($rootScope.ettermek);
                 });
             }
+            
+            });
             
 
         }
