@@ -34,16 +34,6 @@ app.get("/email",(req,res)=>{
     res.send(session.Email);
   }
 })
-app.get('/',(req,res)=>{
-  if(session.Rights=="admin")
-  {
-    dbPool.query('SELECT * FROM felhasznalok',(err,results)=>{
-      if (err)throw err;
-      res.send(results);
-     // console.log(jog);
-    });
-  }
-});
 
     //Log out
 
@@ -353,7 +343,7 @@ app.post('/userupdate',(req,res)=>{
       jog:req.body.Jog,
       statusz:req.body.Statusz
   }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id};`,(err,results)=>{
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id} AND Jog NOT LIKE 'admin';`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
@@ -369,7 +359,7 @@ app.post('/userupdate',(req,res)=>{
 app.post('/userdelete',(req,res)=>{
   if(session.Rights=="admin")
   {
-    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID} AND Jog NOT LIKE 'admin'`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
@@ -677,10 +667,17 @@ app.post('/profilmod',(req,res)=>{
       passwd:req.body.Passwd,
       telefon:req.body.Telefon,
     }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
-      if(err)throw err;
-      res.json({message:"ok"});
-    })
+    if(session.ID==req.body.ID)
+    {
+      dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nincs jogod ezeket Módosítani"})
+    }
     
   }
   else
@@ -809,13 +806,14 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás select
   
   app.post('/reservationSelect',(req,res)=>{
-    if(session.Rights=="user")
+    if(session.Rights=="user"||session.Rights=="admin")
     {
       let data={
-        id:req.body.ID
+        id:req.body.ID,
+        feltetel:req.body.Feltetel
       }
           
-    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo,helyfoglalas.Etterem_ID FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id} ${data.feltetel} ORDER BY Kezdes desc `,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })
@@ -829,7 +827,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás update  
 
  app.post('/reservationUpdate',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     let data={
       id:req.body.ID,
@@ -850,7 +848,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás delete
 
 app.post("/reservationDelete",(req,res)=>{
-  if(session.Rights=="etterem")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
@@ -862,6 +860,23 @@ app.post("/reservationDelete",(req,res)=>{
     res.json({message:"Nem engedélyezett"});
   }
 })
+
+  //idő lekérdezése
+
+app.get("/time",(req,res)=>{
+  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
+  {
+    dbPool.query('SELECT CURRENT_TIMESTAMP AS Ido',(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });
