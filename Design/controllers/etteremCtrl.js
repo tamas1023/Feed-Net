@@ -36,7 +36,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     }
     $scope.update=function()
     {   
-        if($scope.ujemail!=$scope.ujemail)
+        if($scope.email!=$scope.ujemail)
         {
             dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
@@ -94,6 +94,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujID=null;
         $scope.ujnev=null;
         $scope.ujemail=null;
+        $scope.email=null;
         $scope.ujtelefon=null;
         $scope.ujcim=null;
         $scope.ujleiras=null;

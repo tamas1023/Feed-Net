@@ -666,6 +666,12 @@ padding: 2px;
         cursor: pointer;
         right: 0; 
     }
+    .rendelesekmod
+    {
+        position: relative !important;
+        cursor: pointer !important;
+        right: 0 !important;
+    }
     .reg
     {
         position: relative;

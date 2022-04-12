@@ -802,6 +802,78 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
+
+        //helyfoglalás select
+        
+        reservationSelect:function(id,feltetel) {
+            let data = {
+                ID:id,
+                Feltetel:feltetel
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/reservationSelect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //helyfoglalás update
+        
+        reservationUpdate:function(id,kezdes,fo) {
+            let data = {
+                ID:id,
+                Kezdes:kezdes,
+                Fo:fo
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/reservationUpdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //helyfoglalás törlés
+  
+        reservationDelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/reservationDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //idő kekérdezésse
+        
+        time:function() {
+            let deferred = $q.defer();
+            $http.get(url + '/time').then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         // SELECT ALL
         selectAll: function(tablename) {
             let deferred = $q.defer();

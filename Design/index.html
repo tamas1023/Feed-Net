@@ -38,6 +38,7 @@
   <script src="controllers/ertekelesCtrl.js"></script>
   <script src="controllers/profilmodCtrl.js"></script>
   <script src="controllers/etteremnyitvatartasCtrl.js"></script>
+  <script src="controllers/helyfoglalasCtrl.js"></script>
   
     <title class="ng-binding">{{title}}</title>
 
@@ -65,8 +66,16 @@
             <li class="nav-item">
               <a class="nav-link"  href="#!/gyik">GYIK</a>
             </li>
-             
-            <li class="nav-item" ng-if="loggedIn==true">
+            <li class="nav-item dropdown" ng-if="logJog=='admin'||logJog=='user'&&loggedIn==true" >
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Profil módosítás
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'" href="#!/profilmod"><i class="bx bi-gear-fill"> </i>Fiók adatainak módosítása</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'"href="#!/reservationmod">Rendelések módosítás</a></li>
+              </ul>
+            </li>
+            <li class="nav-item" ng-if="loggedIn==true&&logJog=='etterem'">
               <a class="nav-link profilmod" href="#!/profilmod"><i class="bx bi-gear-fill"> </i> Profil módosítás</a>
             </li>
             <li class="nav-item" ng-if="loggedIn==false">
@@ -76,7 +85,7 @@
             <li class="nav-item" ng-if="loggedIn==false">
               <a class="nav-link reg" href="#!/reg">Regisztráció</a>
             </li>
-            <li class="nav-item dropdown" ng-if="logJog=='admin'" ><!-- -->
+            <li class="nav-item dropdown" ng-if="logJog=='admin'" >
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Admin felület
               </a>
@@ -87,7 +96,7 @@
                 <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/ertekeles">Értékelések</a></li>
               </ul>
             </li>
-            <li class="nav-item dropdown" ng-if="logJog=='etterem'" ><!-- -->
+            <li class="nav-item dropdown" ng-if="logJog=='etterem'" >
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Étterem
               </a>
