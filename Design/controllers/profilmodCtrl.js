@@ -40,87 +40,153 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
     }
     $scope.update=function()
     {
-        if($scope.ujpass==null||$scope.ujpass1==null&&$scope.oldpass==null)
+        if($scope.ujnev==""||$scope.ujemail=="")
         {
             alert('nem adtál meg mindem mezőt');
         }
         else
         {
-            if(CryptoJS.SHA1($scope.oldpass).toString()!=$scope.pass)
+            if($scope.ujpass==null&&$scope.ujpass1==null&&$scope.oldpass==null)
             {
-                alert("nem megfelelő régi jelszó")
+                
+                $scope.updatenameoremail();
             }
-            else
-            {
-                if($scope.ujpass!=$scope.ujpass1)
+           else
+           {
+               $scope.updatepass();
+                
+           }
+        }
+    }
+    $scope.updatenameoremail=function()
+    {
+        if($scope.email==$scope.ujemail)
                 {
-                    alert('A két új jeszó nem egyezik');
+                    dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
+                        alert('Módosítva csak név/email');
+                            dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
+                                if(res.data.length>0)
+                                {
+                                $scope.ujnev=res.data[0].Nev;
+                                $scope.ujemail=res.data[0].Email;
+                                $scope.ujtelefon=res.data[0].Telefon;
+                                $scope.pass=res.data[0].Jelszo;
+                                $scope.email=res.data[0].Email;
+                                }
+                            })
+                        })
                 }
                 else
                 {
-                    if($scope.ujpass==$scope.pass)
-                    {
-                        alert('A régi jelszó nem lehet az új jelszó');
-                    }
-                    else
-                    {
-                        let pattern =  /^[a-zA-Z0-9]{8,}$/;
-                        if(!$scope.ujpass.match(pattern))
+                    dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+                        if(res.data.length>0)
                         {
-                            alert('a követelményeknak nem felel meg az új jelszó(8 karakter minimum 1 nagy és kell bele szám)');
+                            alert('Ez az email cím már foglalat');
                         }
                         else
                         {
-                            if($scope.email==$scope.ujemail)
-                            {
-                                dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
-                                    alert('Módosítva');
-                                        dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
-                                            if(res.data.length>0)
-                                            {
-                                            $scope.ujnev=res.data[0].Nev;
-                                            $scope.ujemail=res.data[0].Email;
-                                            $scope.ujtelefon=res.data[0].Telefon;
-                                            $scope.pass=res.data[0].Jelszo;
-                                            $scope.email=res.data[0].Email;
-                                            }
-                                        })
+                            dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
+                                alert('Módosítva csak név/email');
+                                    dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
+                                        if(res.data.length>0)
+                                        {
+                                        $scope.ujnev=res.data[0].Nev;
+                                        $scope.ujemail=res.data[0].Email;
+                                        $scope.ujtelefon=res.data[0].Telefon;
+                                        $scope.pass=res.data[0].Jelszo;
+                                        $scope.email=res.data[0].Email;
+                                        }
                                     })
+                                })
+                        }
+                    })
+                }
+    }
+    $scope.updatepass=function()
+    {
+        if($scope.ujpass==""||$scope.ujpass1==""||$scope.oldpass=="")
+                    {
+                    alert('A jelszavak nincsenek kitöltve');
+                    }
+                else
+                {
+                    if($scope.ujpass!=""&&$scope.ujpass1!=""&&$scope.oldpass!="")
+                    {
+                        if(CryptoJS.SHA1($scope.oldpass).toString()!=$scope.pass)
+                        {
+                            alert("nem megfelelő régi jelszó")
+                        }
+                        else
+                        {
+                            if($scope.ujpass!=$scope.ujpass1)
+                            {
+                                alert('A két új jeszó nem egyezik');
                             }
                             else
                             {
-                                dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
-                                    if(res.data.length>0)
+                                if($scope.ujpass==$scope.pass)
+                                {
+                                    alert('A régi jelszó nem lehet az új jelszó');
+                                }
+                                else
+                                {
+                                    let pattern =  /^[a-zA-Z0-9]{8,}$/;
+                                    if(!$scope.ujpass.match(pattern))
                                     {
-                                        alert('Ez az email cím már foglalat');
+                                        alert('a követelményeknak nem felel meg az új jelszó(8 karakter minimum 1 nagy és kell bele szám)');
                                     }
                                     else
                                     {
-                                        dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
-                                            alert('Módosítva');
-                                                dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
-                                                    if(res.data.length>0)
-                                                    {
-                                                    $scope.ujnev=res.data[0].Nev;
-                                                    $scope.ujemail=res.data[0].Email;
-                                                    $scope.ujtelefon=res.data[0].Telefon;
-                                                    $scope.pass=res.data[0].Jelszo;
-                                                    $scope.email=res.data[0].Email;
-                                                    }
+                                        if($scope.email==$scope.ujemail)
+                                        {
+                                            dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
+                                                alert('Módosítva');
+                                                    dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
+                                                        if(res.data.length>0)
+                                                        {
+                                                        $scope.ujnev=res.data[0].Nev;
+                                                        $scope.ujemail=res.data[0].Email;
+                                                        $scope.ujtelefon=res.data[0].Telefon;
+                                                        $scope.pass=res.data[0].Jelszo;
+                                                        $scope.email=res.data[0].Email;
+                                                        }
+                                                    })
                                                 })
+                                        }
+                                        else
+                                        {
+                                            dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+                                                if(res.data.length>0)
+                                                {
+                                                    alert('Ez az email cím már foglalat');
+                                                }
+                                                else
+                                                {
+                                                    dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
+                                                        alert('Módosítva');
+                                                            dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
+                                                                if(res.data.length>0)
+                                                                {
+                                                                $scope.ujnev=res.data[0].Nev;
+                                                                $scope.ujemail=res.data[0].Email;
+                                                                $scope.ujtelefon=res.data[0].Telefon;
+                                                                $scope.pass=res.data[0].Jelszo;
+                                                                $scope.email=res.data[0].Email;
+                                                                }
+                                                            })
+                                                        })
+                                                }
                                             })
+                                        }
+                                    
                                     }
-                                })
+                                
+                                }
+                            
                             }
-                           
+                            
                         }
-                    
                     }
-                
                 }
-                
-            }
-        }
     }
-          
 })
