@@ -19,7 +19,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
 
     //egy gomb ami az összes szűrési feltételt reszeteli
     $scope.Szures=function () {
-        
+        $scope.etteremid=[];
         
         $scope.feltetelek=[];
         if ($scope.kartyaszures) {
@@ -49,11 +49,18 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
 
             // ide majd a lekérdezett n ap jön majd
             let datum=new Date();
+            dbfactory.time().then(function(res) {
+                datum=res.data[0].Ido;
+                datum=moment(datum).format('YYYY-MM-DD HH:mm:ss',true);
+                console.log(datum); 
+                
+            });
             let hetmelyiknap=datum.getDay();
+            //console.log(hetmelyiknap);
             let melyiknapszo="";
             //0 vasárnap ... 6 szombat
             //console.log(hetmelyiknap);
-    
+            
             if (hetmelyiknap==0 ) {
                 melyiknapszo="Vasárnap";
                         
@@ -87,11 +94,24 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             //és ha a mostani órában nyitva van akkor az étterem id jét
             //letárolni, és azután az éttermek listát frissíteni
             //azokkal az elemekkel ami benne van a listában
-            
-            for (let i = 0; i < $scope.nyitvatartas.length; i++) {
-                if ( $scope.nyitvatartas[i].Nap==melyiknapszo) {
+
+            for (let i = 0; i < $scope.ettermek.length; i++) {
+                //megnézni a nyitvatartását, és ha nyitva van akkor hozzáadni a 
+                //listához
+                dbfactory.selectCustom("nyitvatartas"," Etterem_ID="+$scope.ettermek[i].ID).then(function(res) {
+                    if (res.data.length > 0) { 
+                        //res.data a nyitvatartások
+                        for (let i = 0; i < res.data.length; i++) {
+                            if (melyiknapszo==res.data[i].Nap) {
+                                console.log(res.data[i].Nyitas);
+                                console.log(res.data[i].Zaras);
+                            }
+                            
+                        }
+                        
+                    } 
                     
-                }
+                });
         
             }
         }

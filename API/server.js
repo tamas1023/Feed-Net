@@ -864,17 +864,10 @@ app.post("/reservationDelete",(req,res)=>{
   //idő lekérdezése
 
 app.get("/time",(req,res)=>{
-  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
-  {
-    dbPool.query('SELECT CURRENT_TIMESTAMP AS Ido',(err,results)=>{
-      if(err)throw err;
-      res.json(results);
-    })
-  }
-  else
-  {
-    res.json({message:"Nem engedélyezett"});
-  }
+  dbPool.query('SELECT CURRENT_TIMESTAMP AS Ido',(err,results)=>{
+    if(err)throw err;
+    res.json(results);
+  })
 })
 
 app.listen(port, ()=>{
