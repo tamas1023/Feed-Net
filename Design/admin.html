@@ -30,6 +30,18 @@
               <label for="floatingInput">Cím</label>
             </div>
             <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujweboldal" placeholder="+">
+              <label for="floatingInput">Weboldal</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujfacebook" placeholder="+">
+              <label for="floatingInput">Facebook</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujtipus" placeholder="+">
+              <label for="floatingInput">Tipus</label>
+            </div>
+            <div class="form-floating mb-3 ">
               <input type="number" min="0" class="form-control" id="floatingInput" ng-model="ujferohely" placeholder="+">
               <label for="floatingInput">Férőhely</label>
             </div>
@@ -56,6 +68,10 @@
           <div class="form-check form-switch ">
             <label for="berelheto">Bérelhető</label>
             <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ng-checked="ujberelheto==1"><br>
+          </div>
+          <div class="form-check form-switch ">
+            <label for="berelheto">Wifi</label>
+            <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujwifi" ng-checked="ujwifi==1"><br>
           </div>
           <div class="form-check form-switch ">
             <label for="hazhozszallitas">Házhozszállítás</label>

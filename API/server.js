@@ -146,9 +146,13 @@ app.post('/admindiningupdate',(req,res)=>{
       terasz:req.body.Terasz,
       berelheto:req.body.Berelheto,
       hazhozszallitas:req.body.Hazhozszallitas,
-      statusz:req.body.Statusz
+      statusz:req.body.Statusz,
+      weboldal:req.body.Weboldal,
+      facebook:req.body.Facebook,
+      tipus:req.body.Tipus,
+      wifi:req.body.Wifi
     }
-    dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
+    dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz},Weboldal='${data.weboldal}',Facebook='${data.facebook}',Tipus='${data.tipus}',Wifi=${data.wifi} WHERE ID=${data.id}`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log('sikeres módosítás');
@@ -179,9 +183,13 @@ app.post('/admindininginsert',(req,res)=>{
       terasz:req.body.Terasz,
       berelheto:req.body.Berelheto,
       hazhozszallitas:req.body.Hazhozszallitas,
-      statusz:req.body.Statusz
+      statusz:req.body.Statusz,
+      weboldal:req.body.Weboldal,
+      facebook:req.body.Facebook,
+      tipus:req.body.Tipus,
+      wifi:req.body.Wifi
     }
-    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz},'')`,(err,results)=>{
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}','${data.tipus}',${data.wifi},${data.statusz},'','${data.weboldal}','${data.facebook}','')`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log('sikeres felvétel');

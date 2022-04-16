@@ -274,7 +274,7 @@ app.factory('dbfactory', function($http, $q) {
 
         //admin Étterem update
 
-        admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+        admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz,webodal,facebook,tipus,wifi) {
             let deferred = $q.defer();
             let data = {
                 ID:id,
@@ -290,7 +290,11 @@ app.factory('dbfactory', function($http, $q) {
                 Terasz:terasz,
                 Berelheto:berelheto,
                 Hazhozszallitas:hazhozszallitas,
-                Statusz:statusz
+                Statusz:statusz,
+                Weboldal:webodal,
+                Facebook:facebook,
+                Tipus:tipus,
+                Wifi:wifi
             }
             $http.post(url + '/admindiningupdate',data).then(
                 function(res) {
@@ -304,7 +308,7 @@ app.factory('dbfactory', function($http, $q) {
         },
 
          //admin Étterem insert
-         admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+         admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz,webodal,facebook,tipus,wifi) {
             let deferred = $q.defer();
             let data = {
                 ID:id,
@@ -320,7 +324,11 @@ app.factory('dbfactory', function($http, $q) {
                 Terasz:terasz,
                 Berelheto:berelheto,
                 Hazhozszallitas:hazhozszallitas,
-                Statusz:statusz
+                Statusz:statusz,
+                Weboldal:webodal,
+                Facebook:facebook,
+                Tipus:tipus,
+                Wifi:wifi,
             }
             $http.post(url + '/admindininginsert',data).then(
                 function(res) {
