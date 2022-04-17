@@ -24,6 +24,10 @@ body {
     background-color: var(--highlight);
     
 }
+#footerthings{
+    list-style: none;
+    text-align: end;
+}
 .openings{
     display: none;
     transition: 0.5s ;
@@ -675,6 +679,9 @@ padding: 2px;
     #kereso
     {
         width: 40%;
+    }
+    #footerthings{
+        text-align:start;
     }
 
 }
