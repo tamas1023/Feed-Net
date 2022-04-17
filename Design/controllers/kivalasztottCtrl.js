@@ -547,7 +547,20 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
    $scope.ertekelesek=[];
    dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
     if (res.data.length > 0) { 
-        $scope.ertekelesek=res.data;
+        for (let i = 0; i < res.data.length; i++) {
+            if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                $scope.ertekelesek.push(res.data[i]);
+                
+            }
+        }
+        for (let i = 0; i < res.data.length; i++) {
+            if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                $scope.ertekelesek.push(res.data[i]);
+                
+            }
+        }
+        
+        //$scope.ertekelesek=res.data;
         //console.log($scope.ertekelesek);
         
         for (let i = 0; i < $scope.ertekelesek.length; i++) {

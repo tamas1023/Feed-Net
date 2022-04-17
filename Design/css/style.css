@@ -48,6 +48,7 @@ body {
 #szerkesztes a{
     float: left;
     padding-left: 10px;
+    color: var(--feher);
 }
 .modalproblem{
     color: black;

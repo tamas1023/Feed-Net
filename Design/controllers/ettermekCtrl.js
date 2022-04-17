@@ -40,6 +40,9 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
         if ($scope.wifi) {
             $scope.feltetelek.push({"felt":"Wifi=1"});
         }
+        if ($scope.nyitva) {
+            
+        }
         
         $rootScope.feltetel=" ";
         for (let i = 0; i < $scope.feltetelek.length; i++) {
