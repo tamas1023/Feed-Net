@@ -869,6 +869,78 @@ app.post("/reservationDelete",(req,res)=>{
   }
 })
 
+  //képek select
+
+app.post("/imageselect",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    dbPool.query(`SELECT * FROM kepek WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+        res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //képek delete
+
+app.post("/imagedelete",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    dbPool.query(`DELETE FROM kepek WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //képek update
+
+app.post("/imageupdate",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    let data={
+      id:req.body.ID,
+      img:req.body.IMG,
+    }
+    dbPool.query(`UPDATE kepek SET Kepek='${data.img}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //kép insert
+
+app.post("/imageinsert",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    let data={
+      etterem_id:req.body.EtteremID,
+      img:req.body.IMG,
+    }
+    dbPool.query(`INSERT INTO kepek VALUES(null,${data.etterem_id},'${data.img}')`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
   //idő lekérdezése
 
 app.get("/time",(req,res)=>{

@@ -868,6 +868,80 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
+        //kép select
+
+        imageselect:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek delete
+
+        imagedelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imagedelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek update
+
+        imageupdate:function(id,img) {
+            let data = {
+                ID:id,
+                IMG:img
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek insert
+
+        imageinsert:function(id,img) {
+            let data = {
+                EtteremID:id,
+                IMG:img
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageinsert',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
         //idő kekérdezésse
         
         time:function() {
