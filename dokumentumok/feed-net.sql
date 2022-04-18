@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Ápr 10. 19:14
+-- Létrehozás ideje: 2022. Ápr 18. 19:11
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -20,6 +20,41 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `feed-net`
 --
+
+DELIMITER $$
+--
+-- Eljárások
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isopened` ()  BEGIN
+DECLARE n INT DEFAULT 0;
+DECLARE i INT DEFAULT 0;
+DECLARE Nyitas TIME ;
+DECLARE Zaras TIME;
+DECLARE ID INT DEFAULT 0;
+SELECT COUNT(*) FROM ettermek INTO n;
+SET i=1;
+WHILE i<n+1 DO 
+   SELECT nyitvatartas.Nyitas FROM `nyitvatartas`,ettermek WHERE nyitvatartas.Etterem_ID=i AND ettermek.ID=i AND DAYOFWEEK(CURRENT_TIMESTAMP)=nyitvatartas.napid INTO Nyitas;
+
+ SELECT nyitvatartas.Zaras  FROM `nyitvatartas`,ettermek WHERE nyitvatartas.Etterem_ID=i AND ettermek.ID=i AND DAYOFWEEK(CURRENT_TIMESTAMP)=nyitvatartas.napid INTO Zaras;
+
+SET ID=i;
+
+
+  
+ CALL isopenedupdate(Nyitas,Zaras,ID);
+  
+  SET i = i + 1;
+
+END WHILE;
+ 
+End$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isopenedupdate` (IN `Nyitas` DATETIME, IN `Zaras` DATETIME, IN `EtteremID` INT(11))  BEGIN
+UPDATE `ettermek` SET `nyitvavane`=IF(Zaras>CURRENT_TIME AND Nyitas<CURRENT_TIME,1,0)  WHERE ID=EtteremID;
+End$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -47,7 +82,7 @@ INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Erte
 (4, 1, 2, 4, 'Finom volt az étel.', '2022-03-16 21:01:34'),
 (5, 2, 2, 2, 'Az étel miatt.', '2022-03-16 21:11:59'),
 (6, 2, 2, 4, 'Finom volt az étel.', '2022-03-16 21:13:41'),
-(41, 1, 1, 4, 'undefined', '2022-04-01 13:33:41');
+(41, 1, 1, 4, '', '2022-04-16 13:18:27');
 
 -- --------------------------------------------------------
 
@@ -113,17 +148,18 @@ CREATE TABLE `ettermek` (
   `Statusz` tinyint(1) NOT NULL,
   `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Weboldal` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Facebook` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL
+  `Facebook` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `nyitvavane` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `ettermek`
 --
 
-INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Statusz`, `Kep`, `Weboldal`, `Facebook`) VALUES
-(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 1, 'img/rozsaetterem.jpg', NULL, NULL),
-(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 'img/kedvencetterem.jpg', NULL, NULL),
-(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 0, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 1, 'img/rozsaetterem.jpg', NULL, NULL);
+INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Statusz`, `Kep`, `Weboldal`, `Facebook`, `nyitvavane`) VALUES
+(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 1, 'img/rozsaetterem.jpg', NULL, NULL, 0),
+(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 'img/kedvencetterem.jpg', NULL, NULL, 1),
+(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 1, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 0, 'img/rozsaetterem.jpg', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -144,6 +180,7 @@ CREATE TABLE `ettermek_ertekelesek` (
 ,`Hazhozszallitas` tinyint(1)
 ,`Leiras` varchar(1000)
 ,`Statusz` tinyint(1)
+,`nyitvavane` tinyint(4)
 );
 
 -- --------------------------------------------------------
@@ -169,8 +206,8 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-10 18:57:54', 1, 'admin'),
-(2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-01 09:22:28', 1, 'user'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-18 19:04:48', 1, 'admin'),
+(2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-16 13:27:41', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
 -- --------------------------------------------------------
@@ -206,9 +243,16 @@ CREATE TABLE `hibajelentes` (
   `ID` int(11) NOT NULL,
   `Felhasznalo_ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
-  `Tipus` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
+  `Tipus` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `hibajelentes`
+--
+
+INSERT INTO `hibajelentes` (`ID`, `Felhasznalo_ID`, `Etterem_ID`, `Tipus`, `Leiras`) VALUES
+(8, 1, 1, 'rosszadatok', 'Rossz Adatok');
 
 -- --------------------------------------------------------
 
@@ -221,6 +265,15 @@ CREATE TABLE `kedvenc` (
   `Etterem_ID` int(11) NOT NULL,
   `Felhasznalo_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `kedvenc`
+--
+
+INSERT INTO `kedvenc` (`ID`, `Etterem_ID`, `Felhasznalo_ID`) VALUES
+(4, 1, 1),
+(3, 2, 1),
+(2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -260,23 +313,37 @@ CREATE TABLE `nyitvatartas` (
   `ID` int(11) NOT NULL,
   `Etterem_ID` int(11) NOT NULL,
   `Nap` varchar(10) COLLATE utf8_hungarian_ci NOT NULL,
-  `Nyitas` time NOT NULL,
-  `Zaras` time NOT NULL
+  `napid` int(11) NOT NULL,
+  `Nyitas` time DEFAULT NULL,
+  `Zaras` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `nyitvatartas`
 --
 
-INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `Nyitas`, `Zaras`) VALUES
-(1, 1, 'Hétfő', '09:00:00', '20:00:00'),
-(2, 1, 'Kedd', '09:00:00', '20:00:00'),
-(3, 1, 'Szerda', '09:00:00', '20:00:00'),
-(4, 1, 'Csütörtök', '09:00:00', '20:00:00'),
-(5, 1, 'Péntek', '09:00:00', '20:00:00'),
-(6, 1, 'Szombat', '09:00:00', '20:00:00'),
-(7, 1, 'Vasárnap', '09:00:00', '20:00:00'),
-(8, 2, 'Hétfő', '09:00:00', '20:00:00');
+INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `napid`, `Nyitas`, `Zaras`) VALUES
+(1, 1, 'Hétfő', 2, '07:00:00', '15:00:00'),
+(2, 1, 'Kedd', 3, '09:00:00', '20:00:00'),
+(3, 1, 'Szerda', 4, '09:00:00', '20:00:00'),
+(4, 1, 'Csütörtök', 5, '09:00:00', '20:00:00'),
+(5, 1, 'Péntek', 6, '09:00:00', '20:00:00'),
+(6, 1, 'Szombat', 7, '09:00:00', '23:00:00'),
+(7, 1, 'Vasárnap', 1, '09:00:00', '20:00:00'),
+(8, 2, 'Hétfő', 2, '09:00:00', '20:00:00'),
+(9, 2, 'Kedd', 3, '08:00:00', '17:00:00'),
+(10, 2, 'Szerda', 4, '08:00:00', '17:00:00'),
+(11, 2, 'Csütörtök', 5, '08:00:00', '17:00:00'),
+(12, 2, 'Péntek', 6, '08:00:00', '17:00:00'),
+(13, 2, 'Szombat', 7, '08:00:00', '17:00:00'),
+(14, 2, 'Vasárnap', 1, '08:00:00', '17:00:00'),
+(15, 3, 'Hétfő', 2, '08:00:00', '19:00:00'),
+(16, 3, 'Kedd', 3, '08:00:00', '17:00:00'),
+(17, 3, 'Szerda', 4, '08:00:00', '17:00:00'),
+(18, 3, 'Csütörtök', 5, '08:00:00', '17:00:00'),
+(19, 3, 'Péntek', 6, '08:00:00', '17:00:00'),
+(20, 3, 'Szombat', 7, '08:00:00', '17:00:00'),
+(21, 3, 'Vasárnap', 1, '08:00:00', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -294,7 +361,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `ettermek_ertekelesek`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS SELECT `ettermek`.`ID` AS `ID`, `ettermek`.`Nev` AS `Nev`, `ettermek`.`Kep` AS `Kep`, round(sum(`ertekeles`.`Pontszam`) / count(`ertekeles`.`Pontszam`),1) AS `Ertekeles`, `ettermek`.`Parkolo` AS `Parkolo`, `ettermek`.`Bankkartya` AS `Bankkartya`, `ettermek`.`Glutenmentes` AS `Glutenmentes`, `ettermek`.`Terasz` AS `Terasz`, `ettermek`.`Berelheto` AS `Berelheto`, `ettermek`.`Hazhozszallitas` AS `Hazhozszallitas`, `ettermek`.`Leiras` AS `Leiras`, `ettermek`.`Statusz` AS `Statusz` FROM (`ettermek` join `ertekeles`) WHERE `ettermek`.`ID` = `ertekeles`.`Etterem_ID` GROUP BY `ettermek`.`Nev` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS SELECT `ettermek`.`ID` AS `ID`, `ettermek`.`Nev` AS `Nev`, `ettermek`.`Kep` AS `Kep`, round(sum(`ertekeles`.`Pontszam`) / count(`ertekeles`.`Pontszam`),1) AS `Ertekeles`, `ettermek`.`Parkolo` AS `Parkolo`, `ettermek`.`Bankkartya` AS `Bankkartya`, `ettermek`.`Glutenmentes` AS `Glutenmentes`, `ettermek`.`Terasz` AS `Terasz`, `ettermek`.`Berelheto` AS `Berelheto`, `ettermek`.`Hazhozszallitas` AS `Hazhozszallitas`, `ettermek`.`Leiras` AS `Leiras`, `ettermek`.`Statusz` AS `Statusz`, `ettermek`.`nyitvavane` AS `nyitvavane` FROM (`ettermek` join `ertekeles`) WHERE `ettermek`.`ID` = `ertekeles`.`Etterem_ID` GROUP BY `ettermek`.`Nev` ;
 
 --
 -- Indexek a kiírt táblákhoz
@@ -403,13 +470,13 @@ ALTER TABLE `helyfoglalas`
 -- AUTO_INCREMENT a táblához `hibajelentes`
 --
 ALTER TABLE `hibajelentes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `kedvenc`
 --
 ALTER TABLE `kedvenc`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `kepek`
@@ -421,7 +488,7 @@ ALTER TABLE `kepek`
 -- AUTO_INCREMENT a táblához `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -476,6 +543,14 @@ ALTER TABLE `kepek`
 --
 ALTER TABLE `nyitvatartas`
   ADD CONSTRAINT `nyitvatartas_ibfk_1` FOREIGN KEY (`Etterem_ID`) REFERENCES `ettermek` (`ID`);
+
+DELIMITER $$
+--
+-- Események
+--
+CREATE DEFINER=`root`@`localhost` EVENT `myevent` ON SCHEDULE EVERY 1 MINUTE STARTS '2022-04-16 21:24:42' ON COMPLETION NOT PRESERVE ENABLE DO CALL isopened()$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

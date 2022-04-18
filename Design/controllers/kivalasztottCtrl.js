@@ -22,6 +22,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $scope.osszferohely=0;
    
     $scope.jelentes="";
+    $scope.etteremertekeles=0;
     /*
 
     Carousel jobbra balra gombok javítása, hogy jobban látszódjanak,
@@ -44,6 +45,15 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $rootScope.alapfeltetel=" ID="+$id;
     $rootScope.feltetel=" Etterem_ID="+$id;
 
+
+    //étterem értékelésének lekérdezése
+    dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+        if (res.data.length > 0) { 
+            $scope.etteremertekeles=res.data[0].Ertekeles;
+            
+        } 
+        
+    });
 
     //neve és a egyéb adatai
     dbfactory.selectCustom("ettermek",$rootScope.alapfeltetel).then(function(res) {
@@ -363,7 +373,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                         }
                     
                         else{
-                        console.log("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                        alert("A mostani idő és a rendelési idő között nem telt et 12 óra");
                         }
                     }
                     else{

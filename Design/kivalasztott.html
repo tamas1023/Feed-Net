@@ -122,7 +122,8 @@
             <p>{{ett.Cim}}</p>
             <p>{{ett.Telefon}}</p>
             <p>{{ett.Email}}</p>
-            <p>http://dunapartitanyacsarda.hu/</p>
+            <p>{{ett.Weboldal}}</p>
+            <p>{{ett.Facebook}}</p>
             
             <a href=""  data-bs-toggle="modal" id="problem" data-bs-target="#exampleModal">probléma jelentés</a>
             
@@ -172,6 +173,7 @@
         <h4 id="alert" ng-if="hiba==true">Csillagok megadása kötelező!</h4>
         <hr>
         <h2>Értékeld az éttermet!</h2>
+        <h5>Az étterem értékelése: {{etteremertekeles}} <i class='bx bxs-star' style='color:red'></i></h5>
         <div id="ertekeles" class="row">
          
           <div class="col col-12 col-sm-12">
