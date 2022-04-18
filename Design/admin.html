@@ -99,7 +99,7 @@
               <th>Név</th>
               <th>Telefon</th>
               <th>Cím</th>
-              <th>Leírás</th>
+              <th>Képek módosítása</th>
               <th>Nyitva tartás</th>
               <th>Étlap</th>
             </tr>
@@ -109,7 +109,7 @@
               <td>{{adat.Nev}}</td>
               <td>{{adat.Telefon}}</td>
               <td>{{adat.Cim}}</td>
-              <td>{{adat.Leiras}}</td>
+              <td><a ng-click="etteremkepek(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-card-image"></i></td></button></td>
               <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-calendar-week"></i></td></button></td>
               <td><a ng-click="etterem(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-list"></i></td></button></a>
             </tr>

@@ -133,6 +133,11 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $rootScope.selectedetteremID=id;
         $location.url('/admin/etteremnyitva/'+$rootScope.selectedetteremID);
     }
+    $scope.etteremkepek=function(id)
+    {            
+        $rootScope.selectedetteremID=id;
+        $location.url('/admin/etteremkepek/'+$rootScope.selectedetteremID);
+    }
     $scope.visszavaltasetterem=function()
     {
         $scope.ujID=null;

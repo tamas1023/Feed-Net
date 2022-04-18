@@ -1,0 +1,28 @@
+app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
+    $rootScope.sidebar=false;
+    $scope.kepek=[];
+    if($rootScope.logJog=="etterem"){ 
+        dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
+             if(r.data.length>0)
+             {
+                 $rootScope.selectedetteremID=r.data[0].ID;
+                 dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                     if(res.data.length>0)
+                     {
+                         $scope.kepek=res.data;
+                     }
+                 });
+             }   
+         });
+     }
+     else
+     {
+        
+         dbfactory.open($rootScope.selectedetteremID).then(function(res){
+             if(res.data.length>0)
+             {
+                 $scope.kepek=res.data;
+             }
+         });
+     }
+})
