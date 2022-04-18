@@ -1,6 +1,7 @@
 app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.nyitas=[];
+    $scope.nyitasmutat=[];
     $scope.modID=0;
     $scope.index=0;
     $scope.ujnap="Hétfő";
@@ -13,6 +14,15 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
                      if(res.data.length>0)
                      {
                          $scope.nyitas=res.data;
+                         $scope.nyitasmutat=res.data;
+                         for(let i=0;i<$scope.nyitasmutat.length;i++)
+                         {
+                            if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                             {
+                                $scope.nyitasmutat[i].Nyitas="Zárva";
+                                $scope.nyitasmutat[i].Zaras="Zárva";
+                             }
+                         }
                      }
                      
                  });
@@ -25,22 +35,35 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
              if(res.data.length>0)
              {
                  $scope.nyitas=res.data;
+                 $scope.nyitasmutat=res.data;
+                 for(let i=0;i<$scope.nyitasmutat.length;i++)
+                 {
+                    if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                     {
+                        $scope.nyitasmutat[i].Nyitas="Zárva";
+                        $scope.nyitasmutat[i].Zaras="Zárva";
+                     }
+                 }
              }
          });
-     }
-     $scope.egyvalaszt=function(id)
-     {
-        $scope.modID=id;
      }
      $scope.select=function(id,adatid)
      {
         $scope.index=id;
-        alert($scope.index);
         $scope.modID=adatid;
          $rootScope.felvesz=0;
-         $scope.ujnyitas=new Date(moment.parseZone('12-25-1995 '+$scope.nyitas[id].Nyitas).format());
-         $scope.ujzaras=new Date(moment.parseZone('12-25-1995 '+$scope.nyitas[id].Zaras).format());
-         $scope.ujnap=$scope.nyitas[id].Nap;
+         if($scope.nyitas[id].Nyitas=="Zárva"&&$scope.nyitas[id].Zaras=="Zárva")
+         {
+            $scope.ujnyitas=new Date(moment.parseZone('12-25-1995 '+"00:00:00").format());
+            $scope.ujzaras=new Date(moment.parseZone('12-25-1995 '+"00:00:00").format());
+            $scope.ujnap=$scope.nyitas[id].Nap;
+         }
+         else
+         {
+            $scope.ujnyitas=new Date(moment.parseZone('12-25-1995 '+$scope.nyitas[id].Nyitas).format());
+            $scope.ujzaras=new Date(moment.parseZone('12-25-1995 '+$scope.nyitas[id].Zaras).format());
+            $scope.ujnap=$scope.nyitas[id].Nap;
+        }
      }
      $scope.update=function()
      {
@@ -54,13 +77,56 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
        let nyitasora=nyitas.getHours();
        let nyitasperc=nyitas.getMinutes();
        let nyitasvegleges=nyitasora+":"+nyitasperc;
+       let napid=0;
+       if($scope.ujnap=="Vasárnap")
+       {
+           napid=1;
+       }
+       if($scope.ujnap=="Hétfő")
+       {
+           napid=2;
+       }
+       if($scope.ujnap=="Kedd")
+       {
+           napid=3;
+       }
+       if($scope.ujnap=="Szerda")
+       {
+           napid=4;
+       }
+       if($scope.ujnap=="Csötörtök")
+       {
+           napid=5;
+       }
+       if($scope.ujnap=="Péntek")
+       {
+           napid=6;
+       }
+       if($scope.ujnap=="Szombat")
+       {
+           napid=7;
+       }
+       if(nyitasvegleges=="0:0"&&zarasvegleges=="0:0")
+        {
+            nyitasvegleges=null;
+            zarasvegleges=null;
+        }
         if($rootScope.logJog=="etterem"&&$rootScope.selectedetteremID==$scope.nyitas[$scope.index].Etterem_ID)
         {
-            dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges).then(function(res){
+            dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges,napid,$scope.ujnap).then(function(res){
                 dbfactory.open($rootScope.selectedetteremID).then(function(res){
                     if(res.data.length>0)
                     {
                         $scope.nyitas=res.data;
+                        $scope.nyitasmutat=res.data;
+                        for(let i=0;i<$scope.nyitasmutat.length;i++)
+                        {
+                            if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                            {
+                               $scope.nyitasmutat[i].Nyitas="Zárva";
+                               $scope.nyitasmutat[i].Zaras="Zárva";
+                            }
+                        }
                     }
                 });
             })
@@ -69,11 +135,21 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
         {
             if($rootScope.logJog=="admin")
             {
-                dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges).then(function(res){
+                
+                dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges,napid,$scope.ujnap).then(function(res){
                     dbfactory.open($rootScope.selectedetteremID).then(function(res){
                         if(res.data.length>0)
                         {
                             $scope.nyitas=res.data;
+                            $scope.nyitasmutat=res.data;
+                            for(let i=0;i<$scope.nyitasmutat.length;i++)
+                            {
+                                if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                                {
+                                   $scope.nyitasmutat[i].Nyitas="Zárva";
+                                   $scope.nyitasmutat[i].Zaras="Zárva";
+                                }
+                            }
                         }
                     });
                 })
@@ -102,16 +178,90 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
             let nyitasora=nyitas.getHours();
             let nyitasperc=nyitas.getMinutes();
             let nyitasvegleges=nyitasora+":"+nyitasperc;
+            let napid=0;
+            if($scope.ujnap=="Vasárnap")
+            {
+                napid=1;
+            }
+            if($scope.ujnap=="Hétfő")
+            {
+                napid=2;
+            }
+            if($scope.ujnap=="Kedd")
+            {
+                napid=3;
+            }
+            if($scope.ujnap=="Szerda")
+            {
+                napid=4;
+            }
+            if($scope.ujnap=="Csötörtök")
+            {
+                napid=5;
+            }
+            if($scope.ujnap=="Péntek")
+            {
+                napid=6;
+            }
+            if($scope.ujnap=="Szombat")
+            {
+                napid=7;
+            }
+            if(nyitasvegleges=="0:0"&&zarasvegleges=="0:0")
+            {
+                nyitasvegleges=null;
+                zarasvegleges=null;
+            }
+            if($rootScope.logJog=="etterem"&&$rootScope.selectedetteremID==$scope.nyitas[$scope.index].Etterem_ID)
+            {
+                dbfactory.openinsert($rootScope.selectedetteremID,$scope.ujnap,nyitasvegleges,zarasvegleges,napid).then(function(res){
+                    $scope.unselectRow();
+                    dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                           if(res.data.length>0)
+                           {
+                               $scope.nyitas=res.data;
+                               $scope.nyitasmutat=res.data;
+                               for(let i=0;i<$scope.nyitasmutat.length;i++)
+                               {
+                                if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                                   {
+                                      $scope.nyitasmutat[i].Nyitas="Zárva";
+                                      $scope.nyitasmutat[i].Zaras="Zárva";
+                                   }
+                               }
+                           }  
+                       });
+                   })
+            }
+            else
+            {
+                if($rootScope.logJog=="admin")
+                {
+                    dbfactory.openinsert($rootScope.selectedetteremID,$scope.ujnap,nyitasvegleges,zarasvegleges,napid).then(function(res){
+                        $scope.unselectRow();
+                        dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                               if(res.data.length>0)
+                               {
+                                   $scope.nyitas=res.data;
+                                   $scope.nyitasmutat=res.data;
+                                   for(let i=0;i<$scope.nyitasmutat.length;i++)
+                                   {
+                                    if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                                       {
+                                          $scope.nyitasmutat[i].Nyitas="Zárva";
+                                          $scope.nyitasmutat[i].Zaras="Zárva";
+                                       }
+                                   }
+                               }  
+                           });
+                       })
+                }
+                else
+                {
+                    alert('nem végezheted el ezt');
+                }
+            }
                
-               dbfactory.openinsert($rootScope.selectedetteremID,$scope.ujnap,nyitasvegleges,zarasvegleges).then(function(res){
-                $scope.unselectRow();
-                dbfactory.open($rootScope.selectedetteremID).then(function(res){
-                       if(res.data.length>0)
-                       {
-                           $scope.nyitas=res.data;
-                       }  
-                   });
-               })
          } 
      
      }
@@ -128,7 +278,17 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
             $scope.unselectRow();
             dbfactory.open($rootScope.selectedetteremID).then(function(res){
                     $scope.nyitas=res.data;
+                    $scope.nyitasmutat=res.data;
+                    for(let i=0;i<$scope.nyitasmutat.length;i++)
+                    {
+                        if($scope.nyitasmutat[i].Nyitas==null&&$scope.nyitasmutat[i].Zaras==null)
+                        {
+                           $scope.nyitasmutat[i].Nyitas="Zárva";
+                           $scope.nyitasmutat[i].Zaras="Zárva";
+                        }
+                    }
             });
         })
      }
+     $scope.unselectRow();
 })

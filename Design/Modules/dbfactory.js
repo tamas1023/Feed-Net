@@ -737,11 +737,13 @@ app.factory('dbfactory', function($http, $q) {
     
         //étterem nyitvatartás update
 
-        openupdate:function(id,nyitas,zaras) {
+        openupdate:function(id,nyitas,zaras,napid,nap) {
             let data = {
                 ID:id,
                 Nyitas:nyitas,
-                Zaras:zaras
+                Zaras:zaras,
+                Napid:napid,
+                Nap:nap
             }
             let deferred = $q.defer();
             $http.post(url + '/openupdate',data).then(
@@ -792,12 +794,13 @@ app.factory('dbfactory', function($http, $q) {
 
             //étterem nyitvatartás insert
 
-        openinsert:function(id,nap,nyitas,zaras) {
+        openinsert:function(id,nap,nyitas,zaras,napid) {
             let data = {
                 ID:id,
                 Nap:nap,
                 Nyitas:nyitas,
-                Zaras:zaras
+                Zaras:zaras,
+                Napid:napid
             }
             let deferred = $q.defer();
             $http.post(url + '/openinsert',data).then(

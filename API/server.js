@@ -755,12 +755,25 @@ app.post('/profildelete',(req,res)=>{
       let data={
         id:req.body.ID,
         nyitas:req.body.Nyitas,
-        zaras:req.body.Zaras
+        zaras:req.body.Zaras,
+        napid:req.body.Napid,
+        nap:req.body.Nap
       }
-    dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
-      if(err)throw err;
-      res.json({message:"ok"});
-    })
+      if(data.nyitas==null&&data.zaras==null)
+      {
+        dbPool.query(`UPDATE nyitvatartas SET Nyitas=${data.nyitas},Zaras=${data.zaras},napid=${data.napid},Nap='${data.nap}' WHERE ID=${data.id}`,(err,results)=>{
+          if(err)throw err;
+          res.json({message:"ok"});
+        })
+      }
+      else
+      {
+        dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}',napid=${data.napid},Nap='${data.nap}' WHERE ID=${data.id}`,(err,results)=>{
+          if(err)throw err;
+          res.json({message:"ok"});
+        })
+      }
+   
     }
     else
     {
@@ -777,10 +790,11 @@ app.post('/openinsert',(req,res)=>{
       EtteremID:req.body.ID,
       nap:req.body.Nap,
       nyitas:req.body.Nyitas,
-      zaras:req.body.Zaras
+      zaras:req.body.Zaras,
+      napid:req.body.Napid
     }
     
-  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}','${data.nyitas}','${data.zaras}')`,(err,results)=>{
+  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}',${data.napid},'${data.nyitas}','${data.zaras}')`,(err,results)=>{
     if(err)throw err;
     res.json({message:"ok"});
   })
