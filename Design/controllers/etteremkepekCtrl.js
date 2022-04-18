@@ -1,6 +1,7 @@
 app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.kepek=[];
+    $scope.modID=0;
     if($rootScope.logJog=="etterem"){ 
         dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
              if(r.data.length>0)
@@ -24,5 +25,9 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
                  $scope.kepek=res.data;
              }
          });
+     }
+     $scope.select=function(id)
+     {
+         $scope.modID=id;
      }
 })

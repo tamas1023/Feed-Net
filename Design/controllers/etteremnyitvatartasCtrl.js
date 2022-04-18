@@ -2,6 +2,7 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.nyitas=[];
     $scope.modID=0;
+    $scope.index=0;
     $scope.ujnap="Hétfő";
     if($rootScope.logJog=="etterem"){ 
         dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
@@ -33,6 +34,8 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
      }
      $scope.select=function(id,adatid)
      {
+        $scope.index=id;
+        alert($scope.index);
         $scope.modID=adatid;
          $rootScope.felvesz=0;
          $scope.ujnyitas=new Date(moment.parseZone('12-25-1995 '+$scope.nyitas[id].Nyitas).format());
@@ -51,15 +54,36 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
        let nyitasora=nyitas.getHours();
        let nyitasperc=nyitas.getMinutes();
        let nyitasvegleges=nyitasora+":"+nyitasperc;
-
-        dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges).then(function(res){
-            dbfactory.open($rootScope.selectedetteremID).then(function(res){
-                if(res.data.length>0)
-                {
-                    $scope.nyitas=res.data;
-                }
-            });
-        })
+        if($rootScope.logJog=="etterem"&&$rootScope.selectedetteremID==$scope.nyitas[$scope.index].Etterem_ID)
+        {
+            dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges).then(function(res){
+                dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                    if(res.data.length>0)
+                    {
+                        $scope.nyitas=res.data;
+                    }
+                });
+            })
+        }
+        else
+        {
+            if($rootScope.logJog=="admin")
+            {
+                dbfactory.openupdate($scope.modID,nyitasvegleges,zarasvegleges).then(function(res){
+                    dbfactory.open($rootScope.selectedetteremID).then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.nyitas=res.data;
+                        }
+                    });
+                })
+            }
+            else
+            {
+                alert('nem végezheted el ezt');
+            }
+        }
+        
      }
      $scope.insert=function()
      {
