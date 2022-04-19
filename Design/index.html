@@ -59,57 +59,63 @@
         <div class="collapse navbar-collapse" id="navbarText" ng-if="logivagyreg==false">
           <ul class="navbar-nav me-auto mb-lg-0" id="navitems">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#!/" >Főoldal</a>
+              <a class="nav-link" onclick="closeNav()" aria-current="page" href="#!/" >Főoldal</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" ng-if="loggedIn==true&&logJog=='admin'||logJog=='user'" href="#!/kedvencek">Kedvencek</a>
+              <a class="nav-link" onclick="closeNav()" ng-if="loggedIn==true&&logJog=='admin'||logJog=='user'" href="#!/kedvencek">Kedvencek</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"  href="#!/gyik">GYIK</a>
+              <a class="nav-link" onclick="closeNav()"  href="#!/gyik">GYIK</a>
             </li>
+
             <li class="nav-item dropdown" ng-if="logJog=='admin'||logJog=='user'&&loggedIn==true" >
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" onclick="closeNav()" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Profil módosítás
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'" href="#!/profilmod"><i class="bx bi-gear-fill"> </i> Fiók adatainak módosítása</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'"href="#!/reservationmod"><i class="bi bi-bookmark-fill"></i> Rendelések módosítás</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'" href="#!/profilmod" onclick="closeNav()"><i class="bx bi-gear-fill"> </i> Fiók adatainak módosítása</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'||logJog=='user'"href="#!/reservationmod" onclick="closeNav()"><i class="bi bi-bookmark-fill"></i> Rendelések módosítás</a></li>
               </ul>
             </li>
             <li class="nav-item" ng-if="loggedIn==true&&logJog=='etterem'">
               <a class="nav-link profilmod" href="#!/profilmod"><i class="bx bi-gear-fill"> </i> Profil módosítás</a>
+
             </li>
             <li class="nav-item" ng-if="loggedIn==false">
-              <a class="nav-link login" href="#!/login"><i class="bx bx-log-in"> </i> Bejelentkezés</a>
+              <a class="nav-link login" onclick="closeNav()" href="#!/login"><i class="bx bx-log-in"> </i> Bejelentkezés</a>
             </li>
             
             <li class="nav-item" ng-if="loggedIn==false">
-              <a class="nav-link reg" href="#!/reg">Regisztráció</a>
+              <a class="nav-link reg" onclick="closeNav()" href="#!/reg">Regisztráció</a>
             </li>
-            <li class="nav-item dropdown" ng-if="logJog=='admin'" >
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <li class="nav-item dropdown" ng-if="logJog=='admin'" ><!-- -->
+              <a class="nav-link dropdown-toggle" href="#" onclick="closeNav()" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
                 Admin felület
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin">Éttermek kezelés</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'" href="#!/admin/felhasznalo">Felhasználókezelés</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/hiba">Hibajelentések</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='admin'"  href="#!/admin/ertekeles">Értékelések</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'" onclick="closeNav()" href="#!/admin">Éttermek kezelés</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'" onclick="closeNav()" href="#!/admin/felhasznalo">Felhasználókezelés</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'" onclick="closeNav()" href="#!/admin/hiba">Hibajelentések</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='admin'" onclick="closeNav()" href="#!/admin/ertekeles">Értékelések</a></li>
               </ul>
             </li>
+
             <li class="nav-item dropdown" ng-if="logJog=='etterem'" >
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" onclick="closeNav()" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Étterem
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremfoglalas">Éttermek kezelés</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremetlap">Étterem étlap</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremnyitvatartas">Étterem nyitvatartás</a></li>
-                <li><a class="dropdown-item"  ng-if="logJog=='etterem'"  href="#!/etteremkepek">Étterem képek kezelése</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'" onclick="closeNav()"  href="#!/etteremfoglalas">Éttermek kezelés</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'" onclick="closeNav()"  href="#!/etteremetlap">Étterem étlap</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'" onclick="closeNav()"  href="#!/etteremnyitvatartas">Étterem nyitvatartás</a></li>
+                <li><a class="dropdown-item"  ng-if="logJog=='etterem'" onclick="closeNav()"  href="#!/etteremkepek">Étterem képek kezelése</a></li>
+
               </ul>
             </li>
             <li class="nav-item" ng-if="loggedIn==true">
-              <a class="nav-link reg"  href="#!/login"><i class="bx bx-log-out"> </i> Kijelentkezés</a>
+              <a class="nav-link reg"  href="#!/login" onclick="closeNav()"><i class="bx bx-log-out"> </i> Kijelentkezés</a>
             </li>
           </ul>
         </div>
@@ -120,40 +126,7 @@
   <div id="mySidebar" class="sidebar">
     <p href="javascript:void(0)" class="closebtn" onclick="">×</p>
     <h3>Értékelés</h3>
-     <!--
-    <div class="rating-css">
-     
-      <div class="star-icon">
-        <input type="radio" name="rating1" id="rating1" >
-        <label for="rating1" class="fa fa-star" ng-click="Csillag(1)"></label>
-        <input type="radio" name="rating1" id="rating2" >
-        <label for="rating2" class="fa fa-star" ng-click="Csillag(2)"></label>
-        <input type="radio" name="rating1" id="rating3" >
-        <label for="rating3" class="fa fa-star" ng-click="Csillag(3)"></label>
-        <input type="radio" name="rating1" id="rating4" >
-        <label for="rating4" class="fa fa-star" ng-click="Csillag(4)"></label>
-        <input type="radio" name="rating1" id="rating5" >
-        <label for="rating5" class="fa fa-star" ng-click="Csillag(5)"></label>
-      </div>
-
-      
-    </div>
     
-    <fieldset class="star-rating" style="padding-left: 30px;">
-      <div>
-        <input type="radio" name="rating" value="1" id="rating1" />
-        <label for="rating1" ng-click="Csillag(1)"><span>1</span></label>
-        <input type="radio" name="rating" value="2" id="rating2" />
-        <label for="rating2" ng-click="Csillag(2)"><span>2</span></label>
-        <input type="radio" name="rating" value="3" id="rating3" />
-        <label for="rating3" ng-click="Csillag(3)"><span>3</span></label>
-        <input type="radio" name="rating" value="4" id="rating4" />
-        <label for="rating4" ng-click="Csillag(4)"><span>4</span></label>
-        <input type="radio" name="rating" value="5" id="rating5" />
-        <label for="rating5" ng-click="Csillag(5)"><span>5</span></label>
-      </div>
-    </fieldset>
-  -->
   <div class="rating">
     <input type="radio" name="rating" id="rating-5">
     <label for="rating-5"  ng-click="Csillag(5)"></label>
@@ -217,8 +190,8 @@
         <h3><a href="#">Feed-Net</a></h3>
         
       </div>
-      <div class="col-12 col-md-4">
-          <ul class="m-0">
+      <div class="col-12 col-md-4 ">
+          <ul class="m-0 p-0" id="footerthings">
               <li>E-mail: admin@admin.hu</li>
               <li>Telefon: +36408245489</li>
               

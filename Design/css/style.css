@@ -10,8 +10,14 @@
 
     --star-rating-size: 25px;
     --unchecked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='%23fff' stroke='%23666' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
-    --checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    --checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='red' stroke='%23fff' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    --hovered-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+
+
+    /*--checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
     --hovered-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='red' stroke='%23fff' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
+    */
+    
     --max-stars: 5;
    
     --footer:#A0AFBA;
@@ -23,6 +29,10 @@ body {
     font-family: "Lato", sans-serif;
     background-color: var(--highlight);
     
+}
+#footerthings{
+    list-style: none;
+    text-align: end;
 }
 .openings{
     display: none;
@@ -48,6 +58,7 @@ body {
 #szerkesztes a{
     float: left;
     padding-left: 10px;
+    color: var(--feher);
 }
 .modalproblem{
     color: black;
@@ -139,45 +150,6 @@ body {
   }
   
 
-
-/*
-  .rating-2 {
-    display: flex;
-    width: 100%;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-  }
-  
-  .rating-0 {
-    filter: grayscale(100%);
-  }
-  
-  .rating-2 > input {
-    display: none;
-  }
-  
-  .rating-2 > label {
-    cursor: pointer;
-    width: 33px;
-    height: 33px;
-    margin-top: auto;
-    background-image:var(--unchecked-image) ;
-    background-repeat: no-repeat;
-    background-size: 76%;
-    transition: .3s;
-  }
-  
-  .rating-2 > input:checked ~ label,
-  .rating-2 > input:checked ~ label ~ label {
-    background-image: var(--checked-image);
-  }
-  
-  
-  .rating-2 > input:not(:checked) ~ label:hover,
-  .rating-2 > input:not(:checked) ~ label:hover ~ label {
-    background-image: var(--hovered-image);
-  }
-    */
 
   
 
@@ -396,7 +368,7 @@ a:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 0;
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
@@ -680,6 +652,9 @@ padding: 2px;
     #kereso
     {
         width: 40%;
+    }
+    #footerthings{
+        text-align:start;
     }
 
 }

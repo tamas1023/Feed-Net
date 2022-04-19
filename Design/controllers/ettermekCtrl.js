@@ -41,6 +41,7 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             $scope.feltetelek.push({"felt":"Wifi=1"});
         }
         
+        
         $rootScope.feltetel=" ";
         for (let i = 0; i < $scope.feltetelek.length; i++) {
             
@@ -67,15 +68,40 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             }
         } 
         
-        dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel+" AND Statusz=1").then(function(res) {
-            if (res.data.length > 0) {
-                $rootScope.nincsetterem="";
-                $rootScope.ettermek=res.data;
-            } else {
-                $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
-                $rootScope.ettermek=res.data;
-            }
-        });
+        if ($scope.nyitva) {
+            $rootScope.ettermek=[];
+            dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel+" AND Statusz=1").then(function(res) {
+                if (res.data.length > 0) {
+                    
+                    for (let i = 0; i < res.data.length; i++) {
+                        
+                        if (res.data[i].nyitvavane) {
+                            $rootScope.nincsetterem="";
+                            $rootScope.ettermek.push(res.data[i]);
+                        }
+                        
+                    }
+                    
+                    
+                } else {
+                    $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
+                    $rootScope.ettermek=res.data;
+                }
+            });
+        }
+        else
+        {
+            dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel+" AND Statusz=1").then(function(res) {
+                if (res.data.length > 0) {
+                    $rootScope.nincsetterem="";
+                    $rootScope.ettermek=res.data;
+                } else {
+                    $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
+                    $rootScope.ettermek=res.data;
+                }
+            });
+        }
+        
 
     }
 
