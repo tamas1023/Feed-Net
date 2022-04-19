@@ -47,7 +47,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="animate" ng-repeat="adat in nyitas | filter:{Nev:search}" ng-click="select($index,adat.ID)">
+                <tr class="animate" ng-repeat="adat in nyitasmutat | filter:{Nev:search}" ng-click="select($index,adat.ID)">
                   <td>{{adat.Nap}}</td>
                   <td>{{adat.Nyitas}}</td>
                   <td>{{adat.Zaras}}</td>
@@ -56,7 +56,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="4" class="text-center">Összesen: {{nyitas.length}} rekord </td>
+                  <td colspan="4" class="text-center">Összesen: {{nyitasmutat.length}} rekord </td>
                 </tr>
               </tfoot>
             </table>

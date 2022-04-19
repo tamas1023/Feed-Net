@@ -34,16 +34,6 @@ app.get("/email",(req,res)=>{
     res.send(session.Email);
   }
 })
-app.get('/',(req,res)=>{
-  if(session.Rights=="admin")
-  {
-    dbPool.query('SELECT * FROM felhasznalok',(err,results)=>{
-      if (err)throw err;
-      res.send(results);
-     // console.log(jog);
-    });
-  }
-});
 
     //Log out
 
@@ -156,9 +146,13 @@ app.post('/admindiningupdate',(req,res)=>{
       terasz:req.body.Terasz,
       berelheto:req.body.Berelheto,
       hazhozszallitas:req.body.Hazhozszallitas,
-      statusz:req.body.Statusz
+      statusz:req.body.Statusz,
+      weboldal:req.body.Weboldal,
+      facebook:req.body.Facebook,
+      tipus:req.body.Tipus,
+      wifi:req.body.Wifi
     }
-    dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz} WHERE ID=${data.id}`,(err,results)=>{
+    dbPool.query(`UPDATE ettermek SET ID=${data.id},Email='${data.email}',Nev='${data.nev}',Telefon='${data.telefon}',Parkolo=${data.parkolo},Bankkartya=${data.bankkartya},Glutenmentes=${data.glutenmentes},Terasz=${data.terasz},Berelheto=${data.berelheto},Cim='${data.cim}',Ferohely=${data.ferohely},Hazhozszallitas=${data.hazhozszallitas},Leiras='${data.leiras}',Statusz=${data.statusz},Weboldal='${data.weboldal}',Facebook='${data.facebook}',Tipus='${data.tipus}',Wifi=${data.wifi} WHERE ID=${data.id}`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log('sikeres módosítás');
@@ -189,9 +183,13 @@ app.post('/admindininginsert',(req,res)=>{
       terasz:req.body.Terasz,
       berelheto:req.body.Berelheto,
       hazhozszallitas:req.body.Hazhozszallitas,
-      statusz:req.body.Statusz
+      statusz:req.body.Statusz,
+      weboldal:req.body.Weboldal,
+      facebook:req.body.Facebook,
+      tipus:req.body.Tipus,
+      wifi:req.body.Wifi
     }
-    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}',${data.statusz},'')`,(err,results)=>{
+    dbPool.query(`INSERT INTO ettermek VALUES (NULL,'${data.email}','${data.nev}','${data.telefon}',${data.parkolo},${data.bankkartya},${data.glutenmentes},${data.terasz},${data.berelheto},'${data.cim}',${data.ferohely},${data.hazhozszallitas},'${data.leiras}','${data.tipus}',${data.wifi},${data.statusz},'','${data.weboldal}','${data.facebook}','')`,(err,results)=>{
       if(err)throw err;
       res.json(results);
       //console.log('sikeres felvétel');
@@ -353,7 +351,7 @@ app.post('/userupdate',(req,res)=>{
       jog:req.body.Jog,
       statusz:req.body.Statusz
   }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id};`,(err,results)=>{
+    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id} AND Jog NOT LIKE 'admin';`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
@@ -369,7 +367,7 @@ app.post('/userupdate',(req,res)=>{
 app.post('/userdelete',(req,res)=>{
   if(session.Rights=="admin")
   {
-    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID}`,(err,results)=>{
+    dbPool.query(`DELETE FROM felhasznalok WHERE ID=${req.body.ID} AND Jog NOT LIKE 'admin'`,(err,results)=>{
       if(err)throw err;
       res.json({message:"ok"});
     })
@@ -677,10 +675,17 @@ app.post('/profilmod',(req,res)=>{
       passwd:req.body.Passwd,
       telefon:req.body.Telefon,
     }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
-      if(err)throw err;
-      res.json({message:"ok"});
-    })
+    if(session.ID==req.body.ID)
+    {
+      dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.nev}',Jelszo='${data.passwd}',Telefon='${data.telefon}' WHERE ID=${data.id}`,(err,results)=>{
+        if(err)throw err;
+        res.json({message:"ok"});
+      })
+    }
+    else
+    {
+      res.json({message:"Nincs jogod ezeket Módosítani"})
+    }
     
   }
   else
@@ -750,12 +755,25 @@ app.post('/profildelete',(req,res)=>{
       let data={
         id:req.body.ID,
         nyitas:req.body.Nyitas,
-        zaras:req.body.Zaras
+        zaras:req.body.Zaras,
+        napid:req.body.Napid,
+        nap:req.body.Nap
       }
-    dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}' WHERE ID=${data.id}`,(err,results)=>{
-      if(err)throw err;
-      res.json({message:"ok"});
-    })
+      if(data.nyitas==null&&data.zaras==null)
+      {
+        dbPool.query(`UPDATE nyitvatartas SET Nyitas=${data.nyitas},Zaras=${data.zaras},napid=${data.napid},Nap='${data.nap}' WHERE ID=${data.id}`,(err,results)=>{
+          if(err)throw err;
+          res.json({message:"ok"});
+        })
+      }
+      else
+      {
+        dbPool.query(`UPDATE nyitvatartas SET Nyitas='${data.nyitas}',Zaras='${data.zaras}',napid=${data.napid},Nap='${data.nap}' WHERE ID=${data.id}`,(err,results)=>{
+          if(err)throw err;
+          res.json({message:"ok"});
+        })
+      }
+   
     }
     else
     {
@@ -772,10 +790,11 @@ app.post('/openinsert',(req,res)=>{
       EtteremID:req.body.ID,
       nap:req.body.Nap,
       nyitas:req.body.Nyitas,
-      zaras:req.body.Zaras
+      zaras:req.body.Zaras,
+      napid:req.body.Napid
     }
     
-  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}','${data.nyitas}','${data.zaras}')`,(err,results)=>{
+  dbPool.query(`INSERT INTO nyitvatartas VALUES (null,'${data.EtteremID}','${data.nap}',${data.napid},'${data.nyitas}','${data.zaras}')`,(err,results)=>{
     if(err)throw err;
     res.json({message:"ok"});
   })
@@ -809,13 +828,14 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás select
   
   app.post('/reservationSelect',(req,res)=>{
-    if(session.Rights=="user")
+    if(session.Rights=="user"||session.Rights=="admin")
     {
       let data={
-        id:req.body.ID
+        id:req.body.ID,
+        feltetel:req.body.Feltetel
       }
           
-    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id}`,(err,results)=>{
+    dbPool.query(`SELECT helyfoglalas.ID,ettermek.Nev,helyfoglalas.Felhasznalo_ID,Kezdes,Fo,helyfoglalas.Etterem_ID FROM helyfoglalas,ettermek WHERE ettermek.ID=helyfoglalas.Etterem_ID AND Felhasznalo_ID=${data.id} ${data.feltetel} ORDER BY Kezdes desc `,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })
@@ -829,7 +849,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás update  
 
  app.post('/reservationUpdate',(req,res)=>{
-  if(session.Rights=="user")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     let data={
       id:req.body.ID,
@@ -850,7 +870,7 @@ app.post('/opendelete',(req,res)=>{
   //helyfoglalás delete
 
 app.post("/reservationDelete",(req,res)=>{
-  if(session.Rights=="etterem")
+  if(session.Rights=="user"||session.Rights=="admin")
   {
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=${req.body.ID}`,(err,results)=>{
       if(err)throw err;
@@ -862,6 +882,95 @@ app.post("/reservationDelete",(req,res)=>{
     res.json({message:"Nem engedélyezett"});
   }
 })
+
+  //képek select
+
+app.post("/imageselect",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    dbPool.query(`SELECT * FROM kepek WHERE Etterem_ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+        res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //képek delete
+
+app.post("/imagedelete",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    dbPool.query(`DELETE FROM kepek WHERE ID=${req.body.ID}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //képek update
+
+app.post("/imageupdate",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    let data={
+      id:req.body.ID,
+      img:req.body.IMG,
+    }
+    dbPool.query(`UPDATE kepek SET Kepek='${data.img}' WHERE ID=${data.id}`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //kép insert
+
+app.post("/imageinsert",(req,res)=>{
+  if(session.Rights=="etterem"||session.Rights=="admin")
+  {
+    let data={
+      etterem_id:req.body.EtteremID,
+      img:req.body.IMG,
+    }
+    dbPool.query(`INSERT INTO kepek VALUES(null,${data.etterem_id},'${data.img}')`,(err,results)=>{
+      if(err)throw err;
+      res.json({message:"ok"});
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
+  //idő lekérdezése
+
+app.get("/time",(req,res)=>{
+  if(session.Rights=="user"||session.Rights=="admin"||session.Rights=="etterem")
+  {
+    dbPool.query('SELECT CURRENT_TIMESTAMP AS Ido',(err,results)=>{
+      if(err)throw err;
+      res.json(results);
+    })
+  }
+  else
+  {
+    res.json({message:"Nem engedélyezett"});
+  }
+})
+
 app.listen(port, ()=>{
     console.log(`Server listening on port ${port}...`);
 });

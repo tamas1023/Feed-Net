@@ -209,6 +209,46 @@ app.config(function($routeProvider){
         templateUrl:'etteremnyitvatartas.html',
         controller:'etteremnyitvatartasCtrl'
     })
+    .when('/etteremkepek',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremkepek.html',
+        controller:'etteremkepekCtrl'
+    })
+   
+    .when('/admin/etteremkepek/:id',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="admin"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremkepek.html',
+        controller:'etteremkepekCtrl'
+    })
+    .when('/reservationmod',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&($rootScope.logJog=="admin"||$rootScope.logJog=="user")))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'helyfoglalasmodisitas.html',
+        controller:'helyfoglalasCtrl'
+    })
 })
 
 

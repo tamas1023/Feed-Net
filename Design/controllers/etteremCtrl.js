@@ -13,7 +13,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         {
             $scope.ettermek=res.data;
         }
-       //console.log(res.data.length);
+       //console.log(res.data);
     });
     $scope.selectRow=function($id){
        $scope.ModID=$scope.ettermek[$id].ID;
@@ -22,7 +22,11 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.email=$scope.ettermek[$id].Email;
         $scope.ujtelefon=$scope.ettermek[$id].Telefon;
         $scope.ujcim=$scope.ettermek[$id].Cim;
+        $scope.ujweboldal=$scope.ettermek[$id].Weboldal;
+        $scope.ujfacebook=$scope.ettermek[$id].Facebook;
         $scope.ujleiras=$scope.ettermek[$id].Leiras;
+        $scope.ujtipus=$scope.ettermek[$id].Tipus;
+        $scope.ujwifi=($scope.ettermek[$id].Wifi)? true : false;
        // $scope.parkolo=$scope.ettermek[$id].Parkolo;
         $scope.ujparkolo=($scope.ettermek[$id].Parkolo)? true : false;
         $scope.ujbankkartya=($scope.ettermek[$id].Bankkartya)? true : false;
@@ -36,7 +40,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     }
     $scope.update=function()
     {   
-        if($scope.ujemail!=$scope.ujemail)
+        if($scope.email!=$scope.ujemail)
         {
             dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
@@ -51,7 +55,8 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                     }
                     else
                     {
-                        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                        //ujweboldal,ujfacebook
+                        dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
                     
                             dbfactory.admindingingselect().then(function(res){
                                 if(res.data.length>0)
@@ -74,7 +79,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
             }
             else
             {
-                dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
             
                     dbfactory.admindingingselect().then(function(res){
                         if(res.data.length>0)
@@ -94,6 +99,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujID=null;
         $scope.ujnev=null;
         $scope.ujemail=null;
+        $scope.email=null;
         $scope.ujtelefon=null;
         $scope.ujcim=null;
         $scope.ujleiras=null;
@@ -105,6 +111,10 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujhazhozszallitas=null
         $scope.ujferohely=null;
         $scope.ujstatusz=null;
+        $scope.ujweboldal=null;
+        $scope.ujfacebook=null;
+        $scope.ujtipus=null;
+        $scope.ujwifi=null;
         $rootScope.felvesz=1;
         
     }
@@ -122,6 +132,11 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
     {
         $rootScope.selectedetteremID=id;
         $location.url('/admin/etteremnyitva/'+$rootScope.selectedetteremID);
+    }
+    $scope.etteremkepek=function(id)
+    {            
+        $rootScope.selectedetteremID=id;
+        $location.url('/admin/etteremkepek/'+$rootScope.selectedetteremID);
     }
     $scope.visszavaltasetterem=function()
     {
@@ -145,7 +160,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
             }
             else
             {
-                if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null)
+                if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null||$scope.ujtipus==null)
                 {
                     alert('a kellő adatok nincsenek kitöltve ')
                 }
@@ -158,7 +173,8 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                     $scope.ujberelheto=( $scope.ujberelheto)? true : false;
                     $scope.ujhazhozszallitas=( $scope.ujhazhozszallitas)? true : false;
                     $scope.ujstatusz=( $scope.ujstatusz)? true : false;
-                    dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz).then(function(res){
+                    $scope.ujwifi=($scope.ujwifi)? true : false;
+                    dbfactory.admindininginsert($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
                         dbfactory.admindingingselect().then(function(res){
                             if(res.data.length>0)
                             {
