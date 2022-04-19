@@ -30,6 +30,18 @@
               <label for="floatingInput">Cím</label>
             </div>
             <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujweboldal" placeholder="+">
+              <label for="floatingInput">Weboldal</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujfacebook" placeholder="+">
+              <label for="floatingInput">Facebook</label>
+            </div>
+            <div class="form-floating mb-3 ">
+              <input type="text" class="form-control" id="floatingInput" ng-model="ujtipus" placeholder="+">
+              <label for="floatingInput">Tipus</label>
+            </div>
+            <div class="form-floating mb-3 ">
               <input type="number" min="0" class="form-control" id="floatingInput" ng-model="ujferohely" placeholder="+">
               <label for="floatingInput">Férőhely</label>
             </div>
@@ -58,6 +70,10 @@
             <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujberelheto" ng-checked="ujberelheto==1"><br>
           </div>
           <div class="form-check form-switch ">
+            <label for="berelheto">Wifi</label>
+            <input type="checkbox" class="form-check-input" name="berelheto" ng-model="ujwifi" ng-checked="ujwifi==1"><br>
+          </div>
+          <div class="form-check form-switch ">
             <label for="hazhozszallitas">Házhozszállítás</label>
             <input type="checkbox" class="form-check-input" name="hazhozszallitas" ng-model="ujhazhozszallitas" ng-checked="ujhazhozszallitas==1"><br>
           </div>
@@ -83,7 +99,7 @@
               <th>Név</th>
               <th>Telefon</th>
               <th>Cím</th>
-              <th>Leírás</th>
+              <th>Képek módosítása</th>
               <th>Nyitva tartás</th>
               <th>Étlap</th>
             </tr>
@@ -93,7 +109,7 @@
               <td>{{adat.Nev}}</td>
               <td>{{adat.Telefon}}</td>
               <td>{{adat.Cim}}</td>
-              <td>{{adat.Leiras}}</td>
+              <td><a ng-click="etteremkepek(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-card-image"></i></td></button></td>
               <td><a ng-click="etteremnyitva(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-calendar-week"></i></td></button></td>
               <td><a ng-click="etterem(adat.ID)"> <button class="btn menucolor" ><i class="bi bi-list"></i></td></button></a>
             </tr>

@@ -274,7 +274,7 @@ app.factory('dbfactory', function($http, $q) {
 
         //admin Étterem update
 
-        admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+        admindiningupdate:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz,webodal,facebook,tipus,wifi) {
             let deferred = $q.defer();
             let data = {
                 ID:id,
@@ -290,7 +290,11 @@ app.factory('dbfactory', function($http, $q) {
                 Terasz:terasz,
                 Berelheto:berelheto,
                 Hazhozszallitas:hazhozszallitas,
-                Statusz:statusz
+                Statusz:statusz,
+                Weboldal:webodal,
+                Facebook:facebook,
+                Tipus:tipus,
+                Wifi:wifi
             }
             $http.post(url + '/admindiningupdate',data).then(
                 function(res) {
@@ -304,7 +308,7 @@ app.factory('dbfactory', function($http, $q) {
         },
 
          //admin Étterem insert
-         admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz) {
+         admindininginsert:function(id,nev,email,telefon,cim,ferohely,leiras,parkolo,bankkartya,glutenmentes,terasz,berelheto,hazhozszallitas,statusz,webodal,facebook,tipus,wifi) {
             let deferred = $q.defer();
             let data = {
                 ID:id,
@@ -320,7 +324,11 @@ app.factory('dbfactory', function($http, $q) {
                 Terasz:terasz,
                 Berelheto:berelheto,
                 Hazhozszallitas:hazhozszallitas,
-                Statusz:statusz
+                Statusz:statusz,
+                Weboldal:webodal,
+                Facebook:facebook,
+                Tipus:tipus,
+                Wifi:wifi,
             }
             $http.post(url + '/admindininginsert',data).then(
                 function(res) {
@@ -729,11 +737,13 @@ app.factory('dbfactory', function($http, $q) {
     
         //étterem nyitvatartás update
 
-        openupdate:function(id,nyitas,zaras) {
+        openupdate:function(id,nyitas,zaras,napid,nap) {
             let data = {
                 ID:id,
                 Nyitas:nyitas,
-                Zaras:zaras
+                Zaras:zaras,
+                Napid:napid,
+                Nap:nap
             }
             let deferred = $q.defer();
             $http.post(url + '/openupdate',data).then(
@@ -784,12 +794,13 @@ app.factory('dbfactory', function($http, $q) {
 
             //étterem nyitvatartás insert
 
-        openinsert:function(id,nap,nyitas,zaras) {
+        openinsert:function(id,nap,nyitas,zaras,napid) {
             let data = {
                 ID:id,
                 Nap:nap,
                 Nyitas:nyitas,
-                Zaras:zaras
+                Zaras:zaras,
+                Napid:napid
             }
             let deferred = $q.defer();
             $http.post(url + '/openinsert',data).then(
@@ -850,6 +861,80 @@ app.factory('dbfactory', function($http, $q) {
             }
             let deferred = $q.defer();
             $http.post(url + '/reservationDelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //kép select
+
+        imageselect:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageselect',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek delete
+
+        imagedelete:function(id) {
+            let data = {
+                ID:id
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imagedelete',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek update
+
+        imageupdate:function(id,img) {
+            let data = {
+                ID:id,
+                IMG:img
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageupdate',data).then(
+                function(res) {
+                    deferred.resolve(res);
+                },
+                function(err) {
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
+
+        //képek insert
+
+        imageinsert:function(id,img) {
+            let data = {
+                EtteremID:id,
+                IMG:img
+            }
+            let deferred = $q.defer();
+            $http.post(url + '/imageinsert',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },
