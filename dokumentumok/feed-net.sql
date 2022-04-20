@@ -1,15 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
-
--- Létrehozás ideje: 2022. Ápr 18. 19:11
--- Kiszolgáló verziója: 10.4.17-MariaDB
--- PHP verzió: 8.0.1
-
+-- Létrehozás ideje: 2022. Ápr 20. 13:05
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -147,7 +146,7 @@ CREATE TABLE `ettermek` (
   `Hazhozszallitas` tinyint(1) NOT NULL,
   `Leiras` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Tipus` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `Wifi` int(11) NOT NULL,
+  `Wifi` tinyint(4) NOT NULL,
   `Statusz` tinyint(1) NOT NULL,
   `Kep` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Weboldal` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
@@ -159,11 +158,10 @@ CREATE TABLE `ettermek` (
 -- A tábla adatainak kiíratása `ettermek`
 --
 
-INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Statusz`, `Kep`, `Weboldal`, `Facebook`, `nyitvavane`) VALUES
-(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 1, 'img/rozsaetterem.jpg', NULL, NULL, 0),
-(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 'img/kedvencetterem.jpg', NULL, NULL, 1),
-(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 1, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 0, 'img/rozsaetterem.jpg', NULL, NULL, 0);
-
+INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`, `Glutenmentes`, `Terasz`, `Berelheto`, `Cim`, `Ferohely`, `Hazhozszallitas`, `Leiras`, `Tipus`, `Wifi`, `Statusz`, `Kep`, `Weboldal`, `Facebook`, `nyitvavane`) VALUES
+(1, 'etterem1@gmail.com', 'Étterem1', '+36793556834', 1, 0, 0, 1, 0, '6500 Baja Ady Endre utca 300', 35, 0, 'Bajai Étterem', 'Magyar', 0, 1, 'img/rozsaetterem.jpg', NULL, NULL, 0),
+(2, 'etterem2@gmail.com', 'Étterem2', '+36793558862', 1, 1, 1, 1, 1, '6500 Baja Kovács Béla utca 23', 20, 1, 'Bajai étterem minden funkcióval', 'Japán', 1, 1, 'img/kedvencetterem.jpg', NULL, NULL, 1),
+(3, 'etterem3@gmail.com', 'Étterem3', '+36792556872', 0, 0, 0, 0, 0, '6500 Baja Kovács István utca 42', 20, 1, 'Bajai étterem semmilyen funkcióvall', 'Kínai', 1, 0, 'img/rozsaetterem.jpg', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -182,10 +180,9 @@ CREATE TABLE `ettermek_ertekelesek` (
 ,`Terasz` tinyint(1)
 ,`Berelheto` tinyint(1)
 ,`Hazhozszallitas` tinyint(1)
-,`Wifi` int(11)
+,`Wifi` tinyint(4)
 ,`Leiras` varchar(1000)
 ,`Statusz` tinyint(1)
-,`nyitvavane` tinyint(4)
 );
 
 -- --------------------------------------------------------
@@ -211,10 +208,8 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-
 (1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-18 19:04:48', 1, 'admin'),
 (2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-16 13:27:41', 1, 'user'),
-
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem');
 
 -- --------------------------------------------------------
@@ -278,11 +273,9 @@ CREATE TABLE `kedvenc` (
 --
 
 INSERT INTO `kedvenc` (`ID`, `Etterem_ID`, `Felhasznalo_ID`) VALUES
-
 (4, 1, 1),
 (3, 2, 1),
 (2, 3, 1);
-
 
 -- --------------------------------------------------------
 
@@ -334,7 +327,7 @@ CREATE TABLE `nyitvatartas` (
 INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `napid`, `Nyitas`, `Zaras`) VALUES
 (1, 1, 'Hétfő', 2, '07:00:00', '15:00:00'),
 (2, 1, 'Kedd', 3, '09:00:00', '20:00:00'),
-(3, 1, 'Szerda', 4, '09:00:00', '20:00:00'),
+(3, 1, 'Szerda', 4, '09:00:00', '12:00:00'),
 (4, 1, 'Csütörtök', 5, '09:00:00', '20:00:00'),
 (5, 1, 'Péntek', 6, '09:00:00', '20:00:00'),
 (6, 1, 'Szombat', 7, '09:00:00', '23:00:00'),
@@ -361,7 +354,7 @@ INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `napid`, `Nyitas`, `Zaras
 --
 DROP TABLE IF EXISTS `ertekelesek`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ertekelesek`  AS SELECT `felhasznalok`.`Nev` AS `Nev`, `felhasznalok`.`ID` AS `Felhasznalo_ID`, `ettermek`.`ID` AS `Etterem_ID`, `ertekeles`.`Datum` AS `Datum`, `ertekeles`.`Pontszam` AS `Pontszam`, `ertekeles`.`Ertekeles` AS `Ertekeles`, `ertekeles`.`ID` AS `Ertekeles_ID` FROM ((`ertekeles` join `felhasznalok`) join `ettermek`) WHERE `ertekeles`.`Felhasznalo_ID` = `felhasznalok`.`ID` AND `ettermek`.`ID` = `ertekeles`.`Etterem_ID` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ertekelesek`  AS  select `felhasznalok`.`Nev` AS `Nev`,`felhasznalok`.`ID` AS `Felhasznalo_ID`,`ettermek`.`ID` AS `Etterem_ID`,`ertekeles`.`Datum` AS `Datum`,`ertekeles`.`Pontszam` AS `Pontszam`,`ertekeles`.`Ertekeles` AS `Ertekeles`,`ertekeles`.`ID` AS `Ertekeles_ID` from ((`ertekeles` join `felhasznalok`) join `ettermek`) where `ertekeles`.`Felhasznalo_ID` = `felhasznalok`.`ID` and `ettermek`.`ID` = `ertekeles`.`Etterem_ID` ;
 
 -- --------------------------------------------------------
 
@@ -370,9 +363,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `ettermek_ertekelesek`;
 
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS SELECT `ettermek`.`ID` AS `ID`, `ettermek`.`Nev` AS `Nev`, `ettermek`.`Kep` AS `Kep`, round(sum(`ertekeles`.`Pontszam`) / count(`ertekeles`.`Pontszam`),1) AS `Ertekeles`, `ettermek`.`Parkolo` AS `Parkolo`, `ettermek`.`Bankkartya` AS `Bankkartya`, `ettermek`.`Glutenmentes` AS `Glutenmentes`, `ettermek`.`Terasz` AS `Terasz`, `ettermek`.`Berelheto` AS `Berelheto`, `ettermek`.`Hazhozszallitas` AS `Hazhozszallitas`, `ettermek`.`Leiras` AS `Leiras`, `ettermek`.`Statusz` AS `Statusz`, `ettermek`.`nyitvavane` AS `nyitvavane` FROM (`ettermek` join `ertekeles`) WHERE `ettermek`.`ID` = `ertekeles`.`Etterem_ID` GROUP BY `ettermek`.`Nev` ;
-
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ettermek_ertekelesek`  AS  select `ettermek`.`ID` AS `ID`,`ettermek`.`Nev` AS `Nev`,`ettermek`.`Kep` AS `Kep`,round(sum(`ertekeles`.`Pontszam`) / count(`ertekeles`.`Pontszam`),1) AS `Ertekeles`,`ettermek`.`Parkolo` AS `Parkolo`,`ettermek`.`Bankkartya` AS `Bankkartya`,`ettermek`.`Glutenmentes` AS `Glutenmentes`,`ettermek`.`Terasz` AS `Terasz`,`ettermek`.`Berelheto` AS `Berelheto`,`ettermek`.`Hazhozszallitas` AS `Hazhozszallitas`,`ettermek`.`Wifi` AS `Wifi`,`ettermek`.`Leiras` AS `Leiras`,`ettermek`.`Statusz` AS `Statusz` from (`ettermek` join `ertekeles`) where `ettermek`.`ID` = `ertekeles`.`Etterem_ID` group by `ettermek`.`Nev` ;
 
 --
 -- Indexek a kiírt táblákhoz
@@ -487,9 +478,7 @@ ALTER TABLE `hibajelentes`
 -- AUTO_INCREMENT a táblához `kedvenc`
 --
 ALTER TABLE `kedvenc`
-
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 
 --
 -- AUTO_INCREMENT a táblához `kepek`
