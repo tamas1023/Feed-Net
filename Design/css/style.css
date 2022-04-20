@@ -12,11 +12,6 @@
     --unchecked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='%23fff' stroke='%23666' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
     --checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='red' stroke='%23fff' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
     --hovered-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
-
-
-    /*--checked-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='gold' stroke='%23666' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
-    --hovered-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3e%3cpath fill='red' stroke='%23fff' stroke-width='2' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3e%3c/svg%3e");
-    */
     
     --max-stars: 5;
    
@@ -80,37 +75,6 @@ body {
 .modal-body h4{
     margin-top: 10px;
 }
-/*Star rating system*/
-/*
-.rating-css {
-    height: 50px;
-    width: 200px;
-}
-.rating-css div {
-    color: #ffe400;
-    font-size: 10px;
-    font-family: sans-serif;
-    font-weight: 800;
-    text-align: center;
-    text-transform: uppercase;
-    padding: 5px 0;
-}
-.rating-css input {
-    display: none;
-}
-.rating-css input + label {
-    font-size: 20px;
-    text-shadow: 1px 1px 0 #ffe400;
-    cursor: pointer;
-}
-.rating-css input:checked + label ~ label {
-    color: #838383;
-}
-.rating-css label:active {
-    transform: scale(0.8);
-    transition: 0.3s ease;
-}
-*/
 .rating {
     display: flex;
     width: 100%;
@@ -148,10 +112,6 @@ body {
   .rating > input:not(:checked) ~ label:hover ~ label {
     background-image: var(--hovered-image);
   }
-  
-
-
-  
 
 .star-rating{
     width: min-content;
@@ -206,7 +166,6 @@ body {
     background-image: var(--hovered-image); 
 }
 
-
 .star-rating input,
 .star-rating label>span{
     border: 0;
@@ -221,30 +180,10 @@ body {
     clip-path: inset(50%); /*modern browsers, clip-path works inwards from each corner*/
     white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 }
-
-.star-rating>div:focus-within{
-    /*Ha ki akarjuk emelni
-    outline: 0.25rem solid lightblue;
-    */
-    
-    
-}
-
 .star-value{
   font-size: 5rem;
   margin: 0.2rem;
 }
-
-
-
-
-
-
-
-
-
-
-
 .accordion-button {
     background-color: slategray;
 }
@@ -254,7 +193,6 @@ body {
 }
 img{
     width: 100%;
-    /*height: 100%;*/
 }
 #menu{
  position: fixed;
@@ -314,8 +252,6 @@ a:hover{
     top: 56px;
     transition: .1s;
     padding: 15px;
-    /*
-    background-color: var(--lesshighlight);*/
     width: 80px;
     margin-bottom: 80px;
     z-index: 0;
@@ -399,8 +335,6 @@ a:hover{
     display: none;
     position: fixed;
     z-index: 1;
-    /*
-    top: 35px;*/
     left: 0;
     background-color:var(--lesshighlight);
     overflow-x: hidden;
@@ -477,16 +411,7 @@ a:hover{
     color: var(--highlight);
     font-weight: bold;
     margin:0 auto;
-    /* a szöveg középre helyezése
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;*/
     transition: 0.5s;
-    
-}
-#footer a{
-    
     
 }
 a{
@@ -500,7 +425,6 @@ a:hover{
 
 #kivalasztottegesz{
     width: 100%;
-    /*padding: 10px;*/
     padding-top: 55px;
 
 }
@@ -516,7 +440,6 @@ a:hover{
     justify-content: flex-end;
 }
 .gombok button{
-    /*float: right;*/
     margin-right: 10px;
     margin-bottom: 10px;
 }
@@ -534,20 +457,8 @@ a:hover{
     word-break: break-word;
 }
 #infok{
-    /*display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 150px;
-    border: 1px solid black;*/
     margin-top: 50px;
 }
-/*
-#informaciok{
-    height: 100%;
-    width: 100%;
-}*/
-
-
 #etelkritikus{
     
     width: 150px;
@@ -583,23 +494,8 @@ a:hover{
     border: 1px solid black;
     margin-bottom: 10px;
 }
-@media (min-width: 992px) {
-    .reg
-{
-    position: absolute;
-    cursor: pointer;
-    right: 0;
-}
-
-}
-@media screen and (max-height: 450px) {
-    #mySidebar {padding-top: 15px;}
-    #mySidebar a {font-size: 18px;}
-}
-
 .container
 {
-    /*background-color: rgba(100,100, 100, 0.2);*/
     background-color: white;
     box-shadow: 0 0 15px gray;
     margin: 50px auto;
@@ -615,48 +511,6 @@ a:hover{
 .form-group
 {
 padding: 2px;
-}
-@media (min-width: 992px) {
-    .logout
-{
-    position: absolute;
-    cursor: pointer;
-    right: 0;
-}
-
-}
-@media (max-width: 767px) {
-    .login
-    {
-        position: relative;
-        cursor: pointer;
-        right: 0;
-    }
-    .profilmod
-    {
-        position: relative;
-        cursor: pointer;
-        right: 0; 
-    }
-    .rendelesekmod
-    {
-        position: relative !important;
-        cursor: pointer !important;
-        right: 0 !important;
-    }
-    .reg
-    {
-        position: relative;
-        cursor: pointer;
-    }
-    #kereso
-    {
-        width: 40%;
-    }
-    #footerthings{
-        text-align:start;
-    }
-
 }
 #h2{
     padding: 3px;
@@ -714,29 +568,6 @@ letter-spacing: 3px;
     background-color: var(--hoverszin);
     cursor: pointer;
 }
-@media (max-width: 576px) {
-
-    #adminegesz{
-    padding-left: 2px;
-    padding-right:2px ;
-}
-@media (max-width: 444px) {
-
-    #ertekelesgomb{
-        display: block;
-    }
-}
-}
-
-  @media (max-width: 420px) {
-
-
-   .admin{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-   }
-  }
 #kereso
 {
     display: block;
@@ -752,13 +583,6 @@ letter-spacing: 3px;
 {
     margin-top: 5px;margin-bottom: 20px;
 }
-
-@media (max-width: 768px) {
-    .gombok{
-        display: block;
-    }
-}
-
 .Etlap{
     display: flex;
     flex-direction: column;
@@ -879,13 +703,6 @@ div.loginfloating
     padding-bottom: 10px;
     padding-top: 10px;
 }
-@media (max-width:280px)
-{
-    #regdiv
-    {
-        position: relative !important;
-    }
-}
 #page-container {
     position: relative;
     min-height: 100vh;
@@ -908,3 +725,99 @@ div.loginfloating
 #problem{
     color: var(--feher);
 }
+@media (min-width: 992px) {
+    .reg
+{
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+
+}
+@media screen and (max-height: 450px) {
+    #mySidebar {padding-top: 15px;}
+    #mySidebar a {font-size: 18px;}
+}
+
+
+@media (min-width: 992px) {
+    .logout
+{
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
+
+}
+@media (max-width: 767px) {
+    .login
+    {
+        position: relative;
+        cursor: pointer;
+        right: 0;
+    }
+    .profilmod
+    {
+        position: relative;
+        cursor: pointer;
+        right: 0; 
+    }
+    .rendelesekmod
+    {
+        position: relative !important;
+        cursor: pointer !important;
+        right: 0 !important;
+    }
+    .reg
+    {
+        position: relative;
+        cursor: pointer;
+    }
+    #kereso
+    {
+        width: 40%;
+    }
+    #footerthings{
+        text-align:start;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    #adminegesz{
+    padding-left: 2px;
+    padding-right:2px ;
+}
+@media (max-width: 444px) {
+
+    #ertekelesgomb{
+        display: block;
+    }
+}
+}
+
+  @media (max-width: 420px) {
+
+
+   .admin{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+  }
+
+@media (max-width: 768px) {
+    .gombok{
+        display: block;
+    }
+}
+
+@media (max-width:280px)
+{
+    #regdiv
+    {
+        position: relative !important;
+    }
+}
+

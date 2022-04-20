@@ -3,7 +3,6 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
     $rootScope.sidebar=false;
-    //sessionStorage.removeItem('User');
     dbfactory.logout().then(function(res){
         $rootScope.loggedIn=false;
         $rootScope.logJog="";
@@ -20,7 +19,6 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
             }
             else
             {
-              //alert($scope.ujemail);
                     
                 dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
                     if(res.data.length>0)

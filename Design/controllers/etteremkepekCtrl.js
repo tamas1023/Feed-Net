@@ -45,17 +45,19 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
      }
      $scope.insert=function()
      {
-         if($scope.ujkep==null||$scope.ujkep=="")
+         if($scope.addkep==null||$scope.addkep=="")
          {
              alert('nincs kitöltve a kép neve')
          }
          else
          {
-             let inset="img/"+$scope.ujkep;
+             let inset="img/"+$scope.addkep;
             dbfactory.imageinsert($rootScope.selectedetteremID,inset).then(function(res){
                 $scope.selectimage();
+                $scope.addkep==null;
              })
          }
+        
          
      }
      $scope.update=function()
@@ -77,5 +79,9 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
          dbfactory.imagedelete($scope.modID).then(function(res){
             $scope.selectimage();
          })
+     }
+     $scope.unselectrow=function()
+     {
+         $scope.addkep=="";
      }
 })

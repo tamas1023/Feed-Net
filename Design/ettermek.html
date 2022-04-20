@@ -2,7 +2,6 @@
     <div id="kereses">
       
       <input type="search" id="search" class="m-2" ng-model="keres" placeholder="Keresés">
-      <!--<button type="submit" class="m-2 btn btn-success" >Keresés</button>-->
          
     </div>
     
@@ -10,7 +9,6 @@
       <h1>{{nincsetterem}}</h1>
       <div id="etterem" ng-repeat="ett in ettermek | filter:{Nev:keres}" class="col-12 col-md-6 col-s-12">
         <a href="" onclick="closeNav()" ng-click="Valasztas(ett.ID)">
-          <!--  href="#!/kivalasztott/{{ett.ID}}"  -->
           <img src="{{ett.Kep}}" alt="">
           <br><br>
           <h2>{{ett.Nev}}</h2>

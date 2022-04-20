@@ -14,9 +14,6 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
         } 
         
     });
-
-    
-
     //egy gomb ami az összes szűrési feltételt reszeteli
     $scope.Szures=function () {
         

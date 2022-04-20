@@ -3,7 +3,6 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
     $rootScope.sidebar=false;
     $scope.jelszo="";
     $scope.email="";
-   // $scope.statusz=0;
     $scope.felhasznalok=[];
     dbfactory.userselect().then(function(res){
       if(res.data.length>0)
@@ -23,12 +22,10 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
          $scope.ujstatusz=$scope.felhasznalok[id].Statusz ? true:false;
          if($scope.felhasznalok[id].Jog=="admin")
          {
-            //console.log($scope.felhasznalok[id].Jog,"+ id: "+id);
             $scope.admin=true;
          }
          else
          {
-            //console.log($scope.felhasznalok[id].Jog,"+ id: "+id);
             $scope.admin=false;
          }
          $rootScope.felvesz=0;
@@ -41,7 +38,6 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
         $scope.ujtelefon=null;
         $scope.ujjog=null;
         $scope.ujstatusz=null;
-       // $scope.statusz=0;
         $rootScope.felvesz=1;
         $scope.admin=false;
         $scope.ujpass=null;
@@ -103,7 +99,6 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
      }
      $scope.update=function()
      { 
-         //alert($scope.jelszo,+"Új jelszó:"+$scope.ujpass)
         if($scope.jelszo!=$scope.ujpass)
         {
             $scope.ujpass=CryptoJS.SHA1($scope.ujpass).toString();

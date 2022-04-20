@@ -12,11 +12,9 @@ app.controller('helyfoglalasCtrl',function($scope,$rootScope,dbfactory){
     dbfactory.getDate().then(function(res) {               
         if (res.data.length > 0) { 
            $scope.nap=res.data[0].Nap; 
-           //console.log($scope.nap);
            dbfactory.selectCustom("nyitvatartas",'1').then(function(res) {
             if (res.data.length > 0) { 
                 $scope.nyitvatartas=res.data;
-                //console.log($scope.nyitvatartas);
                 for (let i = 0; i < res.data.length; i++) {
                     if ($scope.nap==1 && res.data[i].Nap=="Vasárnap") {
                         $scope.aktualisnap=res.data[i];
@@ -139,12 +137,10 @@ $scope.helyfoglalasSelect();
                         most.setHours(most.getHours()+12);
                         if (most<=datum) 
                         {
-                            //console.log("Elvileg megvan a 12 óra");
     
                             let hetmelyiknap=datum.getDay();
                             let melyiknapszo="";
                             //0 vasárnap ... 6 szombat
-                            //console.log(hetmelyiknap);
     
                             if (hetmelyiknap==0 ) {
                                 melyiknapszo="Vasárnap";
@@ -167,7 +163,6 @@ $scope.helyfoglalasSelect();
                             if (hetmelyiknap==6 ) {
                                 melyiknapszo="Szombat";
                             }
-                            //console.log(melyiknapszo);
                             let nyitasora;
                             let nyitasperc;                            
     
@@ -175,16 +170,13 @@ $scope.helyfoglalasSelect();
                             let zarasperc;
                             for (let i = 0; i < $scope.nyitvatartas.length; i++) {
                                 if ( $scope.nyitvatartas[i].Nap==melyiknapszo) {
-                                //console.log("megfelelonap");
                                 
                                 let nyitas=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Nyitas).format('YYYY-MM-DD HH:mm',true));
-                                //console.log(nyitas);
                                 nyitasora=nyitas.getHours();
                                 nyitasperc=nyitas.getMinutes();
                                 let zaras=new Date(moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('YYYY-MM-DD HH:mm',true));
                                 zarasora=zaras.getHours();
                                 zarasperc=zaras.getMinutes();
-                                //console.log(moment('12-25-1995 '+$scope.nyitvatartas[i].Zaras).format('HH:mm',true));
                                 }
                         
                             }
@@ -192,50 +184,41 @@ $scope.helyfoglalasSelect();
                             let nyitas=false;
                             let zaras=false;
                             if (ora>nyitasora) {
-                                //console.log("Nyitási idő után jönnének");
                                 nyitas=true;
                             } else {
                                 if (ora==nyitasora) {
                                     if (perc>=nyitasperc) {
-                                        //console.log("Nyitási idő után jönnének");
                                         nyitas=true;
                                         } else {
-                                        //console.log("Nyitás előtt perc");
                                         nyitas=false;
                                     }
                                 }
                                 else{
                                     nyitas=false;
-                                    //console.log("Nyitás előtt óra");
                                 }
                             }
                             if (ora<zarasora) {
-                                //console.log("Zárási idő előtt jönnének");
                                 zaras=true;
                             }
                             else{
                                 if (ora==zarasora) {
                                     if (perc<=zarasperc) {
-                                        //console.log("Zárási előtt után jönnének");
                                         zaras=true;
                                     }
                                     else
                                     {
-                                        //console.log("Zárás után perc");
                                         zaras=false;
                                     }
                                 }
                                 else{
-                                    //console.log("Zárás után óra");
                                     zaras=false;
                                 }
     
-                                //console.log("Zárás után óra");
                             }
                             //ha mind 2 igaz akkor benne van időben
                             $scope.foglalasokszam=0;
                             
-                            //SELECT * FROM `helyfoglalas` WHERE `Kezdes`>='ev-honap-nap-ora-perc-mp' AND Kezdes <='ev-honap-nap+1-ora-perc-mp'
+                            
                             let lekerdezesdatum=new Date($scope.datum);
 
                             lekerdezesdatum.setHours(datum.getHours()-6);
@@ -247,7 +230,6 @@ $scope.helyfoglalasSelect();
 
                             $scope.szabadhely=$scope.maxfo;
                             let feltetel2="Kezdes <='"+ev+"-"+honap+"-"+nap+"-"+ora+"-"+perc+"-00' AND Kezdes >='"+lekerdezesev+"-"+lekerdezeshonap+"-"+lekerdezesnap+"-"+lekerdezesora+"-"+lekerdezesperc+"-00' AND ID<>"+$scope.modID;
-                            //console.log($scope.feltetel);
                             if (nyitas && zaras) {
                                 dbfactory.selectCustom("helyfoglalas",feltetel2).then(function(res) {
                                     if (res.data.length > 0) { 
@@ -285,9 +267,6 @@ $scope.helyfoglalasSelect();
                         alert("A mostani idő és a rendelési idő között nem telt et 12 óra");
                         }
                     
-                       /* dbfactory.reservationUpdate( $scope.modID,$scope.ujdatum,$scope.ujfo).then(function(res){
-                            $scope.helyfoglalasSelect();
-                        })*/
                     })
                   
                 })

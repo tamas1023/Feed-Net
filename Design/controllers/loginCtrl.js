@@ -3,13 +3,11 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
     $rootScope.sidebar=false;
-    //sessionStorage.removeItem('User');
     dbfactory.logout().then(function(res){
         $rootScope.loggedIn=false;
         $rootScope.logJog="";
     });
     $scope.login=function(){
-        //alert("belepett");
          if ($scope.email == null || $scope.jelszo == null) {
              alert('Nem adtál meg minden belépési adatot!');
          } else {
@@ -28,9 +26,6 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
                         {
                             $rootScope.EtteremEmail=res.data[0].Email;
                         }
-                        //alert(res.data[0].Jog);
-                        //$rootScope.loggedUser = $scope.username;
-                        //sessionStorage.setItem('User', angular.toJson($rootScope.logJog));
                      }
                      else
                      {

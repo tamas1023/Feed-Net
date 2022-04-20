@@ -8,7 +8,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         $rootScope.sidebar=false;
         $scope.etlap=[];
         $scope.torolegyid=0;
-        //alert($rootScope.selectedetteremID);
        if($rootScope.logJog=="etterem"){ 
            dbfactory.etteremid($rootScope.EtteremEmail).then(function(r){
                 if(r.data.length>0)
@@ -19,7 +18,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                         {
                             $scope.etlap=res.data;
                         }
-                       //console.log(res.data.length);
                     });
                 }   
             });
@@ -31,7 +29,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                 {
                     $scope.etlap=res.data;
                 }
-            //console.log(res.data.length);
             });
         }
         $scope.visszavaltas=function(){
@@ -44,7 +41,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
             $scope.ujar=$scope.etlap[$id].Ar;
             $scope.ujleirasetel=$scope.etlap[$id].Leiras;
             $rootScope.felvesz2=0;
-            //alert($scope.ujID);
         }
         $scope.unselectRowEtlap=function(){
             $rootScope.felvesz2=1;
@@ -67,7 +63,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                         {
                             $scope.etlap=res.data;
                         }
-                       //console.log(res.data.length);
                     });
                 })
                 $scope.unselectRowEtlap();
@@ -87,7 +82,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                         $scope.etlap=res.data;
                     }
                     $scope.unselectRowEtlap();
-                   //console.log(res.data.length);
                 });
             })
         }
@@ -100,7 +94,6 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
                         $scope.etlap=res.data;
                     }
                     $scope.unselectRowEtlap();
-                   //console.log(res.data.length);
                 });
             })
         }

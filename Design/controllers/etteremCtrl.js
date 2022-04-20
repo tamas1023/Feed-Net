@@ -1,6 +1,4 @@
 app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
-
-   
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";
@@ -13,7 +11,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         {
             $scope.ettermek=res.data;
         }
-       //console.log(res.data);
     });
     $scope.selectRow=function($id){
        $scope.ModID=$scope.ettermek[$id].ID;
@@ -27,7 +24,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         $scope.ujleiras=$scope.ettermek[$id].Leiras;
         $scope.ujtipus=$scope.ettermek[$id].Tipus;
         $scope.ujwifi=($scope.ettermek[$id].Wifi)? true : false;
-       // $scope.parkolo=$scope.ettermek[$id].Parkolo;
         $scope.ujparkolo=($scope.ettermek[$id].Parkolo)? true : false;
         $scope.ujbankkartya=($scope.ettermek[$id].Bankkartya)? true : false;
         $scope.ujglutenmentes=($scope.ettermek[$id].Glutenmentes)? true : false;
@@ -55,7 +51,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                     }
                     else
                     {
-                        //ujweboldal,ujfacebook
                         dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
                     
                             dbfactory.admindingingselect().then(function(res){
@@ -63,7 +58,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                                 {
                                     $scope.ettermek=res.data;
                                 }
-                            //console.log(res.data.length);
                             });
                             $scope.unselectRow();
                         })
@@ -86,7 +80,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                         {
                             $scope.ettermek=res.data;
                         }
-                    //console.log(res.data.length);
                     });
                     $scope.unselectRow();
                 })
@@ -180,7 +173,6 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
                             {
                                 $scope.ettermek=res.data;
                             }
-                        //console.log(res.data.length);
                         });
                     })
                     $scope.unselectRow();
