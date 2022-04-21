@@ -25,6 +25,14 @@ body {
     background-color: var(--highlight);
     
 }
+.alert{
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    top:30px;
+    width: 320px;
+
+}
 #footerthings{
     list-style: none;
     text-align: end;

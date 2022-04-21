@@ -1,4 +1,4 @@
-app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
+app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
     $rootScope.loggedIn=false;
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
@@ -9,7 +9,8 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory){
     });
     $scope.login=function(){
          if ($scope.email == null || $scope.jelszo == null) {
-             alert('Nem adtál meg minden belépési adatot!');
+             //alert('Nem adtál meg minden belépési adatot!');
+             Notify.addMessage('Nem adtál meg minden belépési adatot!', "danger");
          } else {
              dbfactory.logincheck($scope.email, CryptoJS.SHA1($scope.jelszo).toString()).then(function(res) {
                  if (res.data.length > 0) {

@@ -1,4 +1,4 @@
-var app= new angular.module('Feed-Net',['ngRoute',]);
+var app= new angular.module('Feed-Net',['ngRoute','angularjsNotify',]);
 
 app.run(function($rootScope,dbfactory){
     $rootScope.sidebar=false;
@@ -30,7 +30,8 @@ app.run(function($rootScope,dbfactory){
     })
    
 });
-app.config(function($routeProvider){
+app.config(function($routeProvider,NotifyProvider){
+    NotifyProvider.config.displayTime = 3000;
     $routeProvider
     
     .when('/reg',{
