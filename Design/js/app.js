@@ -17,8 +17,6 @@ app.run(function($rootScope,dbfactory){
         $rootScope.EtteremEmail=res.data;
     })
     dbfactory.session().then(function(res){
-        //console.log(res.data);
-      //  sessionStorage.setItem('User', angular.toJson(res.data));
         $rootScope.logJog=res.data[0].Rights;
         $rootScope.loggedInUserID=res.data[0].ID;
         
@@ -26,7 +24,6 @@ app.run(function($rootScope,dbfactory){
         {
             $rootScope.loggedIn=true;
         }
-        //$location.path("#!/");
     })
    
 });
@@ -62,12 +59,6 @@ app.config(function($routeProvider){
         templateUrl:'kedvencettermek.html',
         controller:'kedvencekCtrl'
     })
-    /*
-    .when('/kivalasztott/',{
-        
-        templateUrl:'kivalasztott.html',
-        controller:'kivalasztottCtrl'
-    })*/
     
     .when('/kivalasztott/:id',{
         

@@ -401,7 +401,7 @@ app.post('/errordelete',(req,res)=>{
 app.get('/ratingselect',(req,res)=>{
   if(session.Rights=="admin")
   {
-    dbPool.query(`SELECT  ertekeles.ID,ettermek.Nev as EtNev,felhasznalok.Nev,ertekeles.Ertekeles,ertekeles.Pontszam,ertekeles.Datum FROM ertekeles,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID `,(err,results)=>{
+    dbPool.query(`SELECT  ertekeles.ID,ettermek.Nev as EtNev,felhasznalok.Nev,ertekeles.Ertekeles,ertekeles.Pontszam,ertekeles.Datum FROM ertekeles,ettermek,felhasznalok WHERE Etterem_ID=ettermek.ID AND felhasznalok.ID=Felhasznalo_ID ORDER BY ertekeles.Datum DESC `,(err,results)=>{
       if(err)throw err;
       res.json(results);
     })

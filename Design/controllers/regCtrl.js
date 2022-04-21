@@ -31,26 +31,6 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
                         let Lenght = RegExp(/^.{8,32}$/);
                         let hasNumber = RegExp(/^.*[0-9].*$/);
                         let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
-                        if(Lenght.test($scope.ujjelszo))
-                        {
-                            alert('hossz megfelel');
-                        }
-                        if(hasNumber.test($scope.ujjelszo))
-                        {
-                            alert('Van szám');
-                        }
-                        else
-                        {
-                            alert('Nincs szám');
-                        }
-                        if(hasUpperLowerCase.test($scope.ujjelszo))
-                        {
-                            alert('Van Nagy kicsi ');
-                        }
-                        else
-                        {
-                            alert("Nincs nagy kicsi");
-                        }
                         //!$scope.ujjelszo.match(pattern)
                         if(!Lenght.test($scope.ujjelszo)||!hasNumber.test($scope.ujjelszo)||!hasUpperLowerCase.test($scope.ujjelszo))
                         {
