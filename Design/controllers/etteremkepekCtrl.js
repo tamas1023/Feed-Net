@@ -82,6 +82,6 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
      }
      $scope.unselectrow=function()
      {
-         $scope.addkep=="";
+         $scope.addkep=null;
      }
 })

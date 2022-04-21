@@ -1,0 +1,15 @@
+.env file lérehozása az API könyvtárban
+tartalma:
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASS=""
+DB_NAME="Feed-Net"
+port=8080
+npm i az API könyvtárban
+az adatbázis létrehozása
+a letöltött file okat az xampp htdocs mappába tenni
+
+http://localhost/+(az elérési útvonal a htdocs mappán bellül) pld:
+
+http://localhost/Feed-Net/Feed-Net/Design itt a feed-net mappán bellülre csomagoltuk ki a fileokat
+http://localhost/Feed-Net/Design Ha közvetlen a htdocs ba csomagoljuk ki akkor
