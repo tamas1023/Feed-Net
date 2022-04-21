@@ -5,9 +5,11 @@ DB_USER="root"
 DB_PASS=""
 DB_NAME="Feed-Net"
 port=8080
-npm i az API könyvtárban
+npm i (belpéve az API könyvtárban)
 az adatbázis létrehozása
 a letöltött file okat az xampp htdocs mappába tenni
+az xampp et elindítani
+npm run dev a parancs sorba hogy elinduljon a server
 
 http://localhost/+(az elérési útvonal a htdocs mappán bellül) pld:
 
