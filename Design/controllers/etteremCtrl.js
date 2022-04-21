@@ -1,4 +1,4 @@
-app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
+app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
     $scope.ettermek=[];
     $scope.title="Étterem";
     $scope.teszt1="teszt1";
@@ -41,13 +41,15 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
             dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
                 {
-                    alert('Ez az email cím már foglalat');
+                    
+                    Notify.addMessage('Ez az email cím már foglalat', "danger");
                 }
                 else
                 {
                     if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null)
                     {
-                        alert('a kellő adatok nincsenek kitöltve ')
+                        
+                        Notify.addMessage('A kellő adatok nincsenek kitöltve', "danger");
                     }
                     else
                     {
@@ -69,7 +71,8 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         { 
             if($scope.ujnev==""|| $scope.ujemail==null||$scope.ujtelefon==""||$scope.ujcim==""||$scope.ujleiras=="")
             {
-                alert('a kellő adatok nincsenek kitöltve ')
+               
+                Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
             }
             else
             {
@@ -149,13 +152,15 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory){
         dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
             if(res.data.length>0)
             {
-                alert('Ez az email cím már foglalat');
+                
+                Notify.addMessage('Ez az email cím már foglalt', "danger");
             }
             else
             {
                 if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null||$scope.ujtipus==null)
                 {
-                    alert('a kellő adatok nincsenek kitöltve ')
+                    
+                    Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
                 }
                 else
                 {

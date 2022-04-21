@@ -1,4 +1,4 @@
-app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
+app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
     $rootScope.loggedIn=false;
     $rootScope.logJog="";
     $rootScope.logivagyreg=true;
@@ -9,13 +9,15 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
     });
     $scope.reg=function(){
         if ($scope.ujemail == null || $scope.ujjelszo == null||$scope.ujnev==null||$scope.ujjelszo2==null) {
-            alert('Nem adtál meg minden regisztráláshoz adatot!');
+            
+            Notify.addMessage('Nem adtál meg minden regisztráláshoz adatot!', "danger");
         }
         else
         {
             if($scope.ujjelszo!=$scope.ujjelszo2)
             {
-                alert("A két jelszó nem egyezik");
+                
+                Notify.addMessage('A két jelszó nem egyezik', "danger");
             }
             else
             {
@@ -23,7 +25,8 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
                 dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
                     if(res.data.length>0)
                     {
-                        alert('Ez az email cím már foglalat');
+                        
+                        Notify.addMessage('Ez az email cím már foglalt', "danger");
                     }
                     else
                     { 
@@ -34,7 +37,8 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory){
                         //!$scope.ujjelszo.match(pattern)
                         if(!Lenght.test($scope.ujjelszo)||!hasNumber.test($scope.ujjelszo)||!hasUpperLowerCase.test($scope.ujjelszo))
                         {
-                            alert('a követelményeknak nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)');
+                            
+                            Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
                         }
                         else
                         {

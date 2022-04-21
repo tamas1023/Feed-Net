@@ -1,4 +1,4 @@
-app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
+app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,Notify){
     $rootScope.sidebar=false;
     $scope.admin=false;
     $scope.pass="";
@@ -25,7 +25,8 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
     {
         if($rootScope.logJog=='admin')
         {
-            alert('Nem törölheted ki magad');
+            
+            Notify.addMessage('Nem törölheted ki magad', "danger");
         }
         else
         {
@@ -42,7 +43,8 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
     {
         if($scope.ujnev==""||$scope.ujemail=="")
         {
-            alert('nem adtál meg mindem mezőt');
+           
+            Notify.addMessage('Nem adtál meg mindem mezőt', "danger");
         }
         else
         {
@@ -63,7 +65,8 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
         if($scope.email==$scope.ujemail)
                 {
                     dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
-                        alert('Módosítva csak név vagy email vagy telefon');
+                        
+                            Notify.addMessage('Módosítva csak név vagy email vagy telefon', "success");
                             dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                 if(res.data.length>0)
                                 {
@@ -74,19 +77,21 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
                                 $scope.email=res.data[0].Email;
                                 }
                             })
-                        })
+                    })
                 }
                 else
                 {
                     dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                         if(res.data.length>0)
                         {
-                            alert('Ez az email cím már foglalat');
+                            
+                            Notify.addMessage('Ez az email cím már foglalt', "danger");
                         }
                         else
                         {
                             dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
-                                alert('Módosítva csak név vagy email vagy telefon');
+                               
+                                Notify.addMessage('Módosítva csak név vagy email vagy telefon', "success");
                                     dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                         if(res.data.length>0)
                                         {
@@ -106,7 +111,8 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
     {
         if($scope.ujpass==""||$scope.ujpass1==""||$scope.oldpass=="")
         {
-        alert('A jelszavak nincsenek kitöltve');
+        
+        Notify.addMessage('A jelszavak nincsenek kitöltve', "danger");
         }
         else
         {
@@ -114,19 +120,22 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
             {
                 if(CryptoJS.SHA1($scope.oldpass).toString()!=$scope.pass)
                 {
-                    alert("nem megfelelő régi jelszó")
+                    
+                    Notify.addMessage('Nem megfelelő régi jelszó', "danger");
                 }
                 else
                 {
                     if($scope.ujpass!=$scope.ujpass1)
                     {
-                        alert('A két új jeszó nem egyezik');
+                        
+                        Notify.addMessage('A két új jeszó nem egyezik', "danger");
                     }
                     else
                     {
                         if($scope.ujpass==$scope.pass)
                         {
-                            alert('A régi jelszó nem lehet az új jelszó');
+                            
+                            Notify.addMessage('A régi jelszó nem lehet az új jelszó', "danger");
                         }
                         else
                         {
@@ -137,14 +146,16 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
                             let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
                             if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
                             {
-                                alert('a követelményeknak nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)');
+                                
+                                Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
                             }
                             else
                             {
                                 if($scope.email==$scope.ujemail)
                                 {
                                     dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
-                                        alert('Módosítva');
+                                        
+                                        Notify.addMessage('Módosítva', "success");
                                             dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                                 if(res.data.length>0)
                                                 {
@@ -165,12 +176,14 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location){
                                     dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                                         if(res.data.length>0)
                                         {
-                                            alert('Ez az email cím már foglalat');
+                                            
+                                            Notify.addMessage('Ez az email cím már foglalt', "danger");
                                         }
                                         else
                                         {
                                             dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,CryptoJS.SHA1($scope.ujpass).toString(), $scope.ujtelefon).then(function(res){
-                                                 alert('Módosítva');
+                                                
+                                                 Notify.addMessage('Módosítva', "success");
                                                 dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                                     if(res.data.length>0)
                                                     {

@@ -1,4 +1,4 @@
-app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
+app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory,Notify){
     $scope.admin=false;
     $rootScope.sidebar=false;
     $scope.jelszo="";
@@ -58,14 +58,16 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
      { 
         if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujjog==null||$scope.ujstatusz==null)
         {
-            alert('a kellő adatok nincsenek kitöltve ')
+            
+            Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
         }
         else
         {
             dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
                 {
-                    alert('Ez az email cím már foglalat');
+                    
+                    Notify.addMessage('Ez az email cím már foglalt', "danger");
                 }
                 else
                 {
@@ -77,7 +79,8 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
                     let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
                     if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
                     {
-                        alert('A jelszó nep felel meg a minimális követelményeknek');
+                        
+                        Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
                     }
                     else
                     {
@@ -110,14 +113,16 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
             let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
             if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
             {
-                alert('a követelményeknak nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)');
+                
+                Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
             }
             else
             {
                 $scope.ujpass=CryptoJS.SHA1($scope.ujpass).toString();
                 if($scope.ujnev==""||$scope.ujemail=="")
                 {
-                alert('a kellő adatok nincsenek kitöltve ')
+                
+                Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
                 }
                 else
                 {
@@ -126,7 +131,8 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
                             dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                                 if(res.data.length>0)
                                 {
-                                alert('Ez az email cím már foglalat');
+                                
+                                Notify.addMessage('Ez az email cím már foglalt', "danger");
                                 }
                                 else
                                 {
@@ -161,7 +167,8 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
         {
             if($scope.ujnev==""||$scope.ujemail=="")
             {
-            alert('a kellő adatok nincsenek kitöltve ')
+            
+            Notify.addMessage('A kellő adatok nincsenek kitöltve', "danger");
             }
             else
             {
@@ -170,7 +177,8 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
                         dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
                             if(res.data.length>0)
                             {
-                            alert('Ez az email cím már foglalat');
+                            
+                            Notify.addMessage('Ez az email cím már foglalt', "danger");
                             }
                             else
                             {

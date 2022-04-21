@@ -1,4 +1,4 @@
-app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
+app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory,Notify){
     $rootScope.sidebar=false;
     $scope.kepek=[];
     $scope.modID=0;
@@ -47,7 +47,8 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
      {
          if($scope.addkep==null||$scope.addkep=="")
          {
-             alert('nincs kitöltve a kép neve')
+             
+             Notify.addMessage('Nincs kitöltve a kép neve ', "danger");
          }
          else
          {
@@ -64,7 +65,8 @@ app.controller('etteremkepekCtrl',function($scope,$rootScope,dbfactory){
      {
         if($scope.ujkep==null||$scope.ujkep=="")
         {
-            alert('nincs kitöltve a kép neve')
+            
+            Notify.addMessage('Nincs kitöltve a kép neve ', "danger");
         }
         else
         {

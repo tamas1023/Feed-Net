@@ -1,4 +1,4 @@
-app.controller('helyfoglalasCtrl',function($scope,$rootScope,dbfactory){
+app.controller('helyfoglalasCtrl',function($scope,$rootScope,dbfactory,Notify){
     $rootScope.sidebar=false;
     $scope.helyfoglalas=[];
     $scope.nyitvatartas=[];
@@ -107,7 +107,8 @@ $scope.helyfoglalasSelect();
             }
             else
             {
-                alert('nem módosítható');
+                
+                Notify.addMessage('Nem módosítható', "danger");
             }
            
         }
@@ -238,12 +239,14 @@ $scope.helyfoglalasSelect();
                                         }
                                         if ($scope.foglalas.fo<=$scope.szabadhely) {
                                             dbfactory.reservationUpdate($scope.modID,$scope.ujdatum,$scope.ujfo).then(function(re) {
-                                                alert("A foglalását sikeresen elmentettük.");
+                                                
+                                                Notify.addMessage('A foglalását sikeresen elmentettük', "success");
                                                 $scope.helyfoglalasSelect();
                                             });
                                 
                                         } else {
-                                            alert("Nem sikerült elmenteni a foglalást.Nem volt elég hely a foglalás időpontjában.");
+                                            
+                                            Notify.addMessage('Nem sikerült elmenteni a foglalást.Nem volt elég hely a foglalás időpontjában.', "danger");
                                         }
                                         
                                     } 
@@ -251,20 +254,23 @@ $scope.helyfoglalasSelect();
                                         //ha a megadott időpontokban nincsen még felvéve semmi
 
                                         dbfactory.reservationUpdate($scope.modID,$scope.ujdatum,$scope.ujfo).then(function(result) {
-                                            alert("A foglalását sikeresen elmentettük.");
+                                            
+                                            Notify.addMessage('A foglalását sikeresen elmentettük', "success");
                                             $scope.helyfoglalasSelect();
                                         });
                                     }
                                 });
                             }
                             else{
-                                alert("Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.");
+                                
+                                Notify.addMessage('Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.', "danger");
                             }
     
                         }
                         else
                         {
-                        alert("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                        
+                        Notify.addMessage('A mostani idő és a rendelési idő között nem telt et 12 óra', "danger");
                         }
                     
                     })
@@ -274,7 +280,8 @@ $scope.helyfoglalasSelect();
             }
             else
             {
-                alert('nem módosítható');
+                
+                Notify.addMessage('Nem módosítható', "danger");
             }
         }
         $scope.regiadatok=function()

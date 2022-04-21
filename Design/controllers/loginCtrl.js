@@ -30,11 +30,13 @@ app.controller('loginCtrl',function($scope,$rootScope,$location,dbfactory,Notify
                      }
                      else
                      {
-                         alert('Tiltott felhasználó');
+                         
+                         Notify.addMessage('Tiltott felhasználó!', "danger");
                      }
                     
                  } else {
-                     alert('Hibás belépési adatok!');
+                     
+                     Notify.addMessage('Hibás belépési adatok!', "danger");
                  }
              });
          }

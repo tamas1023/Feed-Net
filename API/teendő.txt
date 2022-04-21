@@ -15,3 +15,5 @@ http://localhost/+(az elérési útvonal a htdocs mappán bellül) pld:
 
 http://localhost/Feed-Net/Feed-Net/Design itt a feed-net mappán bellülre csomagoltuk ki a fileokat
 http://localhost/Feed-Net/Design Ha közvetlen a htdocs ba csomagoljuk ki akkor
+
+Létre kell hozni egy Feed-Net nevű adatbázist, és abba kell beimportálni a .sql állományt
