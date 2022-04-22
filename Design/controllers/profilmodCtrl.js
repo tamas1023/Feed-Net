@@ -147,7 +147,7 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
                             if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
                             {
                                 
-                                Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
+                                Notify.addMessage('A követelményeknek nem felel meg a jelszó(minimum 8  karakter, egy nagy betű,és egy szám)', "danger");
                             }
                             else
                             {

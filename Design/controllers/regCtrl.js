@@ -38,7 +38,7 @@ app.controller('regCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
                         if(!Lenght.test($scope.ujjelszo)||!hasNumber.test($scope.ujjelszo)||!hasUpperLowerCase.test($scope.ujjelszo))
                         {
                             
-                            Notify.addMessage('A követelményeknek nem felel meg a jelszó(8 karakter minimum 1 nagy és kell bele minimum 1 szám)', "danger");
+                            Notify.addMessage('A követelményeknek nem felel meg a jelszó(minimum 8  karakter, egy nagy betű,és egy szám)', "danger");
                         }
                         else
                         {
