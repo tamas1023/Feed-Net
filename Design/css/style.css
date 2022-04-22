@@ -25,13 +25,14 @@ body {
     background-color: var(--highlight);
     
 }
-.alert{
-    position: fixed;
+
+.notifyalert {
+    position: absolute;
     z-index: 100;
     right: 10px;
     top:60px;
     width: 320px;
-
+    
 }
 #footerthings{
     list-style: none;
