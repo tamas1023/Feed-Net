@@ -48,15 +48,13 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
         }
         else
         {
-            if($scope.ujpass==null&&$scope.ujpass1==null&&$scope.oldpass==null)
+            if(($scope.ujpass==null||$scope.ujpass=="")&&($scope.ujpass1==null||$scope.ujpass1=="")&&($scope.oldpass==null||$scope.oldpass==""))
             {
-                
                 $scope.updatenameoremail();
             }
            else
            {
                $scope.updatepass();
-                
            }
         }
     }
