@@ -202,10 +202,11 @@ app.factory('dbfactory', function($http, $q) {
         },
         //értékelés törlése
         ratingDelete:function(id) {
+            let deferred = $q.defer();
             let data = {
                 ID:id
             }
-            let deferred = $q.defer();
+            
             $http.post(url + '/ratingDelete',data).then(
                 function(res) {
                     deferred.resolve(res);

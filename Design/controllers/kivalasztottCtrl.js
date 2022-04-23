@@ -613,9 +613,9 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.loggedIn==true) {
             if ($scope.jelentes=="") {
             
-                $scope.hiba2=true;
+                Notify.addMessage('Válaszd ki mit szeretnél jelenteni', "danger");
             } else {
-                $scope.hiba2=false;
+                
                 //probléma elküldése
                 dbfactory.insertProblem("hibajelentes",$rootScope.loggedInUserID,$id,$scope.jelentes,$scope.uzenet.message3).then(function(res){
                     
@@ -664,13 +664,17 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         
         if ($rootScope.csillag=="") {
             //Csillagok megadása kötelező!ű
-            $scope.hiba=true;
+            //$scope.hiba=true;
+            Notify.addMessage('Csillagok megadása kötelező!', "danger");
         }
         else{
             if ($rootScope.loggedIn==true) {
-            
+                
+                if ($scope.uzenet.message==null) {
+                    $scope.uzenet.message="";
+                }
                 dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
-                    
+                    Notify.addMessage('Értékelését sikeresen felvettük', "success");
                     
                     dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
@@ -712,10 +716,11 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     
     $scope.Torles=function () {
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
-            
+            console.log("asd");
+            console.log($rootScope.TorlesID);
             dbfactory.ratingDelete($rootScope.TorlesID).then(function(res){
+                console.log("ratiig delete után");
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
-                        
                     if (res.data.length > 0) { 
                         $scope.ertekelesek=res.data;
                         $scope.hiba=false;
@@ -752,7 +757,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.ModositFelhaszID==$rootScope.loggedInUserID) {
             if ($rootScope.csillag=="") {
                 //Csillagok megadása kötelező!
-                $scope.hiba=true;
+                //$scope.hiba=true;
+                Notify.addMessage('Csillagok megadása kötelező!', "danger");
             }
             else{
                 $scope.hiba=false;

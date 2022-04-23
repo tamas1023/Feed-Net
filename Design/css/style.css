@@ -64,6 +64,10 @@ body {
     padding-left: 10px;
     color: var(--feher);
 }
+.modal{
+    color: var(--ellenkezoszin);
+}
+
 .modalproblem{
     color: black;
     padding: 10px;
