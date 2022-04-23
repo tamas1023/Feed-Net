@@ -162,6 +162,19 @@ app.config(function($routeProvider,NotifyProvider){
         templateUrl:'etteremfoglalas.html',
         controller:'etteremfoglalasCtrl'
     })
+    .when('/etteremadatok',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremadatok.html',
+        controller:'etteremCtrl'
+    })
     .when('/profilmod',{
         resolve:
         {

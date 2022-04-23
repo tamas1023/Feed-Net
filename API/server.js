@@ -121,7 +121,7 @@ app.post('/emailcheck',(req,res)=>{
   //admin étterem update
 
 app.post('/admindiningupdate',(req,res)=>{
-  if(session.Rights=="admin")
+  if(session.Rights=="admin"||session.Rights=="etterem")
   {
     let data = {
       id:req.body.ID,

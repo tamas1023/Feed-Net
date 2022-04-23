@@ -6,12 +6,47 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
     $scope.etteremad=1;
     $scope.ModID=0;
     $scope.email="";
-    dbfactory.admindingingselect().then(function(res){
-        if(res.data.length>0)
-        {
-            $scope.ettermek=res.data;
-        }
-    });
+    $scope.etteremselect=function()
+    {
+        dbfactory.selectCustom("ettermek",`Email='${$rootScope.EtteremEmail}'`).then(function(res){
+            if(res.data.length>0)
+            {
+                $scope.ettermek=res.data;
+                $scope.ModID=$scope.ettermek[0].ID;
+                $scope.ujnev=$scope.ettermek[0].Nev;
+                $scope.ujemail=$scope.ettermek[0].Email;
+                $scope.email=$scope.ettermek[0].Email;
+                $scope.ujtelefon=$scope.ettermek[0].Telefon;
+                $scope.ujcim=$scope.ettermek[0].Cim;
+                $scope.ujweboldal=$scope.ettermek[0].Weboldal;
+                $scope.ujfacebook=$scope.ettermek[0].Facebook;
+                $scope.ujleiras=$scope.ettermek[0].Leiras;
+                $scope.ujtipus=$scope.ettermek[0].Tipus;
+                $scope.ujwifi=($scope.ettermek[0].Wifi)? true : false;
+                $scope.ujparkolo=($scope.ettermek[0].Parkolo)? true : false;
+                $scope.ujbankkartya=($scope.ettermek[0].Bankkartya)? true : false;
+                $scope.ujglutenmentes=($scope.ettermek[0].Glutenmentes)? true : false;
+                $scope.ujterasz=($scope.ettermek[0].Terasz)? true : false;
+                $scope.ujberelheto=($scope.ettermek[0].Berelheto)? true : false;
+                $scope.ujhazhozszallitas=($scope.ettermek[0].Hazhozszallitas)? true : false;
+                $scope.ujferohely=$scope.ettermek[0].Ferohely;
+                $scope.ujstatusz=($scope.ettermek[0].Statusz)? true : false;
+            }
+        });
+    }
+    if($rootScope.logJog=="etterem")
+    {
+        $scope.etteremselect();
+    }
+    else
+    {
+        dbfactory.admindingingselect().then(function(res){
+            if(res.data.length>0)
+            {
+                $scope.ettermek=res.data;
+            }
+        });
+    }
     $scope.selectRow=function($id){
        $scope.ModID=$scope.ettermek[$id].ID;
         $scope.ujnev=$scope.ettermek[$id].Nev;
@@ -55,13 +90,25 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
                     {
                         dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
                     
-                            dbfactory.admindingingselect().then(function(res){
-                                if(res.data.length>0)
+                            if($rootScope.logJog=="etterem")
+                            {
+                                $scope.etteremselect();
+                                Notify.addMessage('Az adatok módosítva', "success");
+                            }
+                            else
+                            {
+                                dbfactory.admindingingselect().then(function(res){
+                                    if(res.data.length>0)
+                                    {
+                                        $scope.ettermek=res.data;
+                                    }
+                                });
+                                if($rootScope.logJog=="admin")
                                 {
-                                    $scope.ettermek=res.data;
+                                $scope.unselectRow();
                                 }
-                            });
-                            $scope.unselectRow();
+                            }
+                           
                         })
                     }
                 }
@@ -78,13 +125,24 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
             {
                 dbfactory.admindiningupdate($scope.ModID,$scope.ujnev,$scope.ujemail,$scope.ujtelefon,$scope.ujcim,$scope.ujferohely,$scope.ujleiras,$scope.ujparkolo,$scope.ujbankkartya,$scope.ujglutenmentes,$scope.ujterasz,$scope.ujberelheto,$scope.ujhazhozszallitas,$scope.ujstatusz,$scope.ujweboldal,$scope.ujfacebook,$scope.ujtipus,$scope.ujwifi).then(function(res){
             
-                    dbfactory.admindingingselect().then(function(res){
-                        if(res.data.length>0)
+                    if($rootScope.logJog=="etterem")
+                    {
+                        $scope.etteremselect();
+                        Notify.addMessage('Az adatok módosítva', "success");
+                    }
+                    else
+                    {
+                        dbfactory.admindingingselect().then(function(res){
+                            if(res.data.length>0)
+                            {
+                                $scope.ettermek=res.data;
+                            }
+                        });
+                        if($rootScope.logJog=="admin")
                         {
-                            $scope.ettermek=res.data;
+                        $scope.unselectRow();
                         }
-                    });
-                    $scope.unselectRow();
+                    }
                 })
             }
         }
@@ -186,4 +244,5 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
         })
        
     }
+   
 });
