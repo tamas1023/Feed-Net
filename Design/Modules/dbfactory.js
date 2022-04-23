@@ -201,13 +201,13 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
         //értékelés törlése
-        ratingDelete:function(id) {
-            let deferred = $q.defer();
+        ratingDeleteuser:function(id) {
+
             let data = {
                 ID:id
             }
-            
-            $http.post(url + '/ratingDelete',data).then(
+            let deferred = $q.defer();
+            $http.post(url + '/ratingDeleteuser',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },

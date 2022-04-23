@@ -716,10 +716,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     
     $scope.Torles=function () {
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
-            console.log("asd");
-            console.log($rootScope.TorlesID);
-            dbfactory.ratingDelete($rootScope.TorlesID).then(function(res){
-                console.log("ratiig delete után");
+            dbfactory.ratingDeleteuser($rootScope.TorlesID).then(function(res){
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                     if (res.data.length > 0) { 
                         $scope.ertekelesek=res.data;

@@ -425,6 +425,7 @@ app.post('/ratingdelete',(req,res)=>{
   else
   {
     res.json({message:"Nem engedélyezett"});
+    console.log("Nem engedélyezett");
   }
 })
   //étterem is meghatározása
@@ -556,13 +557,11 @@ app.post('/reservationInsert',(req,res)=>{
   })
 
   //ertekeles torles
-app.post('/ratingDelete',(req,res)=>{
-    console.log(req.body.ID);
-    console.log(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`);
+app.post('/ratingDeleteuser',(req,res)=>{
     if(session.Rights=="admin"||session.Rights=="user"||session.Rights=="etterem")
   {
     dbPool.query(`DELETE FROM ertekeles WHERE ID=${req.body.ID}`,(err,results)=>{
-      if(err)throw console.log(err);
+      if(err)throw err;
       res.json({message:"ok"});
     })
   }
