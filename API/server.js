@@ -95,6 +95,7 @@ app.post('/emailcheck',(req,res)=>{
       table: req.body.Table,
       email: req.body.Email,
     }
+    
     dbPool.query(`SELECT * FROM ${data.table} WHERE Email='${data.email}'`, (err, results) => {
       if (err) throw err;
       res.json(results);

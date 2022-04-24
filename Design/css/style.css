@@ -27,7 +27,7 @@ body {
 }
 
 .notifyalert {
-    position: absolute;
+    position: fixed;
     z-index: 100;
     right: 10px;
     top:60px;

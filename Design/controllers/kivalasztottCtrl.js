@@ -718,9 +718,22 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
             dbfactory.ratingDeleteuser($rootScope.TorlesID).then(function(res){
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
+                    
                     if (res.data.length > 0) { 
-                        $scope.ertekelesek=res.data;
-                        $scope.hiba=false;
+                        $scope.ertekelesek=[];
+                        for (let i = 0; i < res.data.length; i++) {
+                            if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                $scope.ertekelesek.push(res.data[i]);
+                                
+                            }
+                        }
+                        for (let i = 0; i < res.data.length; i++) {
+                            if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                                $scope.ertekelesek.push(res.data[i]);
+                                
+                            }
+                        }
+
                         for (let i = 0; i < $scope.ertekelesek.length; i++) {
                             $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
                         }

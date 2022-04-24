@@ -28,7 +28,7 @@ app.run(function($rootScope,dbfactory){
    
 });
 app.config(function($routeProvider,NotifyProvider){
-    NotifyProvider.config.displayTime = 5000;
+    NotifyProvider.config.displayTime = 3000;
     $routeProvider
     
     .when('/reg',{

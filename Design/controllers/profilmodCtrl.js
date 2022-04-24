@@ -21,24 +21,7 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
         $scope.email=res.data[0].Email;
         }
     })
-    $scope.deleteRecord=function()
-    {
-        if($rootScope.logJog=='admin')
-        {
-            
-            Notify.addMessage('Nem törölheted ki magad', "danger");
-        }
-        else
-        {
-            dbfactory.profildelete($rootScope.loggedInUserID).then(function(res){
-                $rootScope.loggedIn=false;
-                $rootScope.logJog="";
-                $rootScope.EtteremEmail=0;
-                $rootScope.loggedInUserID=0;
-                $location.url('/');
-            })
-        }
-    }
+    
     $scope.update=function()
     {
         if($scope.ujnev==""||$scope.ujemail=="")
@@ -64,7 +47,7 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
                 {
                     dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
                         
-                            Notify.addMessage('Módosítva csak név vagy email vagy telefon', "success");
+                            Notify.addMessage('Sikeres módosítás', "success");
                             dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                 if(res.data.length>0)
                                 {
@@ -79,7 +62,7 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
                 }
                 else
                 {
-                    dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+                    dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
                         if(res.data.length>0)
                         {
                             
@@ -89,7 +72,7 @@ app.controller('profilmodCtrl',function($scope,$rootScope,dbfactory,$location,No
                         {
                             dbfactory.profilmod($rootScope.loggedInUserID, $scope.ujemail,$scope.ujnev,$scope.pass, $scope.ujtelefon).then(function(res){
                                
-                                Notify.addMessage('Módosítva csak név vagy email vagy telefon', "success");
+                                Notify.addMessage('Sikeres módosítás', "success");
                                     dbfactory.profilselect($rootScope.loggedInUserID).then(function(res){
                                         if(res.data.length>0)
                                         {
