@@ -613,7 +613,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.loggedIn==true) {
             if ($scope.jelentes=="") {
             
-                Notify.addMessage('Válaszd ki mit szeretnél jelenteni', "danger");
+                Notify.addMessage('Válaszd ki a hiba típusát', "danger");
             } else {
                 
                 //probléma elküldése
