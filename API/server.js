@@ -270,7 +270,7 @@ app.post('/adminfoodupdate',(req,res)=>{
     }
     dbPool.query(`UPDATE etlap SET ID=${data.id}, Etterem_ID=${data.etteremid},Nev='${data.nev}',Ar=${data.ar},Leiras='${data.leiras}' WHERE ID=${data.id} AND Etterem_ID=${data.etteremid} `,[data.id,data.etteremid,data.nev,data.ar,data.leiras,data.id,data.etteremid],(err,results)=>{
       if(err)throw err;
-      res.json({message:"felvéve lett étel"});
+      res.json({message:"módosítva lett étel"});
     })
   }
   else
@@ -313,7 +313,7 @@ app.get("/userselect",(req,res)=>{
     }
       dbPool.query(`INSERT INTO felhasznalok VALUES(NULL,?,?,?,?,CURRENT_TIME,NULL,?,?);`,[data.email,data.name,data.pass,data.telefon,data.statusz,data.jog],(err,results)=>{
         if(err)throw err;
-        res.json({message:"ok"});
+        res.json({message:"felhasználó felvéve"});
       })
     }
     else
@@ -336,9 +336,9 @@ app.post('/userupdate',(req,res)=>{
       jog:req.body.Jog,
       statusz:req.body.Statusz
   }
-    dbPool.query(`UPDATE felhasznalok SET Email='${data.email}',Nev='${data.name}',Jelszo='${data.pass}',Telefon='${data.telefon}',Statusz=${data.statusz},Jog='${data.jog}' WHERE ID=${data.id} AND Jog NOT LIKE 'admin';`,[data.email,data.name,data.pass,data.telefon,data.statusz,data.jog,data.id],(err,results)=>{
+    dbPool.query(`UPDATE felhasznalok SET Email=?,Nev=?,Jelszo=?,Telefon=?,Statusz=?,Jog=? WHERE ID=? AND Jog NOT LIKE 'admin';`,[data.email,data.name,data.pass,data.telefon,data.statusz,data.jog,data.id],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"felhasználó módosítva"});
     })
   }
   else
@@ -354,7 +354,7 @@ app.post('/userdelete',(req,res)=>{
   {
     dbPool.query(`DELETE FROM felhasznalok WHERE ID=? AND Jog NOT LIKE 'admin'`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Felhasználó törölve"});
     })
   }
   else
@@ -386,7 +386,7 @@ app.post('/errordelete',(req,res)=>{
   {
     dbPool.query(`DELETE FROM hibajelentes WHERE ID=?`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Hibajelentés törölve"});
     })
   }
   else
@@ -417,7 +417,7 @@ app.post('/ratingdelete',(req,res)=>{
   {
     dbPool.query(`DELETE FROM ertekeles WHERE ID=?`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Értékelés törlése"});
     })
   }
   else
@@ -459,7 +459,7 @@ app.post("/etteremdelete",(req,res)=>{
   {
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=?`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-        res.json({message:"ok"});
+        res.json({message:"Helyfoglalás törlése"});
     })
   }
   else
