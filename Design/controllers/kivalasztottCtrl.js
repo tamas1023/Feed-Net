@@ -657,9 +657,10 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
         
     }
-    
+
+    //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
     $scope.ertekel=function () {
-        //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
+        
         //az érétkelése ha többször is volt ott
         
         if ($rootScope.csillag=="") {
@@ -717,6 +718,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     $scope.Torles=function () {
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
             dbfactory.ratingDeleteuser($rootScope.TorlesID).then(function(res){
+                Notify.addMessage('Törlés sikeres', "success");
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                     
                     if (res.data.length > 0) { 
@@ -780,6 +782,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             //"ertekeles","mit mire","hol frissítés"
             
             dbfactory.updateRating("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
+                Notify.addMessage('Módosítás sikeres', "success");
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 
