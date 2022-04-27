@@ -584,10 +584,9 @@ app.post('/updateRating',(req,res)=>{
       hol: req.body.Hol,
       
     }
-    
     dbPool.query(`UPDATE ${data.tablename} SET ${data.mitmire}, Datum=CURRENT_TIMESTAMP WHERE ${data.hol}`,(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Módosítva az értékelés"});
       
     });
   }
@@ -610,7 +609,7 @@ app.post('/insertProblem',(req,res)=>{
     
     dbPool.query(`INSERT INTO ${data.tablename} VALUES(NULL,?,?,?,?)`,[data.felhasznaloid,data.etteremid,data.tipus,data.leiras],(err,results)=>{
       if(err) throw err;
-      res.json({message:"ok"});
+      res.json({message:"Hiba felvétele"});
       
     });
   }
@@ -619,23 +618,6 @@ app.post('/insertProblem',(req,res)=>{
     res.json({message:"Nem engedélyezett"});
   }
 })
-
-
-  //étterem férőhelyének lekérése
-
-app.post('/etteremfo',(req,res)=>{
-  if(session.Rights=="etterem")
-  {
-    dbPool.query(`SELECT Ferohely FROM ettermek WHERE ID=${req.body.ID} `,(err,results)=>{
-      if(err)throw err;
-      res.json(results);
-    })
-  }
-  else
-  {
-    res.json({message:"Nem engedélyezett"});
-  }
-});
 
 // egyedi lekérdezés
 app.post('/selectCustom', (req, res) => {
@@ -665,7 +647,7 @@ app.post('/profilmod',(req,res)=>{
     {
       dbPool.query(`UPDATE felhasznalok SET Email=?,Nev=?,Jelszo=?,Telefon=? WHERE ID=?`,[data.email,data.nev,data.passwd,data.telefon,data.id],(err,results)=>{
         if(err)throw err;
-        res.json({message:"ok"});
+        res.json({message:"Profil módosítva"});
       })
     }
     else
@@ -727,14 +709,14 @@ app.post('/profilselect',(req,res)=>{
       {
         dbPool.query(`UPDATE nyitvatartas SET Nyitas=${data.nyitas},Zaras=${data.zaras},napid=?,Nap=? WHERE ID=?`,[data.napid,data.nap,data.id],(err,results)=>{
           if(err)throw err;
-          res.json({message:"ok"});
+          res.json({message:"Nyitvatartás módosítása"});
         })
       }
       else
       {
         dbPool.query(`UPDATE nyitvatartas SET Nyitas=?,Zaras=?,napid=?,Nap=? WHERE ID=?`,[data.nyitas,data.zaras,data.napid,data.nap,data.id],(err,results)=>{
           if(err)throw err;
-          res.json({message:"ok"});
+          res.json({message:"Nyitvatartás módosítása"});
         })
       }
    
@@ -760,7 +742,7 @@ app.post('/openinsert',(req,res)=>{
     
   dbPool.query(`INSERT INTO nyitvatartas VALUES (null,?,?,?,?,?)`,[data.EtteremID,data.nap,data.napid,data.nyitas,data.zaras],(err,results)=>{
     if(err)throw err;
-    res.json({message:"ok"});
+    res.json({message:"Nytivatartás felvéve"});
   })
   }
   else
@@ -780,7 +762,7 @@ app.post('/opendelete',(req,res)=>{
         
   dbPool.query(`DELETE FROM nyitvatartas WHERE ID=?`,[data.id],(err,results)=>{
     if(err)throw err;
-    res.json({message:"ok"});
+    res.json({message:"Nyitvatartás törölve lett"});
   })
   }
   else
@@ -822,7 +804,7 @@ app.post('/opendelete',(req,res)=>{
     }
   dbPool.query(`UPDATE helyfoglalas SET Kezdes=?,Fo=? WHERE ID=?`,[data.kezdes,data.fo,data.id],(err,results)=>{
     if(err)throw err;
-    res.json({message:'Ok'});
+    res.json({message:'Módosítva!'});
   })
   }
   else
@@ -838,7 +820,7 @@ app.post("/reservationDelete",(req,res)=>{
   {
     dbPool.query(`DELETE FROM helyfoglalas WHERE ID=?`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-        res.json({message:"ok"});
+        res.json({message:"Törlve lett a helyfoglalás"});
     })
   }
   else
@@ -870,7 +852,7 @@ app.post("/imagedelete",(req,res)=>{
   {
     dbPool.query(`DELETE FROM kepek WHERE ID=?`,[req.body.ID],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Kép törölve lett"});
     })
   }
   else
@@ -890,7 +872,7 @@ app.post("/imageupdate",(req,res)=>{
     }
     dbPool.query(`UPDATE kepek SET Kepek=? WHERE ID=?`,[data.img,data.id],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Kép módosítva lett"});
     })
   }
   else
@@ -910,7 +892,7 @@ app.post("/imageinsert",(req,res)=>{
     }
     dbPool.query(`INSERT INTO kepek VALUES(null,?,?)`,[data.etterem_id,data.img],(err,results)=>{
       if(err)throw err;
-      res.json({message:"ok"});
+      res.json({message:"Kép beillesztve lett"});
     })
   }
   else
