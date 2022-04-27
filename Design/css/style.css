@@ -305,7 +305,7 @@ a:hover{
     
 }
 #kep,#etterem{
-    display: flex;
+    
     justify-content: center;
     align-items: center;
     border-top: 1px solid black;

@@ -48,7 +48,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             Felszerelesek();
         } 
         else{
-            console.log(res.data);
+            
         }
     });
     //képek lekérése
@@ -59,7 +59,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
         } 
         else{
-            console.log(res.data);
+            
         }
     });
 
@@ -479,17 +479,24 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
    $scope.ertekelesek=[];
    dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
     if (res.data.length > 0) { 
+        
         for (let i = 0; i < res.data.length; i++) {
-            if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
-                $scope.ertekelesek.push(res.data[i]);
-                
+            if(1!=res.data[i].Felhasznalo_ID){
+                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                    $scope.ertekelesek.push(res.data[i]);
+                    
+                }
             }
+            
         }
         for (let i = 0; i < res.data.length; i++) {
-            if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
-                $scope.ertekelesek.push(res.data[i]);
-                
+            if(1!=res.data[i].Felhasznalo_ID){
+                if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                    $scope.ertekelesek.push(res.data[i]);
+                    
+                }
             }
+            
         }
         
         for (let i = 0; i < $scope.ertekelesek.length; i++) {
@@ -680,7 +687,17 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                         if (res.data.length > 0) { 
-                            $scope.ertekelesek=res.data;
+                            $scope.ertekelesek=[];
+                            for (let i = 0; i < res.data.length; i++) {
+                                if(1!=res.data[i].Felhasznalo_ID){
+                                    if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                        $scope.ertekelesek.push(res.data[i]);
+                                        
+                                    }
+                                }
+                                
+                            }
+                            
                             $scope.hiba=false;
                             for (let i = 0; i < $scope.ertekelesek.length; i++) {
                                 $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
@@ -723,17 +740,24 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                     
                     if (res.data.length > 0) { 
                         $scope.ertekelesek=[];
+                        
                         for (let i = 0; i < res.data.length; i++) {
-                            if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
-                                $scope.ertekelesek.push(res.data[i]);
-                                
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
                             }
+                            
                         }
                         for (let i = 0; i < res.data.length; i++) {
-                            if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
-                                $scope.ertekelesek.push(res.data[i]);
-                                
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
                             }
+                            
                         }
 
                         for (let i = 0; i < $scope.ertekelesek.length; i++) {
@@ -786,7 +810,17 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 
-                        $scope.ertekelesek=res.data;
+                        $scope.ertekelesek=[];
+                        for (let i = 0; i < res.data.length; i++) {
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
+                            }
+                            
+                        }
+                        
                         $scope.hiba=false;
                         for (let i = 0; i < $scope.ertekelesek.length; i++) {
                             $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
