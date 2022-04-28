@@ -572,6 +572,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 }
                     $scope.aktualisnap.Nyitas=moment('12-25-1995 '+$scope.aktualisnap.Nyitas).format('HH:mm',true);
                     $scope.aktualisnap.Zaras=moment('12-25-1995 '+$scope.aktualisnap.Zaras).format('HH:mm',true);
+                    
                     if ($scope.aktualisnap.Nyitas=="Invalid date") {
                         
                         $scope.aktualisnap.Nyitas="Zárva";

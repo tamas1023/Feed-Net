@@ -94,7 +94,7 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory,No
        {
            napid=4;
        }
-       if($scope.ujnap=="Csötörtök")
+       if($scope.ujnap=="Csütörtök")
        {
            napid=5;
        }
@@ -197,7 +197,7 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory,No
             {
                 napid=4;
             }
-            if($scope.ujnap=="Csötörtök")
+            if($scope.ujnap=="Csütörtök")
             {
                 napid=5;
             }
