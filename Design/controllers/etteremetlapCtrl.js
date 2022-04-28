@@ -51,7 +51,7 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
             
         $scope.insertEtlap=function()
         {
-            if($scope.ujnevetel==null|| $scope.ujar==null|| $scope.ujleirasetel==null)
+            if($scope.ujnevetel==null|| $scope.ujar==null)
             {
                 
                 Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
@@ -88,14 +88,22 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         }
         $scope.updateEtlap=function()
         {
-            dbfactory.adminfoodupdate($scope.ujID,$rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar,$scope.ujleirasetel).then(function(res){
-                dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
-                    if(res.data.length>0)
-                    {
-                        $scope.etlap=res.data;
-                    }
-                    $scope.unselectRowEtlap();
-                });
-            })
+            if($scope.ujnevetel==null|| $scope.ujar==null)
+            {
+                
+                Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
+            }
+            else
+            {
+                dbfactory.adminfoodupdate($scope.ujID,$rootScope.selectedetteremID,$scope.ujnevetel,$scope.ujar,$scope.ujleirasetel).then(function(res){
+                    dbfactory.adminfoodselect($rootScope.selectedetteremID).then(function(res){
+                        if(res.data.length>0)
+                        {
+                            $scope.etlap=res.data;
+                        }
+                        $scope.unselectRowEtlap();
+                    });
+                })
+            }
         }
 })

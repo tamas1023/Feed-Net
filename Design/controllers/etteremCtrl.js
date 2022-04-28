@@ -1,7 +1,5 @@
 app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
     $scope.ettermek=[];
-    $scope.title="Étterem";
-    $scope.teszt1="teszt1";
     $rootScope.sidebar=false;
     $scope.etteremad=1;
     $scope.ModID=0;
