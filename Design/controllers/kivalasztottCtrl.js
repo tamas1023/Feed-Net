@@ -624,6 +624,22 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             } else {
                 
                 //probléma elküldése
+                if($scope.jelentes=="megszunt")
+                {
+                    $scope.jelentes="megszűnt";
+                }
+                if($scope.jelentes=="dulikacio")
+                {
+                    $scope.jelentes="duplikáció";
+                }
+                if($scope.jelentes=="rosszadatok")
+                {
+                    $scope.jelentes="rossz adatok";
+                }
+                if($scope.jelentes=="egyeb")
+                {
+                    $scope.jelentes="egyéb";
+                }
                 dbfactory.insertProblem("hibajelentes",$rootScope.loggedInUserID,$id,$scope.jelentes,$scope.uzenet.message3).then(function(res){
                     
                     Notify.addMessage('A hibajelentését elküldtük', "success");
@@ -683,7 +699,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 }
                 dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
                     Notify.addMessage('Értékelését sikeresen felvettük', "success");
-                    
+                    dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+                        if (res.data.length > 0) { 
+                            $scope.etteremertekeles=res.data[0].Ertekeles;
+                            
+                        } 
+                        
+                    });
                     dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                         if (res.data.length > 0) { 
@@ -736,6 +758,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
             dbfactory.ratingDeleteuser($rootScope.TorlesID).then(function(res){
                 Notify.addMessage('Törlés sikeres', "success");
+                dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+                    if (res.data.length > 0) { 
+                        $scope.etteremertekeles=res.data[0].Ertekeles;
+                        
+                    } 
+                    
+                });
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                     
                     if (res.data.length > 0) { 
@@ -807,6 +836,13 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
             dbfactory.updateRating("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
                 Notify.addMessage('Módosítás sikeres', "success");
+                dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.alapfeltetel).then(function(res) {
+                    if (res.data.length > 0) { 
+                        $scope.etteremertekeles=res.data[0].Ertekeles;
+                        
+                    } 
+                    
+                });
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 
