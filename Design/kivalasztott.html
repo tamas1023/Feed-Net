@@ -74,17 +74,17 @@
                   Nyitvatartás:
                 </div>
                 <div class=" col-md-8 col-sm-12" >
-                   <div ng-if="nyitvavane==true">
+                   <div ng-if="nyitvavane==true" class="mb-2">
                     Ma: {{aktualisnap.Nyitas}} - {{aktualisnap.Zaras}}
                     <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
                    </div>
-                   <div ng-if="nyitvavane==false">
+                   <div ng-if="nyitvavane==false" class="mb-2">
                     Ma: {{aktualisnap.Nyitas}}
                     <a href="" id="showmoreless" onclick="ShowMoreLess()">Mutass többet</a>
                    </div>
                   
                   
-                  <div class="row openings" ng-repeat="nyitasok in nyitvatartas">
+                  <div class="row openings " ng-repeat="nyitasok in nyitvatartas">
                     <div class="col ">
                       {{nyitasok.Nap}}:
                     </div>
@@ -96,26 +96,26 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-4 col-sm-12 mb-2">
                   Konyha Típus:
                 </div>
-                <div class="col-md-8 col-sm-12">
+                <div class="col-md-8 col-sm-12 mb-2">
                   {{ett.Tipus}}
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-4 col-sm-12 mb-2">
                   Felszereltség:
                 </div>
-                <div class="col-md-8 col-sm-12 ng-binding">
+                <div class="col-md-8 col-sm-12 ng-binding mb-2">
                   {{felszerelt}}
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-4 col-sm-12 mb-2">
                   Rólunk:
                 </div>
-                <div class="col-md-8 col-sm-12 ng-binding">
+                <div class="col-md-8 col-sm-12 ng-binding mb-2">
                   {{ett.Leiras}}
                 </div>
               </div>
