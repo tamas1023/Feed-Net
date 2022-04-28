@@ -25,6 +25,15 @@ body {
     background-color: var(--highlight);
     
 }
+
+.notifyalert {
+    position: fixed;
+    z-index: 100;
+    right: 10px;
+    top:60px;
+    
+    
+}
 #footerthings{
     list-style: none;
     text-align: end;
@@ -55,6 +64,10 @@ body {
     padding-left: 10px;
     color: var(--feher);
 }
+.modal{
+    color: var(--ellenkezoszin);
+}
+
 .modalproblem{
     color: black;
     padding: 10px;
@@ -292,7 +305,7 @@ a:hover{
     
 }
 #kep,#etterem{
-    display: flex;
+    
     justify-content: center;
     align-items: center;
     border-top: 1px solid black;

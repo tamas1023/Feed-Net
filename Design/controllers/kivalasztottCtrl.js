@@ -1,4 +1,4 @@
-app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfactory,$route){
+app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfactory,$route,Notify){
     $rootScope.sidebar=true;
     $rootScope.logivagyreg=false;
     $rootScope.feltetel="";
@@ -48,7 +48,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             Felszerelesek();
         } 
         else{
-            console.log(res.data);
+            
         }
     });
     //képek lekérése
@@ -59,7 +59,7 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
         } 
         else{
-            console.log(res.data);
+            
         }
     });
 
@@ -109,7 +109,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         $scope.maradekferohely=$scope.osszferohely;
         //ha a szám undefined amit megadott azt jelenti hogy több mint 100 főre akar foglani
         if ($scope.foglalas.fo ==null ||$scope.foglalas.datum==null ) {
-            alert("Nem adtál meg minden adatot.");
+            
+            Notify.addMessage('Nem adtál meg minden adatot', "danger");
         }
         else{
             if ($rootScope.loggedIn==true) {
@@ -267,31 +268,36 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                                         if ($scope.foglalas.fo<=$scope.szabadhely) {
                                             
                                             dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
-                                                alert("A foglalását sikeresen elmentettük.");
+                                                
+                                                Notify.addMessage('A foglalását sikeresen elmentettük', "success");
                                             });
                                 
                                         } else {
-                                            alert("Nem sikerült elmenteni a foglalást.Nem volt elég hely a foglalás időpontjában.");
+                                            
+                                            Notify.addMessage('Nem sikerült elmenteni a foglalást.Nem volt elég hely a foglalás időpontjában.', "danger");
                                         }
                                         
                                     } 
                                     else{
                                         //ha a megadott időpontokban nincsen még felvéve semmi
                                         dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
-                                            alert("A foglalását sikeresen elmentettük.");
+                                            
+                                            Notify.addMessage('A foglalását sikeresen elmentettük', "success");
                                         });
                                     }
                                 });                               
                             }
                             else{
-                                alert("Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.");
+                                
+                                Notify.addMessage('Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.', "danger");
                             }
     
                         }
                     
                         else{
 
-                       alert("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                       
+                       Notify.addMessage('A mostani idő és a rendelési idő között nem telt et 12 óra', "danger");
                         }
                     }
                     else{
@@ -389,17 +395,20 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                             if (nyitas && zaras) {
                                 
                                 dbfactory.reservationInsert($id,$rootScope.loggedInUserID,$scope.datum,$scope.foglalas.fo).then(function(res) {
-                                    alert("A foglalását sikeresen elmentettük.");
+                                    
+                                    Notify.addMessage('A foglalását sikeresen elmentettük', "success");
                                 });
                             }
                             else{
-                                alert("Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.");
+                                
+                                Notify.addMessage('Nem sikerült elmenteni a foglalást. Zárva van az étterem a megadott időben.', "danger");
                             }
     
                         }
                     
                         else{
-                        console.log("A mostani idő és a rendelési idő között nem telt et 12 óra");
+                        
+                        Notify.addMessage('A mostani idő és a rendelési idő között nem telt et 12 óra', "danger");
                         }
 
                     } 
@@ -410,7 +419,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             }
             else
             {
-                alert("Jelentkezz be a foglaláshoz");
+                
+                Notify.addMessage('Jelentkezz be a foglaláshoz', "danger");
             }
         }
         
@@ -458,7 +468,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 }
             });
         } else {
-            alert("Jelentkezz be a kedvencekhez adáshoz");
+            
+            Notify.addMessage('Jelentkezz be a kedvencekhez adáshoz', "danger");
         }
 
         
@@ -468,17 +479,24 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
    $scope.ertekelesek=[];
    dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
     if (res.data.length > 0) { 
+        
         for (let i = 0; i < res.data.length; i++) {
-            if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
-                $scope.ertekelesek.push(res.data[i]);
-                
+            if(1!=res.data[i].Felhasznalo_ID){
+                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                    $scope.ertekelesek.push(res.data[i]);
+                    
+                }
             }
+            
         }
         for (let i = 0; i < res.data.length; i++) {
-            if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
-                $scope.ertekelesek.push(res.data[i]);
-                
+            if(1!=res.data[i].Felhasznalo_ID){
+                if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                    $scope.ertekelesek.push(res.data[i]);
+                    
+                }
             }
+            
         }
         
         for (let i = 0; i < $scope.ertekelesek.length; i++) {
@@ -602,19 +620,21 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.loggedIn==true) {
             if ($scope.jelentes=="") {
             
-                $scope.hiba2=true;
+                Notify.addMessage('Válaszd ki a hiba típusát', "danger");
             } else {
-                $scope.hiba2=false;
+                
                 //probléma elküldése
                 dbfactory.insertProblem("hibajelentes",$rootScope.loggedInUserID,$id,$scope.jelentes,$scope.uzenet.message3).then(function(res){
-                    alert("A hibajelentését elküldtük");
+                    
+                    Notify.addMessage('A hibajelentését elküldtük', "success");
                 });
                 
             }
             
         }
         else{
-            alert("Jelentkezz be a probléma jelentéséhez");
+            
+            Notify.addMessage('Jelentkezz be a probléma jelentéséhez', "danger");
         }
         
        
@@ -644,25 +664,40 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         }
         
     }
-    
+
+    //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
     $scope.ertekel=function () {
-        //több értékelést is lehessen adni hogy lássuk hogy a felhasználó hogyan javoltű/rosszult
+        
         //az érétkelése ha többször is volt ott
         
         if ($rootScope.csillag=="") {
             //Csillagok megadása kötelező!ű
-            $scope.hiba=true;
+            //$scope.hiba=true;
+            Notify.addMessage('Csillagok megadása kötelező!', "danger");
         }
         else{
             if ($rootScope.loggedIn==true) {
-            
+                
+                if ($scope.uzenet.message==null) {
+                    $scope.uzenet.message="";
+                }
                 dbfactory.ratingInsert($id,$rootScope.loggedInUserID,$rootScope.csillag,$scope.uzenet.message).then(function (res) {
-                    
+                    Notify.addMessage('Értékelését sikeresen felvettük', "success");
                     
                     dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                         if (res.data.length > 0) { 
-                            $scope.ertekelesek=res.data;
+                            $scope.ertekelesek=[];
+                            for (let i = 0; i < res.data.length; i++) {
+                                if(1!=res.data[i].Felhasznalo_ID){
+                                    if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                        $scope.ertekelesek.push(res.data[i]);
+                                        
+                                    }
+                                }
+                                
+                            }
+                            
                             $scope.hiba=false;
                             for (let i = 0; i < $scope.ertekelesek.length; i++) {
                                 $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
@@ -676,7 +711,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 });
             }
             else{
-                alert("Jelentkezz be az értékeléshez.");
+                
+                Notify.addMessage('Jelentkezz be az értékeléshez', "danger");
             }
         }
     
@@ -698,13 +734,32 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
     
     $scope.Torles=function () {
         if ($rootScope.TorlesFelhaszID==$rootScope.loggedInUserID) {
-            
-            dbfactory.ratingDelete($rootScope.TorlesID).then(function(res){
+            dbfactory.ratingDeleteuser($rootScope.TorlesID).then(function(res){
+                Notify.addMessage('Törlés sikeres', "success");
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
-                        
+                    
                     if (res.data.length > 0) { 
-                        $scope.ertekelesek=res.data;
-                        $scope.hiba=false;
+                        $scope.ertekelesek=[];
+                        
+                        for (let i = 0; i < res.data.length; i++) {
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
+                            }
+                            
+                        }
+                        for (let i = 0; i < res.data.length; i++) {
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID!=res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
+                            }
+                            
+                        }
+
                         for (let i = 0; i < $scope.ertekelesek.length; i++) {
                             $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
                         }
@@ -716,7 +771,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
                 });
             });
         } else {
-            alert("Nincsen jogod ezt az értékelést törölni");
+            
+            Notify.addMessage('Nincsen jogod ezt az értékelést törölni', "danger");
         }
     } 
     //módosítás  
@@ -737,7 +793,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
         if ($rootScope.ModositFelhaszID==$rootScope.loggedInUserID) {
             if ($rootScope.csillag=="") {
                 //Csillagok megadása kötelező!
-                $scope.hiba=true;
+                //$scope.hiba=true;
+                Notify.addMessage('Csillagok megadása kötelező!', "danger");
             }
             else{
                 $scope.hiba=false;
@@ -749,10 +806,21 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             //"ertekeles","mit mire","hol frissítés"
             
             dbfactory.updateRating("ertekeles",$scope.mitmire,$scope.hol).then(function(res){
+                Notify.addMessage('Módosítás sikeres', "success");
                 dbfactory.selectCustom("ertekelesek",$rootScope.feltetel).then(function(res) {
                         
                     if (res.data.length > 0) { 
-                        $scope.ertekelesek=res.data;
+                        $scope.ertekelesek=[];
+                        for (let i = 0; i < res.data.length; i++) {
+                            if(1!=res.data[i].Felhasznalo_ID){
+                                if ($scope.loggedInUserID==res.data[i].Felhasznalo_ID) {
+                                    $scope.ertekelesek.push(res.data[i]);
+                                    
+                                }
+                            }
+                            
+                        }
+                        
                         $scope.hiba=false;
                         for (let i = 0; i < $scope.ertekelesek.length; i++) {
                             $scope.ertekelesek[i].Datum=moment($scope.ertekelesek[i].Datum).format('YYYY MM.DD.');
@@ -767,7 +835,8 @@ app.controller('kivalasztottCtrl',function($rootScope,$routeParams,$scope,dbfact
             
 
         } else {
-            alert("Nincsen jogod ezt az értékelést módosítani");
+            
+            Notify.addMessage('Nincsen jogod ezt az értékelést módosítani', "danger");
         }
     }
 });

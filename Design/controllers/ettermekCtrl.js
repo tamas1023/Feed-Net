@@ -69,18 +69,21 @@ app.controller('ettermekCtrl',function($rootScope,$scope,dbfactory,$route,$locat
             $rootScope.ettermek=[];
             dbfactory.selectCustom("ettermek_ertekelesek",$rootScope.feltetel+" AND Statusz=1").then(function(res) {
                 if (res.data.length > 0) {
-                    
+                   
                     for (let i = 0; i < res.data.length; i++) {
                         
                         if (res.data[i].nyitvavane) {
                             $rootScope.nincsetterem="";
                             $rootScope.ettermek.push(res.data[i]);
+                            console.log($rootScope.ettermek);
+                            console.log(res.data[i]);
                         }
                         
                     }
                     
                     
                 } else {
+                    console.log($rootScope.ettermek);
                     $rootScope.nincsetterem="Nem találtunk egyezést ezekre a szűrési paraméterekre.";
                     $rootScope.ettermek=res.data;
                 }

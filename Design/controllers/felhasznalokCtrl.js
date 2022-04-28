@@ -1,4 +1,4 @@
-app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
+app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory,Notify){
     $scope.admin=false;
     $rootScope.sidebar=false;
     $scope.jelszo="";
@@ -58,23 +58,29 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
      { 
         if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujjog==null||$scope.ujstatusz==null)
         {
-            alert('a kellő adatok nincsenek kitöltve ')
+            
+            Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
         }
         else
         {
             dbfactory.emailcheck('felhasznalok',$scope.ujemail).then(function(res){
                 if(res.data.length>0)
                 {
-                    alert('Ez az email cím már foglalat');
+                    
+                    Notify.addMessage('Ez az email cím már foglalt', "danger");
                 }
                 else
                 {
                     $scope.ujstatusz=($scope.ujstatusz) ? true:false;
                 
-                    let pattern =  /^[a-zA-Z0-9]{8,}$/;
-                    if(!$scope.ujpass.match(pattern))
+                    //let pattern =  /^[a-zA-Z0-9]{8,}$/;
+                    let Lenght = RegExp(/^.{8,32}$/);
+                    let hasNumber = RegExp(/^.*[0-9].*$/);
+                    let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
+                    if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
                     {
-                        alert('A jelszó nep felel meg a minimális követelményeknek');
+                        
+                        Notify.addMessage('A követelményeknek nem felel meg a jelszó(minimum 8  karakter, egy nagy betű,és egy szám)', "danger");
                     }
                     else
                     {
@@ -98,50 +104,109 @@ app.controller('felhasznalokCtrl',function($scope,$rootScope,dbfactory){
         }
      }
      $scope.update=function()
-     { 
+     {  
         if($scope.jelszo!=$scope.ujpass)
         {
-            $scope.ujpass=CryptoJS.SHA1($scope.ujpass).toString();
-        }
-        if($scope.ujnev==""||$scope.ujemail=="")
-        {
-            alert('a kellő adatok nincsenek kitöltve ')
-        }
-        else
-        {
-            if($scope.email!=$scope.ujemail)
+           
+            let Lenght = RegExp(/^.{8,32}$/);
+            let hasNumber = RegExp(/^.*[0-9].*$/);
+            let hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
+            if(!Lenght.test($scope.ujpass)||!hasNumber.test($scope.ujpass)||!hasUpperLowerCase.test($scope.ujpass))
             {
-            dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
-                if(res.data.length>0)
+                
+                Notify.addMessage('A követelményeknek nem felel meg a jelszó(minimum 8  karakter, egy nagy betű,és egy szám)', "danger");
+            }
+            else
+            {
+                $scope.ujpass=CryptoJS.SHA1($scope.ujpass).toString();
+                if($scope.ujnev==""||$scope.ujemail=="")
                 {
-                    alert('Ez az email cím már foglalat');
+                
+                Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
                 }
                 else
                 {
+                        if($scope.email!=$scope.ujemail)
+                        {
+                            dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+                                if(res.data.length>0)
+                                {
+                                
+                                Notify.addMessage('Ez az email cím már foglalt', "danger");
+                                }
+                                else
+                                {
+                                    dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
+                                        dbfactory.userselect().then(function(res){
+                                            if(res.data.length>0)
+                                            {
+                                            $scope.felhasznalok=res.data;
+                                            }
+                                        });
+                                    $scope.unselectRow();
+                                    })
+                                }
+                            })
+                        }
+                        else
+                        {
+                        dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
+                            dbfactory.userselect().then(function(res){
+                                if(res.data.length>0)
+                                {
+                                $scope.felhasznalok=res.data;
+                                }
+                            });
+                            $scope.unselectRow();
+                        })
+                    }
+                }
+            }
+        }
+        else
+        {
+            if($scope.ujnev==""||$scope.ujemail=="")
+            {
+            
+            Notify.addMessage('A kellő adatok nincsenek kitöltve', "danger");
+            }
+            else
+            {
+                    if($scope.email!=$scope.ujemail)
+                    {
+                        dbfactory.emailcheck('ettermek',$scope.ujemail).then(function(res){
+                            if(res.data.length>0)
+                            {
+                            
+                            Notify.addMessage('Ez az email cím már foglalt', "danger");
+                            }
+                            else
+                            {
+                                dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
+                                    dbfactory.userselect().then(function(res){
+                                        if(res.data.length>0)
+                                        {
+                                        $scope.felhasznalok=res.data;
+                                        }
+                                    });
+                                $scope.unselectRow();
+                                })
+                            }
+                        })
+                    }
+                    else
+                    {
                     dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
                         dbfactory.userselect().then(function(res){
                             if(res.data.length>0)
                             {
-                                $scope.felhasznalok=res.data;
+                            $scope.felhasznalok=res.data;
                             }
                         });
                         $scope.unselectRow();
                     })
                 }
-                })
             }
-            else
-            {
-                dbfactory.userupdate($scope.ujID,$scope.ujemail,$scope.ujnev,$scope.ujtelefon,$scope.ujpass,$scope.ujjog,$scope.ujstatusz).then(function(res){
-                    dbfactory.userselect().then(function(res){
-                        if(res.data.length>0)
-                        {
-                            $scope.felhasznalok=res.data;
-                        }
-                    });
-                    $scope.unselectRow();
-                })
-            }
-        }
+        } 
     }
 });

@@ -12,10 +12,11 @@ app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory,$location){
                 $scope.idk.push({"id":res.data[i].Etterem_ID});
                 
             }
+            $scope.kedvencek+="(";
             for (let i = 0; i < $scope.idk.length; i++) {
             
                 if (i==$scope.idk.length-1) {
-                    $scope.kedvencek+=" ID="+$scope.idk[i].id+" ";
+                    $scope.kedvencek+=" ID="+$scope.idk[i].id+" )";
                 }
                 else{
                     $scope.kedvencek+=" ID="+$scope.idk[i].id+" OR ";
@@ -23,11 +24,15 @@ app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory,$location){
             }
 
             $scope.kedvencek+=" AND Statusz=1";
+            
             dbfactory.selectCustom("ettermek_ertekelesek",$scope.kedvencek).then(function(res) {
                 if (res.data.length > 0) { 
                     $rootScope.nincsetterem="";
                     $scope.kedvencettermek=res.data;
                 } 
+                else{
+                    $rootScope.nincsetterem="Nincsen még kedvenc éttermed.";
+                }
                 
             });
             
@@ -41,7 +46,7 @@ app.controller('kedvencekCtrl',function($rootScope,$scope,dbfactory,$location){
         
     });
     $scope.Valasztas=function ($id) { 
-        console.log($id);
+        
         $location.url('/kivalasztott/'+$id);
     }
 

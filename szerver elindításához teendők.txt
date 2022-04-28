@@ -1,0 +1,20 @@
+a letöltött file okat az xampp htdocs mappába tenni
+az xampp et elindítani
+Létre kell hozni egy Feed-Net nevű adatbázist (utf8 hungarian ci), és abba kell beimportálni a .sql állományt
+
+.env file lérehozása az API könyvtárban
+tartalma:
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASS=""
+DB_NAME="Feed-Net"
+port=8080
+npm i (belpéve az API könyvtárban)
+npm run dev a parancs sorba hogy elinduljon a server
+
+
+http://localhost/+(az elérési útvonal a htdocs mappán bellül) pld:
+
+http://localhost/Feed-Net/Feed-Net/Design itt a feed-net mappán bellülre csomagoltuk ki a fileokat
+http://localhost/Feed-Net/Design Ha közvetlen a htdocs ba csomagoljuk ki akkor
+

@@ -1,4 +1,4 @@
-app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
+app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory,Notify){
     $rootScope.sidebar=false;
     $scope.nyitas=[];
     $scope.nyitasmutat=[];
@@ -156,7 +156,8 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
             }
             else
             {
-                alert('nem végezheted el ezt');
+                
+                Notify.addMessage('Nem végezheted el ezt ', "danger");
             }
         }
         
@@ -165,7 +166,8 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
      {
          if($scope.ujnap==null||$scope.ujnyitas==null||$scope.ujzaras==null)
          {
-             alert('Nincsenek az adatok megava');
+             
+             Notify.addMessage('Nincsenek az adatok megava', "danger");
          }
          else
          {
@@ -258,7 +260,8 @@ app.controller('etteremnyitvatartasCtrl',function($scope,$rootScope,dbfactory){
                 }
                 else
                 {
-                    alert('nem végezheted el ezt');
+                    
+                    Notify.addMessage('Nem végezheted el ezt', "danger");
                 }
             }
                

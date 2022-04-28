@@ -1,4 +1,4 @@
-app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory){
+app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory,Notify){
 
     $rootScope.felvesz2=1;
         $scope.etteremad=0;
@@ -53,7 +53,8 @@ app.controller('etteremetlapCtrl',function($scope,$rootScope,$location,dbfactory
         {
             if($scope.ujnevetel==null|| $scope.ujar==null|| $scope.ujleirasetel==null)
             {
-                alert('a kellő adatok nincsenek kitöltve ');
+                
+                Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
             }
             else
             {

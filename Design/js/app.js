@@ -1,4 +1,4 @@
-var app= new angular.module('Feed-Net',['ngRoute',]);
+var app= new angular.module('Feed-Net',['ngRoute','angularjsNotify',]);
 
 app.run(function($rootScope,dbfactory){
     $rootScope.sidebar=false;
@@ -17,8 +17,6 @@ app.run(function($rootScope,dbfactory){
         $rootScope.EtteremEmail=res.data;
     })
     dbfactory.session().then(function(res){
-        //console.log(res.data);
-      //  sessionStorage.setItem('User', angular.toJson(res.data));
         $rootScope.logJog=res.data[0].Rights;
         $rootScope.loggedInUserID=res.data[0].ID;
         
@@ -26,11 +24,11 @@ app.run(function($rootScope,dbfactory){
         {
             $rootScope.loggedIn=true;
         }
-        //$location.path("#!/");
     })
    
 });
-app.config(function($routeProvider){
+app.config(function($routeProvider,NotifyProvider){
+    NotifyProvider.config.displayTime = 3000;
     $routeProvider
     
     .when('/reg',{
@@ -62,12 +60,6 @@ app.config(function($routeProvider){
         templateUrl:'kedvencettermek.html',
         controller:'kedvencekCtrl'
     })
-    /*
-    .when('/kivalasztott/',{
-        
-        templateUrl:'kivalasztott.html',
-        controller:'kivalasztottCtrl'
-    })*/
     
     .when('/kivalasztott/:id',{
         
@@ -169,6 +161,19 @@ app.config(function($routeProvider){
         },
         templateUrl:'etteremfoglalas.html',
         controller:'etteremfoglalasCtrl'
+    })
+    .when('/etteremadatok',{
+        resolve:
+        {
+            function ($location,$rootScope) {
+                if(!($rootScope.loggedIn&&$rootScope.logJog=="etterem"))
+                {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl:'etteremadatok.html',
+        controller:'etteremCtrl'
     })
     .when('/profilmod',{
         resolve:

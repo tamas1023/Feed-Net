@@ -201,12 +201,13 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
         //értékelés törlése
-        ratingDelete:function(id) {
+        ratingDeleteuser:function(id) {
+
             let data = {
                 ID:id
             }
             let deferred = $q.defer();
-            $http.post(url + '/ratingDelete',data).then(
+            $http.post(url + '/ratingDeleteuser',data).then(
                 function(res) {
                     deferred.resolve(res);
                 },
@@ -624,61 +625,6 @@ app.factory('dbfactory', function($http, $q) {
             return deferred.promise;
         },
 
-        //étterem helyfoglalás update
-
-        etteremupdate:function(id,fo,ido) {
-            let data = {
-                ID:id,
-                Fo:fo,
-                Kezdes:ido
-            }
-            let deferred = $q.defer();
-            $http.post(url + '/etteremupdate',data).then(
-                function(res) {
-                    deferred.resolve(res);
-                },
-                function(err) {
-                    deferred.reject(err);
-                }
-            );
-            return deferred.promise;
-        },
-
-        //étterem maxférőhely meghatározása
-
-        etteremfo:function(id) {
-            let data = {
-                ID:id,
-            }
-            let deferred = $q.defer();
-            $http.post(url + '/etteremfo',data).then(
-                function(res) {
-                    deferred.resolve(res);
-                },
-                function(err) {
-                    deferred.reject(err);
-                }
-            );
-            return deferred.promise;
-        },
-
-        //étteremben helyetfoglaltak száma 
-
-        etteremminus:function(id) {
-            let data = {
-                ID:id,
-            }
-            let deferred = $q.defer();
-            $http.post(url + '/etteremminus',data).then(
-                function(res) {
-                    deferred.resolve(res);
-                },
-                function(err) {
-                    deferred.reject(err);
-                }
-            );
-            return deferred.promise;
-        },
 
         //profil select
 
@@ -756,23 +702,7 @@ app.factory('dbfactory', function($http, $q) {
             );
             return deferred.promise;
         },
-
-        //profil delete
-
-        profildelete:function(id) {
-            let data = {
-                ID:id,
-            }
-            let deferred = $q.defer();
-            $http.post(url + '/profildelete',data).then(function(res) {
-                deferred.resolve(res);
-            },
-            function(err) {
-                deferred.reject(err);
-            }
-        );
-        return deferred.promise;
-    },
+        
         //étterem nyitvatartás delete
 
         opendelete:function(id) {
