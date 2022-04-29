@@ -79,7 +79,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
                 }
                 else
                 {
-                    if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null)
+                    if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null)
                     {
                         
                         Notify.addMessage('A kellő adatok nincsenek kitöltve', "danger");
@@ -114,7 +114,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
         }
         else
         { 
-            if($scope.ujnev==""|| $scope.ujemail==null||$scope.ujtelefon==""||$scope.ujcim==""||$scope.ujleiras=="")
+            if($scope.ujnev==""|| $scope.ujemail==null||$scope.ujtelefon==""||$scope.ujcim=="")
             {
                
                 Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");
@@ -213,7 +213,7 @@ app.controller('etteremCtrl',function($scope,$rootScope,$location,dbfactory,Noti
             }
             else
             {
-                if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujleiras==null||$scope.ujtipus==null)
+                if($scope.ujnev==null|| $scope.ujemail==null||$scope.ujtelefon==null||$scope.ujcim==null||$scope.ujtipus==null)
                 {
                     
                     Notify.addMessage('A kellő adatok nincsenek kitöltve ', "danger");

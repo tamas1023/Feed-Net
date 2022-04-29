@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Ápr 28. 22:04
+-- Létrehozás ideje: 2022. Ápr 29. 20:46
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -90,7 +90,10 @@ INSERT INTO `ertekeles` (`ID`, `Etterem_ID`, `Felhasznalo_ID`, `Pontszam`, `Erte
 (50, 8, 1, 5, '', '2022-04-28 20:59:57'),
 (51, 9, 1, 5, '', '2022-04-28 21:12:17'),
 (52, 10, 1, 5, '', '2022-04-28 21:48:01'),
-(53, 11, 1, 5, '', '2022-04-28 22:01:44');
+(53, 11, 1, 5, '', '2022-04-28 22:01:44'),
+(54, 12, 1, 5, '', '2022-04-29 20:29:35'),
+(55, 13, 1, 5, '', '2022-04-29 20:29:35'),
+(56, 14, 1, 5, '', '2022-04-29 20:44:05');
 
 -- --------------------------------------------------------
 
@@ -169,7 +172,7 @@ CREATE TABLE `ettermek` (
   `Cim` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL,
   `Ferohely` int(11) NOT NULL,
   `Hazhozszallitas` tinyint(1) NOT NULL,
-  `Leiras` text COLLATE utf8_hungarian_ci NOT NULL,
+  `Leiras` text COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Tipus` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `Wifi` tinyint(4) NOT NULL,
   `Statusz` tinyint(1) NOT NULL,
@@ -193,7 +196,10 @@ INSERT INTO `ettermek` (`ID`, `Email`, `Nev`, `Telefon`, `Parkolo`, `Bankkartya`
 (8, 'sobrihalaszcsarda@sobrihalaszcsarda.hu', 'Sobri Halászcsárda', '+36 79 420 654', 1, 1, 0, 1, 1, '6500 Baja, Március 15. Sétány 10.', 150, 0, 'Halászcsárdánk Baján, a Sugovica folyó partján, a Petőfi-sziget szívében csodálatos természeti környezetben található.\nNevét Farkas „SOBRI” Józsefről, Magyarország örökös halfőző bajnokáról kapta.\nA Sobrival töltött évek során felhalmozott tapasztalat és a tradicionális, hamisítatlan sobris receptek alapján készítettük , és mind a mai napig készítjük halételeinket.', 'Magyar', 0, 1, 'img/SobriHalaszcsarda3.jpg', 'http://www.sobrihalaszcsarda.hu', 'https://www.facebook.com/sobrihalaszcsarda', 1),
 (9, 'vizafogo@vizafogopanzio.hu', 'Vizafogó Étterem', '+36 79 326 585', 1, 1, 0, 1, 1, '6500 Baja, Március 15. sétány 27.', 60, 0, '', 'Nemzetközi', 0, 1, 'img/vizafogoBaja1.jpg', 'http://www.vizafogopanzio.hu/', 'fb.com/vizafogopanzio/', 1),
 (10, 'info@serranosaloon.hu', 'Serrano Salon', '+36 79 421 909', 0, 1, 0, 1, 0, '6500 Baja, Halászpart A épület', 56, 0, 'Éttermünk Baja belvárosában, a Sugovica partján fekszik, ahol egyedi mexikói hangulattal, 72 különböző röviditallal, 5 különféle csapolt sörrel, 93 egyedi fogással (közöttük mexikói ételkülönlegességek, cápa és kardhal steak, saláták) várjuk kedves vendégeinket!', 'Nemzetközi', 1, 1, 'img/serranosalon1.jpg', 'www.serranosaloon.hu', 'fb.com/serranosaloon', 1),
-(11, 'pizzeriatomato@gmail.com', 'Pizzeria Tomato', '+36 79 324 616', 0, 0, 0, 1, 0, '6500 Baja, Attila utca 17.', 45, 1, 'Ez az igazi! Minden pizzánkat kiváló alapanyagok felhasználásával, frissen, kézzel készített tésztából készítjük el számodra. A tökéletes minőség és a gondos odafigyelés garantálja a fantasztikus végeredményt.', 'Pizzéria', 0, 1, 'img/TomatopizzeriaBaja1.jpg', NULL, 'fb.com/pizzeriatomatobaja/timeline', 0);
+(11, 'pizzeriatomato@gmail.com', 'Pizzeria Tomato', '+36 79 324 616', 0, 0, 0, 1, 0, '6500 Baja, Attila utca 17.', 45, 1, 'Ez az igazi! Minden pizzánkat kiváló alapanyagok felhasználásával, frissen, kézzel készített tésztából készítjük el számodra. A tökéletes minőség és a gondos odafigyelés garantálja a fantasztikus végeredményt.', 'Pizzéria', 0, 1, 'img/TomatopizzeriaBaja1.jpg', NULL, 'fb.com/pizzeriatomatobaja/timeline', 0),
+(12, 'danielscafe@gmail.com', 'Daniel\'s Cafe & Lounge', '+36 20 595 5955', 1, 0, 0, 1, 0, '6500 Baja, Halászpart 4/a', 40, 0, '', 'Strand Bár, Pizzéria és Kávézó', 0, 1, 'img/danielscafeBaja2.jpg', '', 'https://www.facebook.com/Daniels-Cafe-Lounge-134222820001662/', 0),
+(13, 'molagastropub@gmail.com', 'MOLA Gastropub', '+36 30 420 2031', 1, 0, 0, 1, 0, '6500 Baja, Szentháromság tér 11.', 38, 0, 'Mola- spanyol fiatalok által gyakran használt szleng\nJelentése az angol nyelvben használatos \"cool\" kifejezésnek felel meg.\nItthon úgy mondanánk: menő, divatos, nagyszerű\n\nEgy ilyen mindent túlélő helyet álmodtunk meg Baja főterére, ahol az életöröm a közös falatozásokban, iszogatásokban és beszélgetésekben fejeződik ki!', 'Gastropub és Étterem', 0, 1, 'img/molagastropubBaja1.jpg', '', 'fb.com/molagastropub', 0),
+(14, 'zsombordelicat@gmail.com', 'Borbistro', '+36 79 573 177', 0, 0, 0, 1, 0, '6500 Baja, Szentháromság tér 4.', 43, 0, 'A minőségi borok iránti szenvedélyes vonzalom inspirálta a Borbistro létrejöttét. Egy olyan hangulatos, szerethető helyről álmodtunk, ahol vendégeink kulturált környezetben, nívós kiszolgálás mellett élvezhetik a színvonalas borválasztékunk és falatlapunk által nyújtott gasztronómia élvezeteket.\n\nVálasztékunkból: az ország legjobb pincészeteiből állandó 90 féle borkínalat a legjobbb árakon • Helyben sütött sós és édes pékaruk • Don Cortez kávé • magyar, spanyol, olasz, szlovén, sonkák, szalonnák, szalámik • francia, olasz, holland, magyar sajtok • olivabogyók • édesség különlegességek • Elvitel mindenből!', 'Bor Bár', 1, 1, 'img/borbistroBaja1.jpg', 'http://www.borbistro.hu/', 'fb.com/borbistro', 0);
 
 -- --------------------------------------------------------
 
@@ -240,7 +246,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztracio`, `Belepes`, `Statusz`, `Jog`) VALUES
-(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-28 20:41:55', 1, 'admin'),
+(1, 'admin@admin.hu', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', '0000-00-00 00:00:00', '2022-04-29 20:10:15', 1, 'admin'),
 (2, 'felhasznalo@gmail.com', 'Felhasználó', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', '', '0000-00-00 00:00:00', '2022-04-27 21:07:27', 1, 'user'),
 (3, 'etterem@gmail.com', 'Etterem', 'bc99c998efe316166f1aa6cefd571e4e01333b54', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'etterem'),
 (5, 'tanyacsardabaja@freemail.hu', 'Dunaparti Tanyacsárda Étterem Baja', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-27 20:00:10', NULL, 1, 'etterem'),
@@ -249,7 +255,10 @@ INSERT INTO `felhasznalok` (`ID`, `Email`, `Nev`, `Jelszo`, `Telefon`, `Regisztr
 (9, 'sobrihalaszcsarda@sobrihalaszcsarda.hu', 'Sobri Halászcsárda', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-28 20:52:21', NULL, 1, 'etterem'),
 (10, 'vizafogo@vizafogopanzio.hu', 'Vizafogó Étterem', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-28 21:08:07', NULL, 1, 'etterem'),
 (11, 'info@serranosaloon.hu', 'Serrano Salon', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-28 21:19:50', NULL, 1, 'etterem'),
-(12, 'pizzeriatomato@gmail.com', 'Pizzeria Tomato', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-28 21:55:05', NULL, 1, 'etterem');
+(12, 'pizzeriatomato@gmail.com', 'Pizzeria Tomato', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-28 21:55:05', NULL, 1, 'etterem'),
+(13, 'danielscafe@gmail.com', 'Daniel\'s Cafe & Lounge', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-29 20:16:42', NULL, 1, 'etterem'),
+(14, 'molagastropub@gmail.com', 'MOLA Gastropub', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-29 20:32:27', NULL, 1, 'etterem'),
+(15, 'zsombordelicat@gmail.com', 'Borbistro', '73f6d8310155c0a0f5ea64237973990aea02a932', NULL, '2022-04-29 20:39:11', NULL, 1, 'etterem');
 
 -- --------------------------------------------------------
 
@@ -272,7 +281,8 @@ CREATE TABLE `helyfoglalas` (
 INSERT INTO `helyfoglalas` (`ID`, `Felhasznalo_ID`, `Etterem_ID`, `Kezdes`, `Fo`) VALUES
 (1, 2, 1, '2022-04-05 11:58:20', 4),
 (2, 1, 1, '2022-04-05 11:58:20', 10),
-(3, 1, 2, '2022-04-05 11:58:20', 10);
+(3, 1, 2, '2022-04-05 11:58:20', 10),
+(4, 1, 13, '2022-05-03 20:36:00', 4);
 
 -- --------------------------------------------------------
 
@@ -369,7 +379,14 @@ INSERT INTO `kepek` (`ID`, `Etterem_ID`, `Kepek`) VALUES
 (34, 10, 'img/serranosalon1.jpg'),
 (35, 10, 'img/serranosalon2.jpg'),
 (36, 10, 'img/serranosalon3.jpg'),
-(37, 11, 'img/TomatopizzeriaBaja1.jpg');
+(37, 11, 'img/TomatopizzeriaBaja1.jpg'),
+(40, 12, 'img/danielscafeBaja1.jpg'),
+(41, 12, 'img/danielscafeBaja2.jpg'),
+(42, 13, 'img/molagastropubBaja1.jpg'),
+(43, 14, 'img/borbistroBaja1.jpg'),
+(44, 14, 'img/borbistroBaja2.jpg'),
+(45, 14, 'img/borbistroBaja3.jpg'),
+(46, 14, 'img/borbistroBaja4.jpg');
 
 -- --------------------------------------------------------
 
@@ -460,7 +477,28 @@ INSERT INTO `nyitvatartas` (`ID`, `Etterem_ID`, `Nap`, `napid`, `Nyitas`, `Zaras
 (71, 11, 'Csütörtök', 5, '11:00:00', '00:00:00'),
 (72, 11, 'Péntek', 6, '11:00:00', '00:00:00'),
 (73, 11, 'Szombat', 7, '11:00:00', '00:00:00'),
-(74, 11, 'Vasárnap', 1, '11:00:00', '00:00:00');
+(74, 11, 'Vasárnap', 1, '11:00:00', '00:00:00'),
+(75, 12, 'Hétfő', 2, '00:00:00', '23:59:00'),
+(76, 12, 'Kedd', 3, '00:00:00', '23:59:00'),
+(77, 12, 'Szerda', 4, '00:00:00', '23:59:00'),
+(78, 12, 'Csütörtök', 5, '00:00:00', '23:59:00'),
+(79, 12, 'Péntek', 6, '00:00:00', '23:59:00'),
+(80, 12, 'Szombat', 7, '00:00:00', '23:59:00'),
+(81, 12, 'Vasárnap', 1, '00:00:00', '23:59:00'),
+(82, 13, 'Hétfő', 2, '07:00:00', '22:00:00'),
+(83, 13, 'Kedd', 3, '07:00:00', '22:00:00'),
+(84, 13, 'Szerda', 4, '07:00:00', '22:00:00'),
+(85, 13, 'Csütörtök', 5, '07:00:00', '22:00:00'),
+(86, 13, 'Péntek', 6, '07:00:00', '23:59:00'),
+(87, 13, 'Szombat', 7, '07:00:00', '23:59:00'),
+(88, 13, 'Vasárnap', 1, '07:00:00', '21:00:00'),
+(89, 14, 'Hétfő', 2, '07:00:00', '22:00:00'),
+(90, 14, 'Kedd', 3, '07:00:00', '22:00:00'),
+(91, 14, 'Szerda', 4, '07:00:00', '22:00:00'),
+(92, 14, 'Csütörtök', 5, '07:00:00', '22:00:00'),
+(93, 14, 'Péntek', 6, '07:00:00', '23:45:00'),
+(94, 14, 'Szombat', 7, '08:00:00', '23:45:00'),
+(95, 14, 'Vasárnap', 1, '09:00:00', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -557,7 +595,7 @@ ALTER TABLE `nyitvatartas`
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT a táblához `etlap`
@@ -569,19 +607,19 @@ ALTER TABLE `etlap`
 -- AUTO_INCREMENT a táblához `ettermek`
 --
 ALTER TABLE `ettermek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT a táblához `helyfoglalas`
 --
 ALTER TABLE `helyfoglalas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `hibajelentes`
@@ -599,13 +637,13 @@ ALTER TABLE `kedvenc`
 -- AUTO_INCREMENT a táblához `kepek`
 --
 ALTER TABLE `kepek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT a táblához `nyitvatartas`
 --
 ALTER TABLE `nyitvatartas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- Megkötések a kiírt táblákhoz
